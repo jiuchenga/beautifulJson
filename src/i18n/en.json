@@ -1,0 +1,84 @@
+{
+  "site": {
+    "title": "DevToolkit - Free Online Developer Tools",
+    "description": "160+ free online developer tools. JSON formatter, encryption, encoding, QR code, webmaster tools and more."
+  },
+  "nav": {
+    "tools": "Online Tools",
+    "blog": "Blog",
+    "tutorials": "Tutorials",
+    "language": "Language"
+  },
+  "common": {
+    "copy": "Copy",
+    "copied": "Copied!",
+    "download": "Download",
+    "clear": "Clear",
+    "swap": "Swap",
+    "example": "Example",
+    "execute": "Execute",
+    "input": "Input",
+    "output": "Output",
+    "result": "Result",
+    "options": "Options",
+    "search": "Search tools...",
+    "noResults": "No results found",
+    "error": "Error",
+    "success": "Success",
+    "loading": "Loading..."
+  },
+  "tool": {
+    "format": "Format",
+    "minify": "Minify",
+    "validate": "Validate",
+    "convert": "Convert",
+    "compare": "Compare",
+    "generate": "Generate",
+    "encode": "Encode",
+    "decode": "Decode",
+    "compress": "Compress",
+    "decompress": "Decompress"
+  },
+  "seo": {
+    "breadcrumbHome": "Home",
+    "relatedTools": "Related Tools",
+    "features": "Features",
+    "howToUse": "How to Use",
+    "faq": "FAQ"
+  },
+  "category": {
+    "json": "JSON Tools",
+    "encrypt": "Encryption / Decryption",
+    "format": "Compression / Formatting",
+    "encode": "Encoding Conversion",
+    "qr": "QR Code Tools",
+    "webmaster": "Webmaster Tools",
+    "frontend": "Frontend / Design Tools",
+    "life": "Life Tools",
+    "culture": "Culture Resources",
+    "other": "Other Tools"
+  },
+  "json": {
+    "formatter": {
+      "title": "JSON Formatter",
+      "description": "Format, validate and beautify JSON with syntax highlighting and error detection.",
+      "indent": "Indent Size",
+      "sortKeys": "Sort Keys",
+      "errorPosition": "Error at position"
+    },
+    "viewer": {
+      "title": "JSON Viewer",
+      "description": "View JSON in a structured, interactive tree."
+    },
+    "compare": {
+      "title": "JSON Compare",
+      "description": "Compare two JSON objects and highlight differences.",
+      "original": "Original JSON",
+      "modified": "Modified JSON"
+    },
+    "minifier": {
+      "title": "JSON Minifier",
+      "description": "Compress JSON to a single line by removing whitespace."
+    }
+  }
+}
