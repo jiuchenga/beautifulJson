@@ -1,0 +1,101 @@
+---
+// src/components/common/ToolContent.astro
+import { generateFAQSchema, generateHowToSchema } from '@/lib/seo';
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Step {
+  name: string;
+  text: string;
+}
+
+interface RelatedTool {
+  title: string;
+  href: string;
+}
+
+interface Props {
+  toolName: string;
+  features?: string[];
+  steps?: Step[];
+  faq?: FAQ[];
+  relatedTools?: RelatedTool[];
+  siteUrl: string;
+}
+
+const { toolName, features, steps, faq, relatedTools, siteUrl } = Astro.props;
+
+const faqSchema = faq ? generateFAQSchema(faq) : null;
+const howToSchema = steps ? generateHowToSchema(`How to Use ${toolName}`, steps) : null;
+---
+
+<section class="mt-12 space-y-8">
+  <!-- Features -->
+  {features && features.length > 0 && (
+    <div>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Features</h2>
+      <ul class="list-disc space-y-1 pl-5 text-sm text-[var(--text-secondary)]">
+        {features.map((f) => <li>{f}</li>)}
+      </ul>
+    </div>
+  )}
+
+  <!-- How to Use -->
+  {steps && steps.length > 0 && (
+    <div>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">How to Use</h2>
+      <ol class="space-y-2">
+        {steps.map((step, i) => (
+          <li class="flex gap-3 text-sm">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--accent-blue)]/10 text-xs font-medium text-[var(--accent-blue)]">
+              {i + 1}
+            </span>
+            <div>
+              <span class="font-medium text-[var(--text-primary)]">{step.name}</span>
+              <p class="text-[var(--text-secondary)]">{step.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
+    </div>
+  )}
+
+  <!-- FAQ -->
+  {faq && faq.length > 0 && (
+    <div>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Frequently Asked Questions</h2>
+      <div class="space-y-3">
+        {faq.map((item) => (
+          <details class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)]">
+            <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-[var(--text-primary)] group-open:text-[var(--accent-blue)]">
+              {item.question}
+            </summary>
+            <p class="px-4 pb-3 text-sm text-[var(--text-secondary)]">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+      <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    </div>
+  )}
+
+  <!-- Related Tools -->
+  {relatedTools && relatedTools.length > 0 && (
+    <div>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Related Tools</h2>
+      <div class="flex flex-wrap gap-2">
+        {relatedTools.map((tool) => (
+          <a
+            href={tool.href}
+            class="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2 text-sm text-[var(--text-secondary)] hover:border-[var(--accent-blue)]/50 hover:text-[var(--text-primary)] transition-colors"
+          >
+            {tool.title}
+          </a>
+        ))}
+      </div>
+    </div>
+  )}
+</section>
