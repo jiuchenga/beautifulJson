@@ -1,0 +1,79 @@
+---
+// src/components/layout/Header.astro
+import { languages, type Lang } from '@/i18n/ui';
+import { getLangFromUrl, getRouteFromUrl } from '@/i18n/utils';
+import ThemeToggle from '@/components/ui/ThemeToggle';
+import MegaMenu from '@/components/layout/MegaMenu';
+
+interface Props {
+  lang?: Lang;
+}
+
+const lang = Astro.props.lang || getLangFromUrl(Astro.url);
+const currentPath = getRouteFromUrl(Astro.url);
+
+const langEntries = Object.entries(languages);
+---
+
+<header class="sticky top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/80 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
+    <!-- Logo -->
+    <a href={`/${lang}/`} class="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)] hover:no-underline">
+      <span class="font-mono text-[var(--accent-blue)]">{'{ }'}</span>
+      <span>DevToolkit</span>
+    </a>
+
+    <!-- Nav Links -->
+    <nav class="flex items-center gap-6">
+      <!-- Mega Menu for Online Tools -->
+      <div class="relative">
+        <MegaMenu client:idle lang={lang} />
+      </div>
+      <!-- Blog Link -->
+      <a
+        href={`/${lang}/blog`}
+        class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+      >
+        Blog
+      </a>
+      <!-- Tutorials Link -->
+      <a
+        href={`/${lang}/tutorials`}
+        class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
+      >
+        Tutorials
+      </a>
+    </nav>
+
+    <!-- Language Switcher -->
+    <div class="relative group">
+      <button
+        class="flex items-center gap-1 rounded-md border border-[var(--border-primary)] px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:border-[var(--accent-blue)] hover:text-[var(--text-primary)] transition-colors"
+      >
+        <span>🌐</span>
+        <span>{languages[lang]}</span>
+        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div class="invisible absolute right-0 top-full mt-1 w-48 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] py-1 opacity-0 shadow-xl group-hover:visible group-hover:opacity-100 transition-all">
+        {langEntries.map(([code, name]) => (
+          <a
+            href={`/${code}${currentPath}`}
+            class:list={[
+              'block px-4 py-2 text-sm transition-colors',
+              code === lang
+                ? 'bg-[var(--bg-tertiary)] text-[var(--accent-blue)]'
+                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]',
+            ]}
+          >
+            {name}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <ThemeToggle client:idle />
+  </div>
+</header>

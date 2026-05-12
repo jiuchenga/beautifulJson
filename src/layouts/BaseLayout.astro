@@ -1,0 +1,29 @@
+---
+// src/layouts/BaseLayout.astro
+import Header from '@/components/layout/Header.astro';
+import Footer from '@/components/layout/Footer.astro';
+import SEOHead from '@/components/common/SEOHead.astro';
+import type { SEOProps } from '@/lib/seo';
+import '@/styles/global.css';
+
+interface Props extends SEOProps {}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang={props.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <SEOHead {...props} />
+  </head>
+  <body>
+    <Header lang={props.lang as any} />
+    <main class="mx-auto max-w-7xl px-4 py-8">
+      <slot />
+    </main>
+    <Footer lang={props.lang as any} />
+  </body>
+</html>
