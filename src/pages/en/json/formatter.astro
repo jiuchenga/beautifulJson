@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonFormatter from '@/components/tools/json/JsonFormatter';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/en/category/json' },
+  { name: 'JSON Formatter', url: '/en/json/formatter' },
+];
+---
+
+<ToolLayout
+  title="JSON Formatter - Free Online JSON Beautifier"
+  description="Format, validate and beautify JSON online with syntax highlighting and error detection. Free developer tool."
+  path="/json/formatter"
+  siteUrl="https://devtoolkit.com"
+  lang="en"
+  toolName="JSON Formatter"
+  toolDescription="Format, validate and beautify JSON with error detection"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonFormatter client:load />
+</ToolLayout>
