@@ -1,0 +1,48 @@
+---
+// src/components/common/SEOHead.astro
+import { buildMetaTags, generateHreflangTags, generateWebApplicationSchema } from '@/lib/seo';
+import type { SEOProps } from '@/lib/seo';
+
+interface Props extends SEOProps {}
+
+const props = Astro.props;
+const meta = buildMetaTags(props);
+const hreflangs = generateHreflangTags(props.path, props.siteUrl);
+
+// Build JSON-LD schemas array
+const schemas: object[] = [];
+if (props.toolName) {
+  schemas.push(generateWebApplicationSchema(props));
+}
+---
+
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<link rel="canonical" href={meta.canonical} />
+
+<!-- Open Graph -->
+<meta property="og:title" content={meta.og.title} />
+<meta property="og:description" content={meta.og.description} />
+<meta property="og:url" content={meta.og.url} />
+<meta property="og:type" content={meta.og.type} />
+<meta property="og:site_name" content={meta.og.siteName} />
+<meta property="og:locale" content={props.lang} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content={meta.twitter.card} />
+<meta name="twitter:title" content={meta.twitter.title} />
+<meta name="twitter:description" content={meta.twitter.description} />
+
+<!-- Hreflang -->
+{hreflangs.map((h) => (
+  <link rel="alternate" hreflang={h.lang} href={h.href} />
+))}
+
+<!-- JSON-LD Schemas -->
+{schemas.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

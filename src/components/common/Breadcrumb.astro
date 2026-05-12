@@ -1,0 +1,35 @@
+---
+// src/components/common/Breadcrumb.astro
+import { generateBreadcrumbSchema } from '@/lib/seo';
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  items: BreadcrumbItem[];
+  siteUrl: string;
+}
+
+const { items, siteUrl } = Astro.props;
+const schema = generateBreadcrumbSchema(items);
+---
+
+<nav aria-label="Breadcrumb" class="mb-4">
+  <ol class="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+    {items.map((item, index) => (
+      <li class="flex items-center gap-2">
+        {index > 0 && <span class="text-[var(--text-tertiary)]">/</span>}
+        {index < items.length - 1 ? (
+          <a href={item.url} class="hover:text-[var(--accent-blue)] transition-colors">
+            {item.name}
+          </a>
+        ) : (
+          <span class="text-[var(--text-primary)]">{item.name}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</nav>
