@@ -61,6 +61,23 @@ function getCategories(lang: string): CategoryGroup[] {
       ],
     },
     // Remaining 8 categories will be populated in later phases
+    {
+      label: 'Formatting',
+      icon: '📐',
+      href: `/${lang}/category/format`,
+      tools: [
+        { name: 'JS/HTML Format', href: `/${lang}/format/js-html-format` },
+        { name: 'JS Format', href: `/${lang}/format/js-format` },
+        { name: 'CSS Format', href: `/${lang}/format/css-format` },
+        { name: 'XML Format', href: `/${lang}/format/xml-format` },
+        { name: 'SQL Format', href: `/${lang}/format/sql-format` },
+        { name: 'JS Obfuscate', href: `/${lang}/format/js-obfuscate-encrypt` },
+        { name: 'JS Obfuscate & Compress', href: `/${lang}/format/js-obfuscate-compress` },
+        { name: 'Regex Tester', href: `/${lang}/format/regex-tester` },
+        { name: 'Regex Code Generator', href: `/${lang}/format/regex-code-generator` },
+        { name: 'All Formatting Tools', href: `/${lang}/category/format` },
+      ],
+    },
   ];
 }
 
