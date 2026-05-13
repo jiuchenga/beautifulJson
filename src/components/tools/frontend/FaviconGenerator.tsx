@@ -1,49 +1,62 @@
 // src/components/tools/frontend/FaviconGenerator.tsx
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 
 type FaviconSize = 16 | 32 | 48 | 64 | 128 | 256;
+
+function renderFaviconToCanvas(
+  canvas: HTMLCanvasElement,
+  size: number,
+  text: string,
+  bgColor: string,
+  fgColor: string,
+  fontSize: number,
+): string {
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return '';
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = fgColor;
+  ctx.font = `bold ${Math.max(8, fontSize * size / 64)}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text.slice(0, 2), size / 2, size / 2 + 1);
+  return canvas.toDataURL('image/png');
+}
+
+const SIZES: FaviconSize[] = [16, 32, 48, 64, 128, 256];
 
 export default function FaviconGenerator() {
   const [text, setText] = useState('DT');
   const [bgColor, setBgColor] = useState('#3b82f6');
   const [fgColor, setFgColor] = useState('#ffffff');
   const [fontSize, setFontSize] = useState(20);
-  const [preview, setPreview] = useState('');
+  const [previews, setPreviews] = useState<Record<number, string>>({});
   const [error, setError] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  function generateFavicon(size: FaviconSize = 64) {
-    const canvas = canvasRef.current || document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return '';
-
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(0, 0, size, size);
-
-    ctx.fillStyle = fgColor;
-    ctx.font = `bold ${Math.max(8, fontSize * size / 64)}px sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(text.slice(0, 2), size / 2, size / 2 + 1);
-
-    return canvas.toDataURL('image/png');
-  }
 
   function handleGenerate() {
     setError('');
     if (!text.trim()) { setError('Please enter text'); return; }
-    setPreview(generateFavicon(128));
+    const canvas = canvasRef.current || document.createElement('canvas');
+    const results: Record<number, string> = {};
+    for (const size of SIZES) {
+      results[size] = renderFaviconToCanvas(canvas, size, text, bgColor, fgColor, fontSize);
+    }
+    setPreviews(results);
   }
 
   function handleDownload(size: FaviconSize) {
-    const dataUrl = generateFavicon(size);
+    const dataUrl = previews[size];
+    if (!dataUrl) return;
     const a = document.createElement('a');
     a.href = dataUrl;
     a.download = `favicon-${size}x${size}.png`;
     a.click();
   }
+
+  const hasPreview = Object.keys(previews).length > 0;
 
   return (
     <div className="space-y-4">
@@ -79,20 +92,20 @@ export default function FaviconGenerator() {
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          {preview ? (
+          {hasPreview ? (
             <>
               <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-6">
                 <div className="grid grid-cols-3 gap-4 items-end">
-                  {[16, 32, 48, 64, 128, 256].map((size) => (
+                  {SIZES.map((size) => (
                     <div key={size} className="text-center">
-                      <img src={size === 128 ? preview : generateFavicon(size as FaviconSize)} alt={`${size}x${size}`} className="mx-auto mb-1" style={{ width: Math.min(size, 64), height: Math.min(size, 64), imageRendering: 'pixelated' }} />
+                      <img src={previews[size]} alt={`${size}x${size}`} className="mx-auto mb-1" style={{ width: Math.min(size, 64), height: Math.min(size, 64), imageRendering: 'pixelated' }} />
                       <span className="text-xs text-[var(--text-tertiary)]">{size}x{size}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                {([16, 32, 48, 64, 128, 256] as FaviconSize[]).map((size) => (
+                {SIZES.map((size) => (
                   <button key={size} onClick={() => handleDownload(size)}
                     className="rounded-lg border border-[var(--border-primary)] px-3 py-1 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">
                     {size}x{size}

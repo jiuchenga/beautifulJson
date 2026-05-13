@@ -16,7 +16,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 
 const breadcrumbs = [
-  { name: 'Home', url: '/en' },
+  { name: 'Home', url: '/de' },
   { name: 'Blog', url: '/de/blog' },
   { name: post.data.title, url: `/en/blog/${post.id}` },
 ];

@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/common/Breadcrumb.astro';
 import { getCollection } from 'astro:content';
 
 const breadcrumbs = [
-  { name: 'Home', url: '/en' },
+  { name: 'Home', url: '/de' },
   { name: 'Blog', url: '/de/blog' },
 ];
 
@@ -32,7 +32,7 @@ const posts = (await getCollection('blog')).sort(
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {posts.map((post) => (
-      <a href={`/en/blog/${post.id}`}
+      <a href={`/de/blog/${post.id}`}
         class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--accent-blue)]/50">
         <div class="mb-2 flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
           <time datetime={post.data.date.toISOString().split('T')[0]}>

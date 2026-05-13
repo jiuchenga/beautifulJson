@@ -6,30 +6,48 @@ export default function Stopwatch() {
   const [running, setRunning] = useState(false);
   const [laps, setLaps] = useState<number[]>([]);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timeRef = useRef(0);
+  const runningRef = useRef(false);
 
   const startStopwatch = useCallback(() => {
-    if (running) return;
+    if (runningRef.current) return;
+    runningRef.current = true;
     setRunning(true);
-    const startTime = Date.now() - time;
-    intervalRef.current = setInterval(() => setTime(Date.now() - startTime), 10);
-  }, [running, time]);
+    const startTime = Date.now() - timeRef.current;
+    intervalRef.current = setInterval(() => {
+      const now = Date.now() - startTime;
+      timeRef.current = now;
+      setTime(now);
+    }, 10);
+  }, []);
 
   const stop = useCallback(() => {
-    if (!running) return;
+    if (!runningRef.current) return;
+    runningRef.current = false;
     setRunning(false);
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  }, [running]);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  }, []);
 
   const reset = useCallback(() => {
+    runningRef.current = false;
     setRunning(false);
+    timeRef.current = 0;
     setTime(0);
     setLaps([]);
-    if (intervalRef.current) clearInterval(intervalRef.current);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
   }, []);
 
   const lap = useCallback(() => {
-    if (running) setLaps([...laps, time]);
-  }, [running, laps, time]);
+    if (runningRef.current) {
+      setLaps(prev => [...prev, timeRef.current]);
+    }
+  }, []);
 
   const format = (ms: number) => {
     const min = Math.floor(ms / 60000);

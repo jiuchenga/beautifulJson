@@ -16,11 +16,11 @@ const categories = [
 ];
 
 const hotTools = [
-  { title: 'JSON Formatter', description: 'Format and beautify JSON', href: '/en/json/formatter', icon: '{ }' },
-  { title: 'Encrypt / Decrypt', description: 'AES, DES, TripleDES encryption', href: '/en/encrypt/aes', icon: '🔐' },
-  { title: 'Base64 Encode/Decode', description: 'Text Base64 encoding', href: '/en/encrypt/base64', icon: '🔐' },
-  { title: 'JSON Viewer', description: 'Interactive JSON tree view', href: '/en/json/viewer', icon: '{ }' },
-  { title: 'Hash / Digest', description: 'MD5, SHA-256, SHA-512', href: '/en/encrypt/hash-digest', icon: '🔐' },
+  { title: 'JSON Formatter', description: 'Format and beautify JSON', href: '/hi/json/formatter', icon: '{ }' },
+  { title: 'Encrypt / Decrypt', description: 'AES, DES, TripleDES encryption', href: '/hi/encrypt/aes', icon: '🔐' },
+  { title: 'Base64 Encode/Decode', description: 'Text Base64 encoding', href: '/hi/encrypt/base64', icon: '🔐' },
+  { title: 'JSON Viewer', description: 'Interactive JSON tree view', href: '/hi/json/viewer', icon: '{ }' },
+  { title: 'Hash / Digest', description: 'MD5, SHA-256, SHA-512', href: '/hi/encrypt/hash-digest', icon: '🔐' },
 ];
 ---
 
@@ -60,7 +60,7 @@ const hotTools = [
     <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {categories.map((cat) => (
         <a
-          href={`/en/category/${cat.slug}`}
+          href={`/hi/category/${cat.slug}`}
           class="group flex items-center gap-4 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 transition-all hover:border-[var(--accent-blue)]/50"
         >
           <span class="text-2xl">{cat.icon}</span>

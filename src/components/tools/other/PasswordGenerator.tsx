@@ -10,6 +10,7 @@ export default function PasswordGenerator() {
   const [useDigits, setUseDigits] = useState(true);
   const [useSymbols, setUseSymbols] = useState(true);
   const [passwords, setPasswords] = useState<string[]>([]);
+  const [error, setError] = useState('');
 
   function generate() {
     let chars = '';
@@ -17,7 +18,8 @@ export default function PasswordGenerator() {
     if (useLower) chars += 'abcdefghijklmnopqrstuvwxyz';
     if (useDigits) chars += '0123456789';
     if (useSymbols) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
-    if (!chars) return;
+    if (!chars) { setError('Please select at least one character type'); return; }
+    setError('');
 
     const result: string[] = [];
     for (let i = 0; i < count; i++) {
@@ -63,6 +65,7 @@ export default function PasswordGenerator() {
         </div>
 
         <div className="space-y-2">
+          {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
           {passwords.map((pw, i) => (
             <div key={i} className="flex items-center justify-between rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2">
               <code className="text-sm text-[var(--text-primary)] break-all">{pw}</code>

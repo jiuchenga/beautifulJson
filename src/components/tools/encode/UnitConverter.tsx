@@ -33,7 +33,10 @@ export default function UnitConverter() {
     const num = parseFloat(value);
     if (isNaN(num)) return null;
     try {
-      return convertUnit(num, category, fromUnit, toUnit).toPrecision(10).replace(/\.?0+$/, '');
+      const raw = convertUnit(num, category, fromUnit, toUnit);
+      // Format: remove trailing zeros after decimal point, but keep integer part intact
+      const formatted = parseFloat(raw.toPrecision(10));
+      return String(formatted);
     } catch { return null; }
   }, [value, category, fromUnit, toUnit]);
 
