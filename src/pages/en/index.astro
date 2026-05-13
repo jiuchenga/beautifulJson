@@ -31,6 +31,22 @@ const hotTools = [
   siteUrl="https://devtoolkit.com"
   lang="en"
 >
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DevToolkit",
+    "url": "https://devtoolkit.com",
+    "description": "160+ free online developer tools. No signup required.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  })} />
+
   <!-- Hero Section -->
   <section class="py-12 text-center">
     <h1 class="text-4xl font-bold text-[var(--text-primary)]">
