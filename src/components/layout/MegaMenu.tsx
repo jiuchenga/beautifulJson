@@ -41,7 +41,26 @@ function getCategories(lang: string): CategoryGroup[] {
         { name: 'JSON Compress/Escape', href: `/${lang}/json/compress-escape` },
       ],
     },
-    // Remaining 10 categories will be populated in later phases
+    {
+      label: 'Encryption',
+      icon: '🔐',
+      href: `/${lang}/category/encrypt`,
+      tools: [
+        { name: 'Encrypt / Decrypt', href: `/${lang}/encrypt/aes` },
+        { name: 'Hash / Digest', href: `/${lang}/encrypt/hash-digest` },
+        { name: 'Base64 Encode/Decode', href: `/${lang}/encrypt/base64` },
+        { name: 'Image to Base64', href: `/${lang}/encrypt/image-base64` },
+        { name: 'Number Base', href: `/${lang}/encrypt/number-base` },
+        { name: 'Hex ↔ Text', href: `/${lang}/encrypt/hex-text` },
+        { name: 'URL Encode/Decode', href: `/${lang}/encrypt/url-codec` },
+        { name: 'MD5 Encrypt', href: `/${lang}/encrypt/md5` },
+        { name: 'JS Obfuscation', href: `/${lang}/encrypt/js-obfuscation` },
+        { name: 'JS Online Decrypt', href: `/${lang}/encrypt/js-online-decrypt` },
+        { name: 'JSFuck Encrypt', href: `/${lang}/encrypt/jsfuck` },
+        { name: 'All Encryption Tools', href: `/${lang}/category/encrypt` },
+      ],
+    },
+    // Remaining 8 categories will be populated in later phases
   ];
 }
 
