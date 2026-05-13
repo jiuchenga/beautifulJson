@@ -7,11 +7,11 @@ export default function Stopwatch() {
   const [laps, setLaps] = useState<number[]>([]);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const start = useCallback(() => {
+  const startStopwatch = useCallback(() => {
     if (running) return;
     setRunning(true);
-    const start = Date.now() - time;
-    intervalRef.current = setInterval(() => setTime(Date.now() - start), 10);
+    const startTime = Date.now() - time;
+    intervalRef.current = setInterval(() => setTime(Date.now() - startTime), 10);
   }, [running, time]);
 
   const stop = useCallback(() => {
@@ -50,7 +50,7 @@ export default function Stopwatch() {
 
         <div className="flex gap-3">
           {!running ? (
-            <button onClick={start} className="rounded-lg bg-green-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">{time === 0 ? 'Start' : 'Resume'}</button>
+            <button onClick={startStopwatch} className="rounded-lg bg-green-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">{time === 0 ? 'Start' : 'Resume'}</button>
           ) : (
             <button onClick={stop} className="rounded-lg bg-red-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">Stop</button>
           )}
