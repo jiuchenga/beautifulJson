@@ -8,7 +8,7 @@ export default function QrCodeDecoder() {
   const [fileName, setFileName] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     setError('');
     setResult('');
     const file = e.target.files?.[0];
@@ -16,7 +16,9 @@ export default function QrCodeDecoder() {
     setFileName(file.name);
 
     const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
     img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
       const canvas = canvasRef.current || document.createElement('canvas');
       canvas.width = img.width;
       canvas.height = img.height;
@@ -31,8 +33,8 @@ export default function QrCodeDecoder() {
         setError('No QR code found in the image');
       }
     };
-    img.onerror = () => setError('Failed to load image');
-    img.src = URL.createObjectURL(file);
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); setError('Failed to load image'); };
+    img.src = objectUrl;
   }
 
   return (

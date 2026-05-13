@@ -20,13 +20,14 @@ export default function QrCodeGenerator() {
   const [text, setText] = useState('');
   const [dataUrl, setDataUrl] = useState('');
   const [error, setError] = useState('');
+  const [wifiPassword, setWifiPassword] = useState('');
 
   function getContent(): string {
     switch (qrType) {
       case 'email': return text ? `mailto:${text}` : '';
       case 'sms': return text ? `sms:${text}` : '';
       case 'phone': return text ? `tel:${text}` : '';
-      case 'wifi': return text ? `WIFI:T:WPA;S:${text};P:password;;` : '';
+      case 'wifi': return text ? `WIFI:T:WPA;S:${text};P:${wifiPassword};;` : '';
       case 'vcard': return text ? `BEGIN:VCARD\nVERSION:3.0\nFN:${text}\nEND:VCARD` : '';
       default: return text;
     }
@@ -72,6 +73,12 @@ export default function QrCodeGenerator() {
           className="flex-1 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
         <button onClick={handleGenerate} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">Generate</button>
       </div>
+
+      {qrType === 'wifi' && (
+        <input type="text" value={wifiPassword} onChange={(e) => setWifiPassword(e.target.value)}
+          placeholder="WiFi password (optional)"
+          className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
+      )}
 
       {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
 
