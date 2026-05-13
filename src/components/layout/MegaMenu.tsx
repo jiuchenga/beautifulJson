@@ -78,6 +78,65 @@ function getCategories(lang: string): CategoryGroup[] {
         { name: 'All Formatting Tools', href: `/${lang}/category/format` },
       ],
     },
+    {
+      label: 'Encoding',
+      icon: '🔄',
+      href: `/${lang}/category/encode`,
+      tools: [
+        { name: 'Timestamp Converter', href: `/${lang}/encode/timestamp` },
+        { name: 'HTML Escape', href: `/${lang}/encode/html-escape` },
+        { name: 'Word Counter', href: `/${lang}/encode/word-counter` },
+        { name: 'Unit Converter', href: `/${lang}/encode/unit-converter` },
+        { name: 'Subnet Calculator', href: `/${lang}/encode/subnet-calculator` },
+      ],
+    },
+    {
+      label: 'QR Code',
+      icon: '📱',
+      href: `/${lang}/category/qr`,
+      tools: [
+        { name: 'QR Generator', href: `/${lang}/qr/generate` },
+        { name: 'QR Beautifier', href: `/${lang}/qr/beautifier` },
+        { name: 'QR Decoder', href: `/${lang}/qr/decoder` },
+        { name: 'QR API Test', href: `/${lang}/qr/api-test` },
+        { name: 'QR Knowledge', href: `/${lang}/qr/knowledge` },
+      ],
+    },
+    {
+      label: 'Webmaster',
+      icon: '🌐',
+      href: `/${lang}/category/webmaster`,
+      tools: [
+        { name: 'HTTP Status', href: `/${lang}/webmaster/http-status` },
+        { name: 'robots.txt Gen', href: `/${lang}/webmaster/robots-txt` },
+        { name: 'Meta Tag Gen', href: `/${lang}/webmaster/meta-tag-generator` },
+        { name: 'HTTP Headers', href: `/${lang}/webmaster/http-headers` },
+        { name: 'UA Parser', href: `/${lang}/webmaster/user-agent-parser` },
+      ],
+    },
+    {
+      label: 'Frontend',
+      icon: '🎨',
+      href: `/${lang}/category/frontend`,
+      tools: [
+        { name: 'Color Picker', href: `/${lang}/frontend/color-picker` },
+        { name: 'Image Info', href: `/${lang}/frontend/image-info` },
+        { name: 'Favicon Gen', href: `/${lang}/frontend/favicon-generator` },
+      ],
+    },
+    {
+      label: 'Life & Other',
+      icon: '🕐',
+      href: `/${lang}/category/life`,
+      tools: [
+        { name: 'Date Calculator', href: `/${lang}/life/date-calculator` },
+        { name: 'Stopwatch', href: `/${lang}/life/stopwatch` },
+        { name: 'World Time', href: `/${lang}/life/world-time` },
+        { name: 'Morse Code', href: `/${lang}/life/morse-code` },
+        { name: 'Password Gen', href: `/${lang}/other/password-generator` },
+        { name: 'Cron Generator', href: `/${lang}/other/cron-generator` },
+      ],
+    },
   ];
 }
 
