@@ -22,11 +22,11 @@ export default function AsciiConverter() {
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
       onSwap={() => { const tmp = input; setInput(output); setOutput(tmp); setMode(mode === 'text2ascii' ? 'ascii2text' : 'text2ascii'); }}
       onExample={() => setInput(mode === 'text2ascii' ? 'Hello' : '72 101 108 108 111')}
-      error={error}>
-      <div className="flex gap-2">
+      error={error}
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('text2ascii')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'text2ascii' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Text → ASCII</button>
         <button onClick={() => setMode('ascii2text')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'ascii2text' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>ASCII → Text</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }

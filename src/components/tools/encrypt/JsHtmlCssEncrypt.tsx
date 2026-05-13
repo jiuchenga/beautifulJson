@@ -1,7 +1,6 @@
 // src/components/tools/encrypt/JsHtmlCssEncrypt.tsx
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
-import { jsObfuscateSimple } from '@/lib/crypto-utils';
 
 const EXAMPLE = '<div onclick="alert(1)">Hello</div>';
 

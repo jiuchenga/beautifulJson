@@ -33,11 +33,11 @@ export default function JsHtmlConvert() {
       onExample={() => setInput(mode === 'js2html' ? EXAMPLE_JS : EXAMPLE_HTML)}
       error={error}
       inputEditor={{ language: 'javascript' }}
-      outputEditor={{ language: 'javascript', readOnly: true }}>
-      <div className="flex gap-2">
+      outputEditor={{ language: 'javascript', readOnly: true }}
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('js2html')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'js2html' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>JS → HTML</button>
         <button onClick={() => setMode('html2js')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'html2js' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>HTML → JS</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }

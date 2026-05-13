@@ -30,11 +30,10 @@ export default function Base64Codec() {
       onExample={() => setInput(EXAMPLE)}
       error={error}
       inputEditor={{ placeholder: mode === 'encode' ? 'Enter text to encode...' : 'Enter Base64 to decode...' }}
-    >
-      <div className="flex gap-2">
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('encode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'encode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Encode</button>
         <button onClick={() => setMode('decode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'decode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Decode</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }

@@ -22,11 +22,11 @@ export default function Utf8Encoder() {
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
       onSwap={() => { const tmp = input; setInput(output); setOutput(tmp); setMode(mode === 'encode' ? 'decode' : 'encode'); }}
       onExample={() => setInput('你好 Hello')}
-      error={error}>
-      <div className="flex gap-2">
+      error={error}
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('encode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'encode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Encode</button>
         <button onClick={() => setMode('decode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'decode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Decode</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }

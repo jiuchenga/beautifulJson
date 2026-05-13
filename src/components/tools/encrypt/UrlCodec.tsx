@@ -23,11 +23,11 @@ export default function UrlCodec() {
       onSwap={() => { const tmp = input; setInput(output); setOutput(tmp); setMode(mode === 'encode' ? 'decode' : 'encode'); }}
       onExample={() => setInput('https://example.com/path?q=hello world&lang=中文')}
       error={error}
-      inputEditor={{ placeholder: mode === 'encode' ? 'Enter URL to encode...' : 'Enter encoded URL...' }}>
-      <div className="flex gap-2">
+      inputEditor={{ placeholder: mode === 'encode' ? 'Enter URL to encode...' : 'Enter encoded URL...' }}
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('encode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'encode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Encode</button>
         <button onClick={() => setMode('decode')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'decode' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Decode</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }

@@ -24,7 +24,9 @@ export function symmetricEncrypt(
     case 'PBKDF2': {
       const salt = CryptoJS.lib.WordArray.random(128 / 8);
       const derived = CryptoJS.PBKDF2(key, salt, { keySize: 256 / 32, iterations: 1000 });
-      return CryptoJS.AES.encrypt(text, derived.toString()).toString();
+      const encrypted = CryptoJS.AES.encrypt(text, derived.toString());
+      // Prepend salt (hex) + ':' so decrypt can recover it
+      return salt.toString() + ':' + encrypted.toString();
     }
     default:
       throw new Error(`Unsupported algorithm: ${algorithm}`);
@@ -54,10 +56,14 @@ export function symmetricDecrypt(
       decrypted = CryptoJS.Rabbit.decrypt(ciphertext, key);
       break;
     case 'PBKDF2': {
-      // PBKDF2 decryption is the same as AES since we use AES under the hood
-      const salt = CryptoJS.lib.WordArray.random(128 / 8);
+      // Extract the salt from the "salt:ciphertext" format
+      const sep = ciphertext.indexOf(':');
+      if (sep === -1) throw new Error('Invalid PBKDF2 ciphertext format');
+      const saltHex = ciphertext.substring(0, sep);
+      const actualCiphertext = ciphertext.substring(sep + 1);
+      const salt = CryptoJS.enc.Hex.parse(saltHex);
       const derived = CryptoJS.PBKDF2(key, salt, { keySize: 256 / 32, iterations: 1000 });
-      decrypted = CryptoJS.AES.decrypt(ciphertext, derived.toString());
+      decrypted = CryptoJS.AES.decrypt(actualCiphertext, derived.toString());
       break;
     }
     default:
@@ -98,7 +104,15 @@ export function md5Short(text: string): string {
 // === HMAC ===
 
 export function hmacHash(text: string, key: string, algorithm: HashAlgorithm = 'SHA256'): string {
-  return CryptoJS.HmacSHA256(text, key).toString();
+  switch (algorithm) {
+    case 'MD5': return CryptoJS.HmacMD5(text, key).toString();
+    case 'SHA1': return CryptoJS.HmacSHA1(text, key).toString();
+    case 'SHA224': return CryptoJS.HmacSHA224(text, key).toString();
+    case 'SHA256': return CryptoJS.HmacSHA256(text, key).toString();
+    case 'SHA512': return CryptoJS.HmacSHA512(text, key).toString();
+    case 'SHA3': return CryptoJS.HmacSHA3(text, key).toString();
+    default: return CryptoJS.HmacSHA256(text, key).toString();
+  }
 }
 
 // === Base64 ===

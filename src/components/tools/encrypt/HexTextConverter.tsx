@@ -23,11 +23,11 @@ export default function HexTextConverter() {
       onSwap={() => { const tmp = input; setInput(output); setOutput(tmp); setMode(mode === 'text2hex' ? 'hex2text' : 'text2hex'); }}
       onExample={() => setInput(mode === 'text2hex' ? 'Hello' : '48 65 6c 6c 6f')}
       error={error}
-      inputEditor={{ placeholder: mode === 'text2hex' ? 'Enter text...' : 'Enter hex (space separated)...' }}>
-      <div className="flex gap-2">
+      inputEditor={{ placeholder: mode === 'text2hex' ? 'Enter text...' : 'Enter hex (space separated)...' }}
+      options={<div className="flex gap-2">
         <button onClick={() => setMode('text2hex')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'text2hex' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Text → Hex</button>
         <button onClick={() => setMode('hex2text')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'hex2text' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Hex → Text</button>
-      </div>
-    </ToolShell>
+      </div>}
+    />
   );
 }
