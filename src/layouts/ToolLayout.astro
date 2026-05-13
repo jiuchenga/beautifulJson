@@ -4,12 +4,14 @@ import BaseLayout from './BaseLayout.astro';
 import Sidebar from '@/components/layout/Sidebar.astro';
 import Breadcrumb from '@/components/common/Breadcrumb.astro';
 import type { SEOProps } from '@/lib/seo';
+import type { Lang } from '@/i18n/ui';
 
 interface Props extends SEOProps {
   breadcrumbs: Array<{ name: string; url: string }>;
 }
 
 const { breadcrumbs, ...seoProps } = Astro.props;
+const lang = seoProps.lang as Lang;
 ---
 
 <BaseLayout {...seoProps}>
@@ -18,7 +20,7 @@ const { breadcrumbs, ...seoProps } = Astro.props;
   <div class="flex gap-8">
     <!-- Sidebar -->
     <aside class="hidden lg:block w-64 shrink-0">
-      <Sidebar lang={seoProps.lang as any} />
+      <Sidebar lang={lang} />
     </aside>
 
     <!-- Tool Content -->

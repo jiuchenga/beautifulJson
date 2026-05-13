@@ -28,6 +28,8 @@ export default function CodeEditor({
 }: CodeEditorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewRef = useRef<EditorView | null>(null);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -44,8 +46,8 @@ export default function CodeEditor({
         langExtension,
         oneDark,
         EditorView.updateListener.of((update) => {
-          if (update.docChanged && onChange) {
-            onChange(update.state.doc.toString());
+          if (update.docChanged && onChangeRef.current) {
+            onChangeRef.current(update.state.doc.toString());
           }
         }),
         EditorState.readOnly.of(readOnly),

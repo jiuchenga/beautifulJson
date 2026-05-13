@@ -4,11 +4,13 @@ import Header from '@/components/layout/Header.astro';
 import Footer from '@/components/layout/Footer.astro';
 import SEOHead from '@/components/common/SEOHead.astro';
 import type { SEOProps } from '@/lib/seo';
+import type { Lang } from '@/i18n/ui';
 import '@/styles/global.css';
 
 interface Props extends SEOProps {}
 
 const props = Astro.props;
+const lang = props.lang as Lang;
 ---
 
 <!doctype html>
@@ -20,10 +22,10 @@ const props = Astro.props;
     <SEOHead {...props} />
   </head>
   <body>
-    <Header lang={props.lang as any} />
+    <Header lang={lang} />
     <main class="mx-auto max-w-7xl px-4 py-8">
       <slot />
     </main>
-    <Footer lang={props.lang as any} />
+    <Footer lang={lang} />
   </body>
 </html>
