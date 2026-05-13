@@ -103,8 +103,11 @@ export default function RobotsTxtGenerator() {
           className="flex-1 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
       </div>
 
-      <input type="text" value={crawlDelay} onChange={(e) => setCrawlDelay(e.target.value)} placeholder="Crawl delay in seconds (optional)"
-        className="w-64 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
+      <div>
+        <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Crawl Delay (seconds, optional)</label>
+        <input type="text" value={crawlDelay} onChange={(e) => setCrawlDelay(e.target.value)} placeholder="e.g., 10"
+          className="w-64 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
+      </div>
 
       {/* Output */}
       <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
