@@ -1,5 +1,5 @@
 // src/components/ui/Toast.tsx
-import { useState, useEffect, useRef, createContext, useContext, useCallback, type ReactNode } from 'react';
+import { useState, useRef, createContext, useContext, useCallback, type ReactNode } from 'react';
 
 interface Toast {
   id: number;
@@ -42,7 +42,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
         {toasts.map((toast) => (
           <div
             key={toast.id}
-            className={`rounded-lg border px-4 py-3 text-sm shadow-lg animate-slide-in ${typeStyles[toast.type]}`}
+            className={`rounded-lg border px-4 py-3 text-sm shadow-lg animate-in ${typeStyles[toast.type]}`}
           >
             {toast.message}
           </div>

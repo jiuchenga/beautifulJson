@@ -6,7 +6,6 @@ const EXAMPLE = '[{"name": "Alice", "age": 30, "city": "NYC", "score": 95.5}, {"
 
 export default function JsonToExcel() {
   const [input, setInput] = useState('');
-  const [output, setOutput] = useState('');
   const [error, setError] = useState('');
   const [preview, setPreview] = useState<string[][]>([]);
 
@@ -27,7 +26,6 @@ export default function JsonToExcel() {
         headers.map((h) => String((item as Record<string, unknown>)[h] ?? ''))
       );
       setPreview([headers, ...rows]);
-      setOutput(`${arr.length} rows ready for download`);
     } catch (e) {
       setError((e as Error).message);
     }
@@ -67,7 +65,7 @@ export default function JsonToExcel() {
           <button onClick={handleDownload} className="rounded-lg bg-[var(--accent-green)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">⬇ Download Excel</button>
         )}
         <button onClick={() => setInput(EXAMPLE)} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Example</button>
-        <button onClick={() => { setInput(''); setPreview([]); setOutput(''); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Clear</button>
+        <button onClick={() => { setInput(''); setPreview([]); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Clear</button>
       </div>
 
       {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
