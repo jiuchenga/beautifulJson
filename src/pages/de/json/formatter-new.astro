@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonFormatterNew from '@/components/tools/json/JsonFormatterNew';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/de/category/json' },
+  { name: 'JSON Formatter (Enhanced)', url: '/de/json/formatter-new' },
+];
+---
+
+<ToolLayout
+  title="JSON Formatter (Enhanced) - Online JSON Beautifier with Type Analysis"
+  description="Enhanced JSON formatter with data type display, array index, and syntax highlighting. Free online developer tool."
+  path="/json/formatter-new"
+  siteUrl="https://devtoolkit.com"
+  lang="de"
+  toolName="JSON Formatter (Enhanced)"
+  toolDescription="Enhanced JSON formatter with type analysis and array index"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonFormatterNew client:load />
+</ToolLayout>

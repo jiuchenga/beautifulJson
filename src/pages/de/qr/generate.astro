@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import QrCodeGenerator from '@/components/tools/qr/QrCodeGenerator';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'QR Code Tools', url: '/de/category/qr' },
+  { name: 'QR Code Generator', url: '/de/qr/generate' },
+];
+---
+
+<ToolLayout
+  title="QR Code Generator - Free Online Tool | DevToolkit"
+  description="Generate QR codes for text, URLs, email, SMS, phone, WiFi, vCard."
+  path="/qr/generate"
+  siteUrl="https://devtoolkit.com"
+  lang="de"
+  toolName="QR Code Generator"
+  toolDescription="Generate QR codes for multiple content types"
+  breadcrumbs={breadcrumbs}
+>
+  <QrCodeGenerator client:load />
+</ToolLayout>

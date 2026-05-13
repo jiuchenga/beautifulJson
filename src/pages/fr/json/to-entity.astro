@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonToEntity from '@/components/tools/json/JsonToEntity';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/fr/category/json' },
+  { name: 'JSON to Java Entity', url: '/fr/json/to-entity' },
+];
+---
+
+<ToolLayout
+  title="JSON to Java Entity - Generate POJO from JSON"
+  description="Generate Java POJO/DTO/BO/VO classes from JSON data with getters, setters, and inner classes. Free online tool."
+  path="/json/to-entity"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+  toolName="JSON to Java Entity"
+  toolDescription="Generate Java POJO/DTO/BO/VO classes from JSON data"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonToEntity client:load />
+</ToolLayout>

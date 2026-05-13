@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import Utf8Encoder from '@/components/tools/encrypt/Utf8Encoder';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/fr/category/encrypt' },
+  { name: 'UTF-8 Encoder', url: '/fr/encrypt/utf8' },
+];
+---
+
+<ToolLayout
+  title="UTF-8 Encoder - Free Online Tool | DevToolkit"
+  description="Convert text to UTF-8 byte codes and back. Free online developer tool, no signup required."
+  path="/encrypt/utf8"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+  toolName="UTF-8 Encoder"
+  toolDescription="Convert text to UTF-8 byte codes and back"
+  breadcrumbs={breadcrumbs}
+>
+  <Utf8Encoder client:load />
+</ToolLayout>

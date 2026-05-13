@@ -1,0 +1,42 @@
+---
+// src/pages/en/category/webmaster.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Webmaster Tools', url: '/fr/category/webmaster' },
+];
+
+const tools = [
+  { title: 'HTTP Status Code Lookup', description: 'HTTP status code reference', href: '/en/webmaster/http-status', icon: '🌐' },
+  { title: 'robots.txt Generator', description: 'Generate robots.txt files', href: '/en/webmaster/robots-txt', icon: '📄' },
+  { title: 'Meta Tag Generator', description: 'SEO meta tag generator', href: '/en/webmaster/meta-tag-generator', icon: '🏷️' },
+  { title: 'HTTP Headers Check', description: 'HTTP header inspection', href: '/en/webmaster/http-headers', icon: '🔍' },
+  { title: 'User Agent Parser', description: 'User-agent analysis', href: '/en/webmaster/user-agent-parser', icon: '🖥️' },
+];
+---
+
+<BaseLayout
+  title="Webmaster Tools - Free Online SEO & Network Utilities"
+  description="Free online webmaster tools: HTTP status codes, robots.txt generator, meta tag generator, and more."
+  path="/category/webmaster"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">Webmaster Tools</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      Free online webmaster utilities. All processing happens in your browser.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {tools.map((tool) => (
+      <ToolCard {...tool} />
+    ))}
+  </div>
+</BaseLayout>

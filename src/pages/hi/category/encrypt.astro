@@ -1,0 +1,76 @@
+---
+// src/pages/en/category/encrypt.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption / Decryption', url: '/hi/category/encrypt' },
+];
+
+const symmetricTools = [
+  { title: 'Encrypt / Decrypt', description: 'AES, DES, TripleDES, RC4, Rabbit, PBKDF2 encryption', href: '/en/encrypt/aes', icon: '🔐' },
+  { title: 'Hash / Digest', description: 'MD5, SHA-1, SHA-256, SHA-512, SHA-3, RIPEMD-160', href: '/en/encrypt/hash-digest', icon: '🔐' },
+  { title: 'Base64 Encode / Decode', description: 'Text Base64 encoding and decoding', href: '/en/encrypt/base64', icon: '🔐' },
+  { title: 'Image to Base64', description: 'Convert images to Base64 strings', href: '/en/encrypt/image-base64', icon: '🖼️' },
+  { title: 'Number Base Converter', description: 'Binary, Octal, Decimal, Hex, Base32, Base36', href: '/en/encrypt/number-base', icon: '🔢' },
+  { title: 'Hex ↔ Text', description: 'Hexadecimal string conversion', href: '/en/encrypt/hex-text', icon: '🔤' },
+  { title: 'URL Encode / Decode', description: 'URL encoding and decoding', href: '/en/encrypt/url-codec', icon: '🔗' },
+  { title: 'ASCII Converter', description: 'ASCII ↔ text conversion', href: '/en/encrypt/ascii', icon: '🔤' },
+  { title: 'UTF-8 Encoder', description: 'UTF-8 encoding conversion', href: '/en/encrypt/utf8', icon: '🌐' },
+  { title: 'htpasswd Generator', description: 'Apache password file generator', href: '/en/encrypt/htpasswd', icon: '🔒' },
+  { title: 'MD5 Encrypt', description: '32/16 bit MD5 hash generation', href: '/en/encrypt/md5', icon: '🔐' },
+  { title: 'Thunder URL Encrypt', description: 'Thunder link encoding/decoding', href: '/en/encrypt/thunder-url', icon: '⚡' },
+];
+
+const jsTools = [
+  { title: 'JS Encrypt / Compress / Decrypt', description: 'Comprehensive JS processing', href: '/en/encrypt/js-compress', icon: '📜' },
+  { title: 'JS Code Obfuscation', description: 'Obfuscation encryption protection', href: '/en/encrypt/js-obfuscation', icon: '📜' },
+  { title: 'JS Irreversible Encryption', description: 'Multi-layer obfuscation', href: '/en/encrypt/js-irreversible', icon: '🔒' },
+  { title: 'JS Encrypt (Hex)', description: 'Hexadecimal encoding encryption', href: '/en/encrypt/js-hex', icon: '📜' },
+  { title: 'JS Encrypt (Advanced)', description: 'Advanced mixed encryption', href: '/en/encrypt/js-advanced', icon: '🔐' },
+  { title: 'JS Manual Decryption', description: 'Manual deobfuscation', href: '/en/encrypt/js-manual-decrypt', icon: '🔓' },
+  { title: 'JS Online Decrypt', description: 'Automatic de-obfuscation', href: '/en/encrypt/js-online-decrypt', icon: '🔓' },
+  { title: 'JS/HTML/CSS Mixed Encrypt', description: 'Numeric mixed encryption', href: '/en/encrypt/js-html-css', icon: '📜' },
+  { title: 'JS ↔ HTML Convert', description: 'JS/HTML code conversion', href: '/en/encrypt/js-html-convert', icon: '🔄' },
+  { title: 'JSFuck Encrypt', description: 'Special character encoding', href: '/en/encrypt/jsfuck', icon: '😱' },
+  { title: 'JS AAEncode', description: 'Anime emoticon encryption', href: '/en/encrypt/aaencode', icon: 'anime' },
+  { title: 'JS JJEncode', description: 'Irreversible encoding', href: '/en/encrypt/jjencode', icon: '🔒' },
+];
+---
+
+<BaseLayout
+  title="Encryption / Decryption Tools - 24 Free Online Crypto Utilities"
+  description="24 free online encryption tools: AES, DES, MD5, SHA, Base64, JS obfuscation, encoding and more."
+  path="/category/encrypt"
+  siteUrl="https://devtoolkit.com"
+  lang="hi"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">Encryption / Decryption Tools</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      24 free online encryption and encoding utilities. All processing happens in your browser.
+    </p>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Symmetric Encryption / Hash / Encoding</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {symmetricTools.map((tool) => (
+        <ToolCard {...tool} />
+      ))}
+    </div>
+  </div>
+
+  <div>
+    <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">JavaScript Encryption / Obfuscation</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {jsTools.map((tool) => (
+        <ToolCard {...tool} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

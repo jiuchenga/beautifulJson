@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import QrCodeBeautifier from '@/components/tools/qr/QrCodeBeautifier';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'QR Code Tools', url: '/ja/category/qr' },
+  { name: 'QR Code Beautifier', url: '/ja/qr/beautifier' },
+];
+---
+
+<ToolLayout
+  title="QR Code Beautifier - Free Online Tool | DevToolkit"
+  description="Generate styled QR codes with custom colors and size."
+  path="/qr/beautifier"
+  siteUrl="https://devtoolkit.com"
+  lang="ja"
+  toolName="QR Code Beautifier"
+  toolDescription="Style customization for QR codes"
+  breadcrumbs={breadcrumbs}
+>
+  <QrCodeBeautifier client:load />
+</ToolLayout>

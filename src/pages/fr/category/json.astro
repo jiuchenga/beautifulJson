@@ -1,0 +1,52 @@
+---
+// src/pages/en/category/json.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/fr/category/json' },
+];
+
+const tools = [
+  { title: 'JSON Formatter', description: 'Format, validate and beautify JSON with syntax highlighting', href: '/en/json/formatter', icon: '{ }' },
+  { title: 'JSON Formatter (Enhanced)', description: 'Enhanced formatter with type display and array index', href: '/en/json/formatter-new', icon: '{ }' },
+  { title: 'JSON Compress / Escape', description: 'Compress, escape, or Unicode encode JSON strings', href: '/en/json/compress-escape', icon: '{ }' },
+  { title: 'JSON Viewer', description: 'View JSON in a structured, interactive tree', href: '/en/json/viewer', icon: '{ }' },
+  { title: 'JSON Colorizer', description: 'JSON syntax coloring with hierarchy preview', href: '/en/json/colorizer', icon: '{ }' },
+  { title: 'JSON ↔ XML Converter', description: 'Bidirectional JSON to XML conversion', href: '/en/json/xml-converter', icon: '{ }' },
+  { title: 'JSON Compare', description: 'Compare two JSON objects and highlight differences', href: '/en/json/compare', icon: '{ }' },
+  { title: 'JSON to Java Entity', description: 'Generate Java POJO/DTO classes from JSON', href: '/en/json/to-entity', icon: '{ }' },
+  { title: 'JSON Minifier', description: 'Compress JSON to a single line', href: '/en/json/minifier', icon: '{ }' },
+  { title: 'JSON to C# Class', description: 'Generate C# class with Newtonsoft.Json attributes', href: '/en/json/to-csharp', icon: '{ }' },
+  { title: 'JSON to Go Struct', description: 'Generate Go struct definitions from JSON', href: '/en/json/to-go', icon: '{ }' },
+  { title: 'JSON Tree View', description: 'Interactive tree with collapse/expand and type info', href: '/en/json/tree-view', icon: '{ }' },
+  { title: 'JSON Format Online', description: 'Online JSON formatting and validation', href: '/en/json/format-online', icon: '{ }' },
+  { title: 'JSON Parser (Side by Side)', description: 'Parse JSON with left-right split view', href: '/en/json/parser-side-by-side', icon: '{ }' },
+  { title: 'JSON to Excel', description: 'Export JSON data to Excel (.xlsx) file', href: '/en/json/to-excel', icon: '{ }' },
+];
+---
+
+<BaseLayout
+  title="JSON Tools - 15 Free Online JSON Utilities"
+  description="15 free online JSON tools: formatter, viewer, compare, minifier, converter, code generator and more."
+  path="/category/json"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">JSON Tools</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      15 free online JSON utilities. Format, validate, compare, convert, and generate code from JSON data.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {tools.map((tool) => (
+      <ToolCard {...tool} />
+    ))}
+  </div>
+</BaseLayout>

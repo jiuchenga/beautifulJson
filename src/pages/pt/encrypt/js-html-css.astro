@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsHtmlCssEncrypt from '@/components/tools/encrypt/JsHtmlCssEncrypt';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/pt/category/encrypt' },
+  { name: 'JS/HTML/CSS Mixed Encrypt', url: '/pt/encrypt/js-html-css' },
+];
+---
+
+<ToolLayout
+  title="JS/HTML/CSS Mixed Encrypt - Free Online Tool | DevToolkit"
+  description="Numeric mixed encryption for JS, HTML, and CSS. Free online developer tool, no signup required."
+  path="/encrypt/js-html-css"
+  siteUrl="https://devtoolkit.com"
+  lang="pt"
+  toolName="JS/HTML/CSS Mixed Encrypt"
+  toolDescription="Numeric mixed encryption for JS, HTML, and CSS"
+  breadcrumbs={breadcrumbs}
+>
+  <JsHtmlCssEncrypt client:load />
+</ToolLayout>

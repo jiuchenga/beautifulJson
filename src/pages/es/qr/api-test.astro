@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import QrCodeApiTest from '@/components/tools/qr/QrCodeApiTest';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'QR Code Tools', url: '/es/category/qr' },
+  { name: 'QR Code API Test', url: '/es/qr/api-test' },
+];
+---
+
+<ToolLayout
+  title="QR Code API Test - Free Online Tool | DevToolkit"
+  description="Generate QR codes with API-style parameters."
+  path="/qr/api-test"
+  siteUrl="https://devtoolkit.com"
+  lang="es"
+  toolName="QR Code API Test"
+  toolDescription="API-style QR code generation"
+  breadcrumbs={breadcrumbs}
+>
+  <QrCodeApiTest client:load />
+</ToolLayout>

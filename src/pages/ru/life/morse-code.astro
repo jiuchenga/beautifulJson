@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import MorseCode from '@/components/tools/life/MorseCode';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Life Tools', url: '/ru/category/life' },
+  { name: 'Text ↔ Morse Code', url: '/ru/life/morse-code' },
+];
+---
+
+<ToolLayout
+  title="Text ↔ Morse Code - Free Online Tool | DevToolkit"
+  description="Convert text to Morse code and back."
+  path="/life/morse-code"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+  toolName="Text ↔ Morse Code"
+  toolDescription="Morse code encoding/decoding"
+  breadcrumbs={breadcrumbs}
+>
+  <MorseCode client:load />
+</ToolLayout>

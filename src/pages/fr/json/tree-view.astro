@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonTreeView from '@/components/tools/json/JsonTreeView';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/fr/category/json' },
+  { name: 'JSON Tree View', url: '/fr/json/tree-view' },
+];
+---
+
+<ToolLayout
+  title="JSON Tree Viewer - Interactive JSON Tree View"
+  description="View JSON in an interactive tree with collapse/expand, type tags, and depth navigation. Free online tool."
+  path="/json/tree-view"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+  toolName="JSON Tree View"
+  toolDescription="Interactive tree view with collapse/expand and type info"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonTreeView client:load />
+</ToolLayout>

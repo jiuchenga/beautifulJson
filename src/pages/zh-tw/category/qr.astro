@@ -1,0 +1,42 @@
+---
+// src/pages/en/category/qr.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'QR Code Tools', url: '/zh-tw/category/qr' },
+];
+
+const tools = [
+  { title: 'QR Code Generator', description: 'Text/vCard/WiFi/Email/SMS/Phone/URL', href: '/en/qr/generate', icon: '📱' },
+  { title: 'QR Code Beautifier', description: 'Custom colors and size', href: '/en/qr/beautifier', icon: '🎨' },
+  { title: 'QR Code Decoder', description: 'Upload image to decode', href: '/en/qr/decoder', icon: '🔍' },
+  { title: 'QR Code API Test', description: 'API-style parameters', href: '/en/qr/api-test', icon: '⚙️' },
+  { title: 'QR Code Knowledge', description: 'FAQ encyclopedia', href: '/en/qr/knowledge', icon: '📚' },
+];
+---
+
+<BaseLayout
+  title="QR Code Tools - Free Online QR Code Generator & Decoder"
+  description="Free online QR code tools: generate, beautify, decode QR codes. No signup required."
+  path="/category/qr"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">QR Code Tools</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      Free online QR code utilities. All processing happens in your browser.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {tools.map((tool) => (
+      <ToolCard {...tool} />
+    ))}
+  </div>
+</BaseLayout>

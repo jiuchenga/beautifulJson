@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsObfuscateCompress from '@/components/tools/format/JsObfuscateCompress';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Formatting', url: '/pt/category/format' },
+  { name: 'JS Obfuscate & Compress', url: '/pt/format/js-obfuscate-compress' },
+];
+---
+
+<ToolLayout
+  title="JS Obfuscate & Compress - Free Online Tool | DevToolkit"
+  description="Combine compression and obfuscation for JavaScript. Free online developer tool."
+  path="/format/js-obfuscate-compress"
+  siteUrl="https://devtoolkit.com"
+  lang="pt"
+  toolName="JS Obfuscate & Compress"
+  toolDescription="Combine compression and obfuscation for JavaScript"
+  breadcrumbs={breadcrumbs}
+>
+  <JsObfuscateCompress client:load />
+</ToolLayout>

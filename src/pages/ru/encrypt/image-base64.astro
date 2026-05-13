@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageToBase64 from '@/components/tools/encrypt/ImageToBase64';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/ru/category/encrypt' },
+  { name: 'Image to Base64', url: '/ru/encrypt/image-base64' },
+];
+---
+
+<ToolLayout
+  title="Image to Base64 - Free Online Tool | DevToolkit"
+  description="Convert images to Base64 encoded strings. Free online developer tool, no signup required."
+  path="/encrypt/image-base64"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+  toolName="Image to Base64"
+  toolDescription="Convert images to Base64 encoded strings"
+  breadcrumbs={breadcrumbs}
+>
+  <ImageToBase64 client:load />
+</ToolLayout>

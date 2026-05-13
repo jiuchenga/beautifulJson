@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ColorPicker from '@/components/tools/frontend/ColorPicker';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Frontend / Design', url: '/ar/category/frontend' },
+  { name: 'Web Color Picker', url: '/ar/frontend/color-picker' },
+];
+---
+
+<ToolLayout
+  title="Web Color Picker - Free Online Tool | DevToolkit"
+  description="Pick colors and get HEX, RGB, HSL values."
+  path="/frontend/color-picker"
+  siteUrl="https://devtoolkit.com"
+  lang="ar"
+  toolName="Web Color Picker"
+  toolDescription="Color picker with format conversion"
+  breadcrumbs={breadcrumbs}
+>
+  <ColorPicker client:load />
+</ToolLayout>

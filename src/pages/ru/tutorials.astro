@@ -1,0 +1,59 @@
+---
+// src/pages/en/tutorials.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Tutorials', url: '/ru/tutorials' },
+];
+
+const tutorials = [
+  {
+    title: 'JSON Formatter Guide',
+    description: 'Learn how to format, validate, and minify JSON data.',
+    href: '/en/blog/json-formatter-guide',
+    icon: '{ }',
+  },
+  {
+    title: 'Encryption Algorithms Overview',
+    description: 'Top 10 encryption algorithms every developer should know.',
+    href: '/en/blog/encryption-algorithms',
+    icon: '🔐',
+  },
+  {
+    title: 'Regex Cheat Sheet',
+    description: 'Practical regex patterns for web development.',
+    href: '/en/blog/regex-cheat-sheet',
+    icon: '🔍',
+  },
+];
+---
+
+<BaseLayout
+  title="Tutorials - DevToolkit Developer Guides"
+  description="Step-by-step tutorials and guides for using developer tools effectively."
+  path="/tutorials"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">Tutorials</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      Step-by-step guides to help you get the most out of developer tools.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {tutorials.map((t) => (
+      <a href={t.href}
+        class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-[var(--accent-blue)]/50">
+        <span class="text-2xl">{t.icon}</span>
+        <h2 class="mt-2 text-lg font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent-blue)]">{t.title}</h2>
+        <p class="mt-1 text-sm text-[var(--text-secondary)]">{t.description}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

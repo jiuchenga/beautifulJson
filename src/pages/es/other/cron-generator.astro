@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import CronGenerator from '@/components/tools/other/CronGenerator';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Other Tools', url: '/es/category/other' },
+  { name: 'Cron Expression Generator', url: '/es/other/cron-generator' },
+];
+---
+
+<ToolLayout
+  title="Cron Expression Generator - Free Online Tool | DevToolkit"
+  description="Generate and understand cron expressions."
+  path="/other/cron-generator"
+  siteUrl="https://devtoolkit.com"
+  lang="es"
+  toolName="Cron Expression Generator"
+  toolDescription="Cron expression builder"
+  breadcrumbs={breadcrumbs}
+>
+  <CronGenerator client:load />
+</ToolLayout>

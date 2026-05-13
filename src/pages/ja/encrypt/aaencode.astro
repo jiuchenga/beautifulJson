@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsAAEncode from '@/components/tools/encrypt/JsAAEncode';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/ja/category/encrypt' },
+  { name: 'JS AAEncode Encrypt', url: '/ja/encrypt/aaencode' },
+];
+---
+
+<ToolLayout
+  title="JS AAEncode Encrypt - Free Online Tool | DevToolkit"
+  description="Encode JavaScript with anime emoticon characters. Free online developer tool, no signup required."
+  path="/encrypt/aaencode"
+  siteUrl="https://devtoolkit.com"
+  lang="ja"
+  toolName="JS AAEncode Encrypt"
+  toolDescription="Encode JavaScript with anime emoticon characters"
+  breadcrumbs={breadcrumbs}
+>
+  <JsAAEncode client:load />
+</ToolLayout>

@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import RobotsTxtGenerator from '@/components/tools/webmaster/RobotsTxtGenerator';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Webmaster Tools', url: '/es/category/webmaster' },
+  { name: 'robots.txt Generator', url: '/es/webmaster/robots-txt' },
+];
+---
+
+<ToolLayout
+  title="robots.txt Generator - Free Online Tool | DevToolkit"
+  description="Generate a robots.txt file for your website."
+  path="/webmaster/robots-txt"
+  siteUrl="https://devtoolkit.com"
+  lang="es"
+  toolName="robots.txt Generator"
+  toolDescription="Generate robots.txt files"
+  breadcrumbs={breadcrumbs}
+>
+  <RobotsTxtGenerator client:load />
+</ToolLayout>

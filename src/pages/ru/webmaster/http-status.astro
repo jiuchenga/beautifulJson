@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HttpStatusCheck from '@/components/tools/webmaster/HttpStatusCheck';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Webmaster Tools', url: '/ru/category/webmaster' },
+  { name: 'HTTP Status Code Lookup', url: '/ru/webmaster/http-status' },
+];
+---
+
+<ToolLayout
+  title="HTTP Status Code Lookup - Free Online Tool | DevToolkit"
+  description="Look up HTTP status codes and their meanings."
+  path="/webmaster/http-status"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+  toolName="HTTP Status Code Lookup"
+  toolDescription="HTTP status code reference"
+  breadcrumbs={breadcrumbs}
+>
+  <HttpStatusCheck client:load />
+</ToolLayout>

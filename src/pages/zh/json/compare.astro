@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonCompare from '@/components/tools/json/JsonCompare';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/zh/category/json' },
+  { name: 'JSON Compare', url: '/zh/json/compare' },
+];
+---
+
+<ToolLayout
+  title="JSON Compare - Compare Two JSON Objects Online"
+  description="Compare two JSON objects and highlight differences. Visual diff with added, removed, and changed indicators. Free tool."
+  path="/json/compare"
+  siteUrl="https://devtoolkit.com"
+  lang="zh"
+  toolName="JSON Compare"
+  toolDescription="Compare two JSON objects and highlight differences"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonCompare client:load />
+</ToolLayout>

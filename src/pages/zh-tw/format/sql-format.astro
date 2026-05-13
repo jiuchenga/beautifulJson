@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SqlFormatCompress from '@/components/tools/format/SqlFormatCompress';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Formatting', url: '/zh-tw/category/format' },
+  { name: 'SQL Format & Compress', url: '/zh-tw/format/sql-format' },
+];
+---
+
+<ToolLayout
+  title="SQL Format & Compress - Free Online Tool | DevToolkit"
+  description="Beautify or compress SQL queries. Free online developer tool, no signup required."
+  path="/format/sql-format"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+  toolName="SQL Format & Compress"
+  toolDescription="Beautify or compress SQL queries"
+  breadcrumbs={breadcrumbs}
+>
+  <SqlFormatCompress client:load />
+</ToolLayout>

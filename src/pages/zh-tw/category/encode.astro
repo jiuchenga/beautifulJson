@@ -1,0 +1,57 @@
+---
+// src/pages/en/category/encode.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encoding Conversion', url: '/zh-tw/category/encode' },
+];
+
+const textTools = [
+  { title: 'Unix Timestamp Converter', description: 'Timestamp ↔ date conversion', href: '/en/encode/timestamp', icon: '⏱️' },
+  { title: 'HTML Escape / Unescape', description: 'HTML entity encoding', href: '/en/encode/html-escape', icon: '🔄' },
+  { title: 'Online Word Counter', description: 'Character/word/line count', href: '/en/encode/word-counter', icon: '📝' },
+  { title: 'Subnet Mask Calculator', description: 'IP subnet calculation', href: '/en/encode/subnet-calculator', icon: '🌐' },
+];
+
+const unitTools = [
+  { title: 'Unit Converter', description: 'Length, area, volume, temperature, weight, speed, time, data, angle, energy, power, pressure, density, force', href: '/en/encode/unit-converter', icon: '📏' },
+];
+---
+
+<BaseLayout
+  title="Encoding Conversion Tools - Free Online Conversion Utilities"
+  description="Free online conversion tools: timestamp, HTML escape, word counter, unit converter, subnet calculator and more."
+  path="/category/encode"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">Encoding Conversion Tools</h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      Free online conversion utilities. All processing happens in your browser.
+    </p>
+  </div>
+
+  <div class="mb-8">
+    <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Text Conversion</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {textTools.map((tool) => (
+        <ToolCard {...tool} />
+      ))}
+    </div>
+  </div>
+
+  <div>
+    <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Unit Conversion</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {unitTools.map((tool) => (
+        <ToolCard {...tool} />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

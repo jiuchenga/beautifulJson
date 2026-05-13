@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsHtmlFormatCompress from '@/components/tools/format/JsHtmlFormatCompress';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Formatting', url: '/ja/category/format' },
+  { name: 'JS/HTML Format & Compress', url: '/ja/format/js-html-format' },
+];
+---
+
+<ToolLayout
+  title="JS/HTML Format & Compress - Free Online Tool | DevToolkit"
+  description="Smart mixed JS and HTML code formatting and compression. Free online developer tool."
+  path="/format/js-html-format"
+  siteUrl="https://devtoolkit.com"
+  lang="ja"
+  toolName="JS/HTML Format & Compress"
+  toolDescription="Smart mixed JS and HTML code formatting and compression"
+  breadcrumbs={breadcrumbs}
+>
+  <JsHtmlFormatCompress client:load />
+</ToolLayout>

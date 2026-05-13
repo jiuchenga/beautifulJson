@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import RegexTester from '@/components/tools/format/RegexTester';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Formatting', url: '/es/category/format' },
+  { name: 'Regex Tester', url: '/es/format/regex-tester' },
+];
+---
+
+<ToolLayout
+  title="Regex Tester - Free Online Tool | DevToolkit"
+  description="Test regular expressions with real-time matching and highlighting. Free online developer tool."
+  path="/format/regex-tester"
+  siteUrl="https://devtoolkit.com"
+  lang="es"
+  toolName="Regex Tester"
+  toolDescription="Test regular expressions with real-time matching"
+  breadcrumbs={breadcrumbs}
+>
+  <RegexTester client:load />
+</ToolLayout>

@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ThunderUrlCodec from '@/components/tools/encrypt/ThunderUrlCodec';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/zh-tw/category/encrypt' },
+  { name: 'Thunder URL Encrypt', url: '/zh-tw/encrypt/thunder-url' },
+];
+---
+
+<ToolLayout
+  title="Thunder URL Encrypt - Free Online Tool | DevToolkit"
+  description="Encode or decode Thunder download links. Free online developer tool, no signup required."
+  path="/encrypt/thunder-url"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+  toolName="Thunder URL Encrypt"
+  toolDescription="Encode or decode Thunder download links"
+  breadcrumbs={breadcrumbs}
+>
+  <ThunderUrlCodec client:load />
+</ToolLayout>

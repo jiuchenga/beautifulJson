@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonFormatOnline from '@/components/tools/json/JsonFormatOnline';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/ar/category/json' },
+  { name: 'JSON Format Online', url: '/ar/json/format-online' },
+];
+---
+
+<ToolLayout
+  title="JSON Format Online - Format and Validate JSON"
+  description="Online JSON formatting and validation tool. Format, beautify, and validate JSON instantly. Free tool."
+  path="/json/format-online"
+  siteUrl="https://devtoolkit.com"
+  lang="ar"
+  toolName="JSON Format Online"
+  toolDescription="Online JSON formatting and validation tool"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonFormatOnline client:load />
+</ToolLayout>

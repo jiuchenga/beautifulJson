@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import Stopwatch from '@/components/tools/life/Stopwatch';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Life Tools', url: '/ar/category/life' },
+  { name: 'Online Stopwatch', url: '/ar/life/stopwatch' },
+];
+---
+
+<ToolLayout
+  title="Online Stopwatch - Free Online Tool | DevToolkit"
+  description="Simple online stopwatch with lap timer."
+  path="/life/stopwatch"
+  siteUrl="https://devtoolkit.com"
+  lang="ar"
+  toolName="Online Stopwatch"
+  toolDescription="Timer with laps"
+  breadcrumbs={breadcrumbs}
+>
+  <Stopwatch client:load />
+</ToolLayout>

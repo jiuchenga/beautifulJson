@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import NumberBaseConverter from '@/components/tools/encrypt/NumberBaseConverter';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/ru/category/encrypt' },
+  { name: 'Number Base Converter', url: '/ru/encrypt/number-base' },
+];
+---
+
+<ToolLayout
+  title="Number Base Converter - Free Online Tool | DevToolkit"
+  description="Convert numbers between Binary, Octal, Decimal, Hex, Base32, Base36. Free online developer tool, no signup required."
+  path="/encrypt/number-base"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+  toolName="Number Base Converter"
+  toolDescription="Convert numbers between Binary, Octal, Decimal, Hex, Base32, Base36"
+  breadcrumbs={breadcrumbs}
+>
+  <NumberBaseConverter client:load />
+</ToolLayout>

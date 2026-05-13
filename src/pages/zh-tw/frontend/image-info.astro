@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ImageViewer from '@/components/tools/frontend/ImageViewer';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Frontend / Design', url: '/zh-tw/category/frontend' },
+  { name: 'Image Info Viewer', url: '/zh-tw/frontend/image-info' },
+];
+---
+
+<ToolLayout
+  title="Image Info Viewer - Free Online Tool | DevToolkit"
+  description="View image dimensions, size, type, and aspect ratio."
+  path="/frontend/image-info"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+  toolName="Image Info Viewer"
+  toolDescription="Image metadata viewer"
+  breadcrumbs={breadcrumbs}
+>
+  <ImageViewer client:load />
+</ToolLayout>

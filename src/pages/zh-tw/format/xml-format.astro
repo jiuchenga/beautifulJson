@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import XmlFormatCompress from '@/components/tools/format/XmlFormatCompress';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Formatting', url: '/zh-tw/category/format' },
+  { name: 'XML Format & Compress', url: '/zh-tw/format/xml-format' },
+];
+---
+
+<ToolLayout
+  title="XML Format & Compress - Free Online Tool | DevToolkit"
+  description="Beautify or compress XML data. Free online developer tool, no signup required."
+  path="/format/xml-format"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+  toolName="XML Format & Compress"
+  toolDescription="Beautify or compress XML data"
+  breadcrumbs={breadcrumbs}
+>
+  <XmlFormatCompress client:load />
+</ToolLayout>

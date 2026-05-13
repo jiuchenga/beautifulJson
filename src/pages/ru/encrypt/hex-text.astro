@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import HexTextConverter from '@/components/tools/encrypt/HexTextConverter';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/ru/category/encrypt' },
+  { name: 'Hex ↔ Text Converter', url: '/ru/encrypt/hex-text' },
+];
+---
+
+<ToolLayout
+  title="Hex ↔ Text Converter - Free Online Tool | DevToolkit"
+  description="Convert between hexadecimal strings and text. Free online developer tool, no signup required."
+  path="/encrypt/hex-text"
+  siteUrl="https://devtoolkit.com"
+  lang="ru"
+  toolName="Hex ↔ Text Converter"
+  toolDescription="Convert between hexadecimal strings and text"
+  breadcrumbs={breadcrumbs}
+>
+  <HexTextConverter client:load />
+</ToolLayout>

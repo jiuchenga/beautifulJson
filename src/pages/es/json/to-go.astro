@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonToGo from '@/components/tools/json/JsonToGo';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/es/category/json' },
+  { name: 'JSON to Go', url: '/es/json/to-go' },
+];
+---
+
+<ToolLayout
+  title="JSON to Go Struct - Generate Go Structs from JSON"
+  description="Generate Go struct definitions from JSON data with json tags. Free online developer tool."
+  path="/json/to-go"
+  siteUrl="https://devtoolkit.com"
+  lang="es"
+  toolName="JSON to Go"
+  toolDescription="Generate Go struct definitions from JSON data"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonToGo client:load />
+</ToolLayout>

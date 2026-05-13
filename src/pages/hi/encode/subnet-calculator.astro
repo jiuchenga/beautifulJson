@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import SubnetCalculator from '@/components/tools/encode/SubnetCalculator';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encoding Conversion', url: '/hi/category/encode' },
+  { name: 'Subnet Mask Calculator', url: '/hi/encode/subnet-calculator' },
+];
+---
+
+<ToolLayout
+  title="Subnet Mask Calculator - Free Online Tool | DevToolkit"
+  description="Calculate subnet information from IP and CIDR. Free online developer tool."
+  path="/encode/subnet-calculator"
+  siteUrl="https://devtoolkit.com"
+  lang="hi"
+  toolName="Subnet Mask Calculator"
+  toolDescription="Subnet mask calculation"
+  breadcrumbs={breadcrumbs}
+>
+  <SubnetCalculator client:load />
+</ToolLayout>

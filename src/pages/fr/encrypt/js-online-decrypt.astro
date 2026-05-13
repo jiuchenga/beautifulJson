@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsOnlineDecrypt from '@/components/tools/encrypt/JsOnlineDecrypt';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/fr/category/encrypt' },
+  { name: 'JS Online Decrypt', url: '/fr/encrypt/js-online-decrypt' },
+];
+---
+
+<ToolLayout
+  title="JS Online Decrypt - Free Online Tool | DevToolkit"
+  description="Automatic JavaScript de-obfuscation with multi-strategy support. Free online developer tool, no signup required."
+  path="/encrypt/js-online-decrypt"
+  siteUrl="https://devtoolkit.com"
+  lang="fr"
+  toolName="JS Online Decrypt"
+  toolDescription="Automatic JavaScript de-obfuscation with multi-strategy support"
+  breadcrumbs={breadcrumbs}
+>
+  <JsOnlineDecrypt client:load />
+</ToolLayout>

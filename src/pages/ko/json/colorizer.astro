@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsonColorizer from '@/components/tools/json/JsonColorizer';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'JSON Tools', url: '/ko/category/json' },
+  { name: 'JSON Colorizer', url: '/ko/json/colorizer' },
+];
+---
+
+<ToolLayout
+  title="JSON Colorizer - Syntax Highlighting for JSON"
+  description="JSON syntax coloring with hierarchy preview. Colorize keys, strings, numbers, booleans and null values."
+  path="/json/colorizer"
+  siteUrl="https://devtoolkit.com"
+  lang="ko"
+  toolName="JSON Colorizer"
+  toolDescription="JSON syntax coloring with hierarchy preview"
+  breadcrumbs={breadcrumbs}
+>
+  <JsonColorizer client:load />
+</ToolLayout>

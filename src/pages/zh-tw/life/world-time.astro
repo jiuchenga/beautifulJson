@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import WorldTime from '@/components/tools/life/WorldTime';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Life Tools', url: '/zh-tw/category/life' },
+  { name: 'World Time', url: '/zh-tw/life/world-time' },
+];
+---
+
+<ToolLayout
+  title="World Time - Free Online Tool | DevToolkit"
+  description="Current time in major cities around the world."
+  path="/life/world-time"
+  siteUrl="https://devtoolkit.com"
+  lang="zh-tw"
+  toolName="World Time"
+  toolDescription="Current world time"
+  breadcrumbs={breadcrumbs}
+>
+  <WorldTime client:load />
+</ToolLayout>

@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import JsHexEncrypt from '@/components/tools/encrypt/JsHexEncrypt';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encryption', url: '/pt/category/encrypt' },
+  { name: 'JS Encrypt (Hex)', url: '/pt/encrypt/js-hex' },
+];
+---
+
+<ToolLayout
+  title="JS Encrypt (Hex) - Free Online Tool | DevToolkit"
+  description="Encode JavaScript to hexadecimal escape sequences. Free online developer tool, no signup required."
+  path="/encrypt/js-hex"
+  siteUrl="https://devtoolkit.com"
+  lang="pt"
+  toolName="JS Encrypt (Hex)"
+  toolDescription="Encode JavaScript to hexadecimal escape sequences"
+  breadcrumbs={breadcrumbs}
+>
+  <JsHexEncrypt client:load />
+</ToolLayout>

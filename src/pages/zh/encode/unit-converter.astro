@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import UnitConverter from '@/components/tools/encode/UnitConverter';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encoding Conversion', url: '/zh/category/encode' },
+  { name: 'Unit Converter', url: '/zh/encode/unit-converter' },
+];
+---
+
+<ToolLayout
+  title="Unit Converter - Free Online Tool | DevToolkit"
+  description="Convert between 14 categories of units. Free online developer tool, no signup required."
+  path="/encode/unit-converter"
+  siteUrl="https://devtoolkit.com"
+  lang="zh"
+  toolName="Unit Converter"
+  toolDescription="Multi-category unit conversion"
+  breadcrumbs={breadcrumbs}
+>
+  <UnitConverter client:load />
+</ToolLayout>
