@@ -1,5 +1,5 @@
 // src/components/tools/encode/UnitConverter.tsx
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { convertUnit, unitTables, type UnitCategory } from '@/lib/convert-utils';
 
 const CATEGORY_LABELS: Record<UnitCategory, string> = {
@@ -14,24 +14,27 @@ export default function UnitConverter() {
   const [fromUnit, setFromUnit] = useState('');
   const [toUnit, setToUnit] = useState('');
   const [value, setValue] = useState('');
-  const [error, setError] = useState('');
 
   const units = useMemo(() => {
     const table = unitTables[category];
     const keys = Object.keys(table);
-    if (!fromUnit || !keys.includes(fromUnit)) setFromUnit(keys[0]);
-    if (!toUnit || !keys.includes(toUnit)) setToUnit(keys.length > 1 ? keys[1] : keys[0]);
     return keys.map((k) => ({ key: k, ...table[k] }));
   }, [category]);
 
+  // Reset unit selection when category changes
+  useEffect(() => {
+    const keys = Object.keys(unitTables[category]);
+    setFromUnit(keys[0]);
+    setToUnit(keys.length > 1 ? keys[1] : keys[0]);
+  }, [category]);
+
   const result = useMemo(() => {
-    if (!value || !fromUnit || !toUnit) return '';
-    setError('');
+    if (!value || !fromUnit || !toUnit) return null;
     const num = parseFloat(value);
-    if (isNaN(num)) { setError('Invalid number'); return ''; }
+    if (isNaN(num)) return null;
     try {
       return convertUnit(num, category, fromUnit, toUnit).toPrecision(10).replace(/\.?0+$/, '');
-    } catch (e) { setError((e as Error).message); return ''; }
+    } catch { return null; }
   }, [value, category, fromUnit, toUnit]);
 
   return (
@@ -44,7 +47,7 @@ export default function UnitConverter() {
       {/* Category selector */}
       <div className="flex flex-wrap gap-2">
         {(Object.entries(CATEGORY_LABELS) as [UnitCategory, string][]).map(([key, label]) => (
-          <button key={key} onClick={() => { setCategory(key); setValue(''); setError(''); }}
+          <button key={key} onClick={() => { setCategory(key); }}
             className={`rounded-lg px-3 py-1.5 text-sm ${category === key ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}>
             {label}
           </button>
@@ -87,8 +90,6 @@ export default function UnitConverter() {
           </div>
         )}
       </div>
-
-      {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
 
       <button onClick={() => { const tmp = fromUnit; setFromUnit(toUnit); setToUnit(tmp); }}
         className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Swap Units</button>
