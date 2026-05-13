@@ -1,0 +1,23 @@
+---
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import TimestampConverter from '@/components/tools/encode/TimestampConverter';
+
+const breadcrumbs = [
+  { name: 'Home', url: '/en' },
+  { name: 'Encoding Conversion', url: '/en/category/encode' },
+  { name: 'Unix Timestamp Converter', url: '/en/encode/timestamp' },
+];
+---
+
+<ToolLayout
+  title="Unix Timestamp Converter - Free Online Tool | DevToolkit"
+  description="Convert between Unix timestamps and human-readable dates. Free online developer tool."
+  path="/encode/timestamp"
+  siteUrl="https://devtoolkit.com"
+  lang="en"
+  toolName="Unix Timestamp Converter"
+  toolDescription="Timestamp ↔ date conversion"
+  breadcrumbs={breadcrumbs}
+>
+  <TimestampConverter client:load />
+</ToolLayout>
