@@ -1,6 +1,5 @@
 // src/components/tools/format/RegexCodeGenerator.tsx
 import { useState } from 'react';
-import ToolShell from '../ToolShell';
 import OptionBar, { SelectOption } from '../shared/OptionBar';
 import { generateRegexCode } from '@/lib/format-utils';
 import CopyButton from '@/components/ui/CopyButton';

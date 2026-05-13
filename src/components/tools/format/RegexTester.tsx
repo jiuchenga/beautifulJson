@@ -1,7 +1,6 @@
 // src/components/tools/format/RegexTester.tsx
 import { useState, useMemo } from 'react';
-import ToolShell from '../ToolShell';
-import { regexTest, type RegexMatch } from '@/lib/format-utils';
+import { regexTest } from '@/lib/format-utils';
 import CopyButton from '@/components/ui/CopyButton';
 
 const EXAMPLE_TEXT = 'Hello World 123\nfoo@bar.com\n2024-01-15\nhttps://example.com';
@@ -25,17 +24,18 @@ export default function RegexTester() {
     }
   }, [pattern, flags, text]);
 
-  // Highlight matches in the text
+  // Highlight matches in the text (XSS-safe: escape HTML before wrapping)
   const highlighted = useMemo(() => {
     if (!matches.length || !text) return text;
+    const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     let result = '';
     let lastIdx = 0;
     for (const m of matches) {
-      result += text.slice(lastIdx, m.index);
-      result += `<mark>${m.match}</mark>`;
+      result += esc(text.slice(lastIdx, m.index));
+      result += `<mark>${esc(m.match)}</mark>`;
       lastIdx = m.index + m.match.length;
     }
-    result += text.slice(lastIdx);
+    result += esc(text.slice(lastIdx));
     return result;
   }, [text, matches]);
 

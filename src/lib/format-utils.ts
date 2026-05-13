@@ -118,7 +118,6 @@ export function regexTest(pattern: string, flags: string, text: string): RegexMa
 }
 
 export function generateRegexCode(pattern: string, flags: string, language: string): string {
-  const escaped = pattern.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
   switch (language) {
     case 'javascript':
       return `const regex = /${pattern}/${flags};\nconst matches = str.match(regex);`;
