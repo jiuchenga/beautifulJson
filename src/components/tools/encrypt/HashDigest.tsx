@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import OptionBar, { SelectOption } from '../shared/OptionBar';
 import { hashText, type HashAlgorithm } from '@/lib/crypto-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = 'Hello, DevToolkit!';
 
@@ -16,7 +17,8 @@ const ALGORITHMS: Array<{ label: string; value: HashAlgorithm }> = [
   { label: 'RIPEMD-160', value: 'RIPEMD160' },
 ];
 
-export default function HashDigest() {
+export default function HashDigest({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -24,22 +26,22 @@ export default function HashDigest() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter text'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterText); return; }
     try { setOutput(hashText(input, algorithm)); } catch (e) { setError((e as Error).message); }
   }
 
   return (
-    <ToolShell
-      title="Hash / Digest"
-      description="Generate hash digests with MD5, SHA-1, SHA-256, SHA-512, SHA-3, RIPEMD-160."
+    <ToolShell lang={lang}
+      title={toolTitle ?? ''}
+      description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
       onExample={() => setInput(EXAMPLE)}
       error={error}
-      inputEditor={{ placeholder: 'Enter text to hash...' }}
+      inputEditor={{ placeholder: t.phEnterText }}
       outputEditor={{ readOnly: true }}
-      options={<OptionBar label="Algorithm"><SelectOption label="" value={algorithm} options={ALGORITHMS} onChange={(v) => setAlgorithm(v as HashAlgorithm)} /></OptionBar>}
+      options={<OptionBar label={t.algorithm}><SelectOption label="" value={algorithm} options={ALGORITHMS} onChange={(v) => setAlgorithm(v as HashAlgorithm)} /></OptionBar>}
     />
   );
 }

@@ -1,6 +1,8 @@
 ---
 // src/components/common/ToolContent.astro
 import { generateFAQSchema, generateHowToSchema } from '@/lib/seo';
+import { type Lang } from '@/i18n/ui';
+import { getCommon } from '@/i18n/t';
 
 interface FAQ {
   question: string;
@@ -24,19 +26,21 @@ interface Props {
   faq?: FAQ[];
   relatedTools?: RelatedTool[];
   siteUrl: string;
+  lang?: Lang;
 }
 
-const { toolName, features, steps, faq, relatedTools, siteUrl } = Astro.props;
+const { toolName, features, steps, faq, relatedTools, siteUrl, lang = 'en' } = Astro.props;
+const common = getCommon(lang);
 
 const faqSchema = faq ? generateFAQSchema(faq) : null;
-const howToSchema = steps ? generateHowToSchema(`How to Use ${toolName}`, steps) : null;
+const howToSchema = steps ? generateHowToSchema(`${common.howToUse} ${toolName}`, steps) : null;
 ---
 
 <section class="mt-12 space-y-8">
   <!-- Features -->
   {features && features.length > 0 && (
     <div>
-      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Features</h2>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">{common.features}</h2>
       <ul class="list-disc space-y-1 pl-5 text-sm text-[var(--text-secondary)]">
         {features.map((f) => <li>{f}</li>)}
       </ul>
@@ -46,11 +50,11 @@ const howToSchema = steps ? generateHowToSchema(`How to Use ${toolName}`, steps)
   <!-- How to Use -->
   {steps && steps.length > 0 && (
     <div>
-      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">How to Use</h2>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">{common.howToUse}</h2>
       <ol class="space-y-2">
         {steps.map((step, i) => (
           <li class="flex gap-3 text-sm">
-            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--accent-blue)]/10 text-xs font-medium text-[var(--accent-blue)]">
+            <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-blue/10 text-xs font-medium text-accent-blue">
               {i + 1}
             </span>
             <div>
@@ -67,11 +71,11 @@ const howToSchema = steps ? generateHowToSchema(`How to Use ${toolName}`, steps)
   <!-- FAQ -->
   {faq && faq.length > 0 && (
     <div>
-      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Frequently Asked Questions</h2>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">{common.faq}</h2>
       <div class="space-y-3">
         {faq.map((item) => (
           <details class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)]">
-            <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-[var(--text-primary)] group-open:text-[var(--accent-blue)]">
+            <summary class="cursor-pointer px-4 py-3 text-sm font-medium text-[var(--text-primary)] group-open:text-accent-blue">
               {item.question}
             </summary>
             <p class="px-4 pb-3 text-sm text-[var(--text-secondary)]">{item.answer}</p>
@@ -85,12 +89,12 @@ const howToSchema = steps ? generateHowToSchema(`How to Use ${toolName}`, steps)
   <!-- Related Tools -->
   {relatedTools && relatedTools.length > 0 && (
     <div>
-      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">Related Tools</h2>
+      <h2 class="mb-3 text-xl font-semibold text-[var(--text-primary)]">{common.relatedTools}</h2>
       <div class="flex flex-wrap gap-2">
         {relatedTools.map((tool) => (
           <a
             href={tool.href}
-            class="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2 text-sm text-[var(--text-secondary)] hover:border-[var(--accent-blue)]/50 hover:text-[var(--text-primary)] transition-colors"
+            class="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2 text-sm text-[var(--text-secondary)] hover:border-accent-blue/50 hover:text-[var(--text-primary)] transition-colors"
           >
             {tool.title}
           </a>

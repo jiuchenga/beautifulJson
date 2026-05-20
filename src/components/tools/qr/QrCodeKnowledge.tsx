@@ -1,5 +1,6 @@
 // src/components/tools/qr/QrCodeKnowledge.tsx
 import { useState } from 'react';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const faqs = [
   { q: 'What is a QR code?', a: 'A QR (Quick Response) code is a two-dimensional barcode that can store various types of data, including URLs, text, contact information, and more. It was invented in 1994 by Denso Wave, a Japanese company.' },
@@ -12,14 +13,15 @@ const faqs = [
   { q: 'What is the difference between QR code versions?', a: 'QR codes range from Version 1 (21×21 modules) to Version 40 (177×177 modules). Higher versions can store more data but are larger and more complex.' },
 ];
 
-export default function QrCodeKnowledge() {
+export default function QrCodeKnowledge({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">QR Code Knowledge</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Frequently asked questions and encyclopedia about QR codes.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'QR Code Knowledge'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Frequently asked questions and encyclopedia about QR codes.'}</p>
       </div>
 
       <div className="space-y-2">

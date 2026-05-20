@@ -1,0 +1,101 @@
+---
+// src/pages/[lang]/index.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getIndexPage, getTools } from '@/i18n/t';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const indexPage = getIndexPage(langTyped);
+const tools = getTools(langTyped);
+
+const catList = [
+  { slug: 'json', icon: '{ }', count: 15 },
+  { slug: 'encrypt', icon: '🔐', count: 24 },
+  { slug: 'format', icon: '📐', count: 9 },
+  { slug: 'encode', icon: '🔄', count: 5 },
+  { slug: 'qr', icon: '📱', count: 5 },
+  { slug: 'webmaster', icon: '🌐', count: 5 },
+  { slug: 'frontend', icon: '🎨', count: 3 },
+  { slug: 'life', icon: '🕐', count: 4 },
+  { slug: 'other', icon: '🛠️', count: 2 },
+];
+
+const hotToolSlugs = ['json/formatter', 'encrypt/aes', 'encrypt/base64', 'json/viewer', 'encrypt/hash-digest'];
+const hotTools = hotToolSlugs.map(slug => {
+  const tool = tools[slug];
+  return {
+    title: tool?.name ?? slug,
+    description: tool?.description ?? '',
+    href: `/${lang}/${slug}`,
+    icon: slug.startsWith('json') ? '{ }' : '🔐',
+  };
+});
+---
+
+<BaseLayout
+  title={`${common.onlineTools} - BeautifulJSON`}
+  description={indexPage.heroSubtitle + ' ' + indexPage.heroDescription}
+  path="/"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "BeautifulJSON",
+    "url": `https://devtoolkit.com/${lang}`,
+    "description": indexPage.heroSubtitle,
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  })} />
+
+  <!-- Hero Section -->
+  <section class="py-12 text-center">
+    <h1 class="text-4xl font-bold text-[var(--text-primary)]">
+      <span class="text-[var(--text-secondary)] font-light">beautiful</span><span class="font-mono text-accent-blue font-semibold">{"{json}"}</span>
+    </h1>
+    <p class="mt-3 text-lg text-[var(--text-secondary)]">{indexPage.heroSubtitle}</p>
+    <p class="mt-1 text-sm text-[var(--text-tertiary)]">{indexPage.heroDescription}</p>
+  </section>
+
+  <!-- Hot Tools -->
+  <section class="mb-12">
+    <h2 class="mb-4 text-lg font-semibold text-[var(--text-primary)]">{indexPage.popularTools}</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+      {hotTools.map((tool) => (<ToolCard {...tool} />))}
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section>
+    <h2 class="mb-4 text-lg font-semibold text-[var(--text-primary)]">{indexPage.allCategories}</h2>
+    <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {catList.map((cat) => {
+        const catData = categories[cat.slug];
+        return (
+          <a
+            href={`/${lang}/category/${cat.slug}`}
+            class="group flex items-center gap-4 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 transition-all hover:border-accent-blue/50"
+          >
+            <span class="text-2xl">{cat.icon}</span>
+            <div>
+              <h3 class="text-sm font-semibold text-[var(--text-primary)] group-hover:text-accent-blue">{catData?.name ?? cat.slug}</h3>
+              <p class="text-xs text-[var(--text-secondary)]">{catData?.description ?? ''}</p>
+              <span class="mt-1 inline-block rounded-full bg-[var(--bg-tertiary)] px-2 py-0.5 text-[10px] text-[var(--text-tertiary)]">{cat.count} {common.tools}</span>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</BaseLayout>

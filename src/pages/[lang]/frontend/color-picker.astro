@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/frontend/color-picker.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import ColorPicker from '@/components/tools/frontend/ColorPicker';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'frontend/color-picker';
+const toolData = tools[toolKey];
+const catData = categories['frontend'];
+const tc = getToolContent(langTyped, 'frontend', 'color-picker');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'frontend', url: `/${lang}/category/frontend` },
+  { name: toolData?.name ?? 'color-picker', url: `/${lang}/frontend/color-picker` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'color-picker'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/frontend/color-picker"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'color-picker'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <ColorPicker client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'color-picker'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

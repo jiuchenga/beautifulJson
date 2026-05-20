@@ -1,19 +1,21 @@
 // src/components/tools/other/CronGenerator.tsx
 import { useState } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
-const PRESETS = [
-  { label: 'Every minute', value: '* * * * *' },
-  { label: 'Every hour', value: '0 * * * *' },
-  { label: 'Every day at midnight', value: '0 0 * * *' },
-  { label: 'Every Monday at 9am', value: '0 9 * * 1' },
-  { label: 'Every 15 minutes', value: '*/15 * * * *' },
-  { label: 'First day of month', value: '0 0 1 * *' },
-  { label: 'Every Sunday at noon', value: '0 12 * * 0' },
-  { label: 'Every weekday at 9am', value: '0 9 * * 1-5' },
+const PRESET_KEYS = [
+  { labelKey: 'everyMinute', value: '* * * * *' },
+  { labelKey: 'everyHour', value: '0 * * * *' },
+  { labelKey: 'everyDayMidnight', value: '0 0 * * *' },
+  { labelKey: 'everyMonday9am', value: '0 9 * * 1' },
+  { labelKey: 'every15Minutes', value: '*/15 * * * *' },
+  { labelKey: 'firstDayOfMonth', value: '0 0 1 * *' },
+  { labelKey: 'everySundayNoon', value: '0 12 * * 0' },
+  { labelKey: 'everyWeekday9am', value: '0 9 * * 1-5' },
 ];
 
-export default function CronGenerator() {
+export default function CronGenerator({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [minute, setMinute] = useState('*');
   const [hour, setHour] = useState('*');
   const [day, setDay] = useState('*');
@@ -34,26 +36,26 @@ export default function CronGenerator() {
   };
 
   const fields = [
-    { label: 'Minute', value: minute, set: setMinute, range: '0-59', desc: 'e.g., 0, */5, 15,30' },
-    { label: 'Hour', value: hour, set: setHour, range: '0-23', desc: 'e.g., 0, */2, 9-17' },
-    { label: 'Day of Month', value: day, set: setDay, range: '1-31', desc: 'e.g., 1, */2, 1,15' },
-    { label: 'Month', value: month, set: setMonth, range: '1-12', desc: 'e.g., *, 1,6,12' },
-    { label: 'Day of Week', value: weekday, set: setWeekday, range: '0-6', desc: 'e.g., *, 1-5, 0,6' },
+    { label: t.cronMinute, value: minute, set: setMinute, range: '0-59', desc: 'e.g., 0, */5, 15,30' },
+    { label: t.cronHour, value: hour, set: setHour, range: '0-23', desc: 'e.g., 0, */2, 9-17' },
+    { label: t.cronDayOfMonth, value: day, set: setDay, range: '1-31', desc: 'e.g., 1, */2, 1,15' },
+    { label: t.cronMonth, value: month, set: setMonth, range: '1-12', desc: 'e.g., *, 1,6,12' },
+    { label: t.cronDayOfWeek, value: weekday, set: setWeekday, range: '0-6', desc: 'e.g., *, 1-5, 0,6' },
   ];
 
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Cron Expression Generator</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Generate and understand cron expressions.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Cron Expression Generator'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Generate and understand cron expressions.'}</p>
       </div>
 
       {/* Presets */}
       <div className="flex flex-wrap gap-2">
-        {PRESETS.map((p) => (
-          <button key={p.label} onClick={() => { const parts = p.value.split(' '); setMinute(parts[0]); setHour(parts[1]); setDay(parts[2]); setMonth(parts[3]); setWeekday(parts[4]); }}
+        {PRESET_KEYS.map((p) => (
+          <button key={p.labelKey} onClick={() => { const parts = p.value.split(' '); setMinute(parts[0]); setHour(parts[1]); setDay(parts[2]); setMonth(parts[3]); setWeekday(parts[4]); }}
             className="rounded-lg border border-[var(--border-primary)] px-3 py-1.5 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">
-            {p.label}
+            {(t as any)[p.labelKey] || p.labelKey}
           </button>
         ))}
       </div>
@@ -73,11 +75,11 @@ export default function CronGenerator() {
       {/* Output */}
       <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-sm font-medium text-[var(--text-secondary)]">Cron Expression</h3>
-          <CopyButton text={cronExpr} />
+          <h3 className="text-sm font-medium text-[var(--text-secondary)]">{t.cronExpression}</h3>
+          <CopyButton text={cronExpr} lang={lang} />
         </div>
         <code className="text-2xl font-bold text-[var(--accent-blue)]">{cronExpr}</code>
-        <p className="mt-2 text-sm text-[var(--text-secondary)]">{descriptions[cronExpr] || 'Custom schedule'}</p>
+        <p className="mt-2 text-sm text-[var(--text-secondary)]">{descriptions[cronExpr] || t.customSchedule}</p>
       </div>
     </div>
   );

@@ -2,20 +2,21 @@
 import { useState } from 'react';
 import QRCode from 'qrcode';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
 type QrType = 'text' | 'url' | 'email' | 'sms' | 'phone' | 'wifi' | 'vcard';
 
-const QR_TYPES: { label: string; value: QrType }[] = [
-  { label: 'Text', value: 'text' },
-  { label: 'URL', value: 'url' },
-  { label: 'Email', value: 'email' },
-  { label: 'SMS', value: 'sms' },
-  { label: 'Phone', value: 'phone' },
-  { label: 'WiFi', value: 'wifi' },
-  { label: 'vCard', value: 'vcard' },
-];
-
-export default function QrCodeGenerator() {
+export default function QrCodeGenerator({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
+  const QR_TYPES: { label: string; value: QrType }[] = [
+    { label: t.text, value: 'text' },
+    { label: t.url, value: 'url' },
+    { label: t.email, value: 'email' },
+    { label: t.sms, value: 'sms' },
+    { label: t.phone, value: 'phone' },
+    { label: t.wifi, value: 'wifi' },
+    { label: t.vcard, value: 'vcard' },
+  ];
   const [qrType, setQrType] = useState<QrType>('text');
   const [text, setText] = useState('');
   const [dataUrl, setDataUrl] = useState('');
@@ -36,7 +37,7 @@ export default function QrCodeGenerator() {
   async function handleGenerate() {
     setError('');
     const content = getContent();
-    if (!content.trim()) { setError('Please enter content'); return; }
+    if (!content.trim()) { setError(t.pleaseEnter); return; }
     try {
       const url = await QRCode.toDataURL(content, { width: 300, margin: 2, color: { dark: '#000000', light: '#ffffff' } });
       setDataUrl(url);
@@ -54,29 +55,29 @@ export default function QrCodeGenerator() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">QR Code Generator</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Generate QR codes for text, URLs, email, SMS, phone, WiFi, vCard.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'QR Code Generator'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Generate QR codes for text, URLs, email, SMS, phone, WiFi, vCard.'}</p>
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {QR_TYPES.map((t) => (
-          <button key={t.value} onClick={() => { setQrType(t.value); setDataUrl(''); setError(''); }}
-            className={`rounded-lg px-3 py-1.5 text-sm ${qrType === t.value ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}>
-            {t.label}
+        {QR_TYPES.map((qt) => (
+          <button key={qt.value} onClick={() => { setQrType(qt.value); setDataUrl(''); setError(''); }}
+            className={`rounded-lg px-3 py-1.5 text-sm ${qrType === qt.value ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]'}`}>
+            {qt.label}
           </button>
         ))}
       </div>
 
       <div className="flex gap-3">
         <input type="text" value={text} onChange={(e) => setText(e.target.value)}
-          placeholder={qrType === 'text' ? 'Enter text...' : qrType === 'url' ? 'Enter URL...' : qrType === 'email' ? 'Enter email...' : qrType === 'wifi' ? 'Enter network name...' : 'Enter value...'}
+          placeholder={qrType === 'text' ? t.phEnterText : qrType === 'url' ? t.phEnterUrl : qrType === 'email' ? t.phEnterText : qrType === 'wifi' ? t.phEnterText : t.phEnterText}
           className="flex-1 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
-        <button onClick={handleGenerate} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">Generate</button>
+        <button onClick={handleGenerate} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">{t.generate}</button>
       </div>
 
       {qrType === 'wifi' && (
         <input type="text" value={wifiPassword} onChange={(e) => setWifiPassword(e.target.value)}
-          placeholder="WiFi password (optional)"
+          placeholder={t.phWifiPass}
           className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
       )}
 
@@ -86,14 +87,14 @@ export default function QrCodeGenerator() {
         <div className="flex flex-col items-center gap-4 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-6">
           <img src={dataUrl} alt="QR Code" className="h-64 w-64" />
           <div className="flex gap-2">
-            <button onClick={handleDownload} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">Download PNG</button>
-            <CopyButton text={dataUrl} />
+            <button onClick={handleDownload} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">{t.downloadPng}</button>
+            <CopyButton text={dataUrl} lang={lang} />
           </div>
         </div>
       )}
 
       <button onClick={() => { setText(''); setDataUrl(''); setError(''); }}
-        className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Clear</button>
+        className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.clear}</button>
     </div>
   );
 }

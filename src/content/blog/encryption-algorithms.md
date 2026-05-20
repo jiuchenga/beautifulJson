@@ -2,7 +2,7 @@
 title: "Top 10 Encryption Algorithms Every Developer Should Know"
 description: "An overview of the most important encryption algorithms used in modern web development."
 date: 2026-05-12
-author: "DevToolkit"
+author: "BeautifulJSON"
 tags: ["encryption", "security", "aes", "rsa"]
 ---
 

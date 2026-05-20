@@ -2,8 +2,8 @@
 // src/components/layout/Header.astro
 import { languages, type Lang } from '@/i18n/ui';
 import { getLangFromUrl, getRouteFromUrl } from '@/i18n/utils';
+import { getCategories, getCommon, getTools } from '@/i18n/t';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import MegaMenu from '@/components/layout/MegaMenu';
 
 interface Props {
   lang?: Lang;
@@ -11,69 +11,199 @@ interface Props {
 
 const lang = Astro.props.lang || getLangFromUrl(Astro.url);
 const currentPath = getRouteFromUrl(Astro.url);
-
+const common = getCommon(lang);
+const categories = getCategories(lang);
+const tools = getTools(lang);
 const langEntries = Object.entries(languages);
+
+const catMap: Record<string, { icon: string; slugs: string[] }> = {
+  json: { icon: '{ }', slugs: ['json/formatter','json/formatter-new','json/compress-escape','json/viewer','json/colorizer','json/xml-converter','json/compare','json/to-entity','json/minifier','json/to-csharp','json/to-go','json/to-excel','json/tree-view','json/format-online','json/parser-side-by-side'] },
+  encrypt: { icon: '🔐', slugs: ['encrypt/aes','encrypt/hash-digest','encrypt/base64','encrypt/image-base64','encrypt/number-base','encrypt/hex-text','encrypt/url-codec','encrypt/md5','encrypt/ascii','encrypt/htpasswd','encrypt/utf8','encrypt/thunder-url','encrypt/js-obfuscation','encrypt/js-online-decrypt','encrypt/jsfuck','encrypt/aaencode','encrypt/jjencode','encrypt/js-advanced','encrypt/js-compress','encrypt/js-hex','encrypt/js-html-convert','encrypt/js-html-css','encrypt/js-irreversible','encrypt/js-manual-decrypt'] },
+  format: { icon: '📐', slugs: ['format/js-html-format','format/js-format','format/css-format','format/xml-format','format/sql-format','format/js-obfuscate-encrypt','format/js-obfuscate-compress','format/regex-tester','format/regex-code-generator'] },
+  encode: { icon: '🔄', slugs: ['encode/timestamp','encode/html-escape','encode/word-counter','encode/unit-converter','encode/subnet-calculator'] },
+  qr: { icon: '📱', slugs: ['qr/generate','qr/beautifier','qr/decoder','qr/api-test','qr/knowledge'] },
+  webmaster: { icon: '🌐', slugs: ['webmaster/http-status','webmaster/robots-txt','webmaster/meta-tag-generator','webmaster/http-headers','webmaster/user-agent-parser'] },
+  frontend: { icon: '🎨', slugs: ['frontend/color-picker','frontend/image-info','frontend/favicon-generator'] },
+  life: { icon: '🕐', slugs: ['life/date-calculator','life/stopwatch','life/world-time','life/morse-code'] },
+  other: { icon: '🛠️', slugs: ['other/password-generator','other/cron-generator'] },
+};
+
+const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'frontend', 'life', 'other'];
 ---
 
-<header class="sticky top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-primary)]/80 backdrop-blur-md">
+<header class="sticky top-0 z-50 border-b border-[var(--border-primary)] bg-[var(--bg-secondary)] backdrop-blur-md">
+  <!-- Row 1: Logo | Ad | Language/Theme -->
   <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
     <!-- Logo -->
-    <a href={`/${lang}/`} class="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)] hover:no-underline">
-      <span class="font-mono text-[var(--accent-blue)]">{'{ }'}</span>
-      <span>DevToolkit</span>
+    <a href={`/${lang}/`} class="flex items-center hover:no-underline shrink-0">
+      <span class="text-lg font-bold text-[var(--text-primary)]">beautiful<span class="text-[var(--accent-blue)]">{'{json}'}</span></span>
     </a>
 
-    <!-- Nav Links -->
-    <nav class="flex items-center gap-6">
-      <!-- Mega Menu for Online Tools -->
-      <div class="relative">
-        <MegaMenu client:idle lang={lang} />
-      </div>
-      <!-- Blog Link -->
-      <a
-        href={`/${lang}/blog`}
-        class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-      >
-        Blog
-      </a>
-      <!-- Tutorials Link -->
-      <a
-        href={`/${lang}/tutorials`}
-        class="text-sm text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
-      >
-        Tutorials
-      </a>
-    </nav>
-
-    <!-- Language Switcher -->
-    <div class="relative group">
-      <button
-        class="flex items-center gap-1 rounded-md border border-[var(--border-primary)] px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:border-[var(--accent-blue)] hover:text-[var(--text-primary)] transition-colors"
-      >
-        <span>🌐</span>
-        <span>{languages[lang]}</span>
-        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      <div class="invisible absolute right-0 top-full mt-1 w-48 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] py-1 opacity-0 shadow-xl group-hover:visible group-hover:opacity-100 transition-all">
-        {langEntries.map(([code, name]) => (
-          <a
-            href={`/${code}${currentPath}`}
-            class:list={[
-              'block px-4 py-2 text-sm transition-colors',
-              code === lang
-                ? 'bg-[var(--bg-tertiary)] text-[var(--accent-blue)]'
-                : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]',
-            ]}
-          >
-            {name}
-          </a>
-        ))}
+    <!-- Ad Placeholder (desktop only) -->
+    <div class="hidden md:flex flex-1 justify-center px-4">
+      <div class="flex items-center justify-center rounded border border-dashed border-[var(--border-primary)] bg-[var(--bg-tertiary)]/40 h-10 w-full max-w-2xl text-sm font-bold text-[var(--accent-blue)]">
+        {common.adSpaceContact ?? 'Ad Space \u2014 Contact: jiuchenga@163.com'}
       </div>
     </div>
 
-    <!-- Theme Toggle -->
-    <ThemeToggle client:idle />
+    <!-- Desktop Right: Language + Theme -->
+    <div class="hidden md:flex items-center gap-3 shrink-0">
+      <div class="relative group">
+        <button class="flex items-center gap-1 rounded-md border border-[var(--border-primary)] px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:border-accent-blue hover:text-[var(--text-primary)] transition-colors">
+          <span>🌐</span>
+          <span>{languages[lang]}</span>
+          <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+        </button>
+        <div class="invisible absolute right-0 top-full mt-1 w-48 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] py-1 opacity-0 shadow-xl group-hover:visible group-hover:opacity-100 transition-all z-[60]">
+          {langEntries.map(([code, name]) => (
+            <a href={`/${code}${currentPath}`} class:list={[
+              'block px-4 py-2 text-sm transition-colors',
+              code === lang ? 'bg-[var(--bg-tertiary)] text-accent-blue' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]',
+            ]}>{name}</a>
+          ))}
+        </div>
+      </div>
+      <ThemeToggle client:idle />
+    </div>
+
+    <!-- Mobile: Theme + Hamburger -->
+    <div class="flex md:hidden items-center gap-2">
+      <ThemeToggle client:idle />
+      <button id="mobile-menu-btn" class="rounded-md p-2 text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]" aria-label="Menu">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+      </button>
+    </div>
   </div>
+
+  <!-- Row 2: Category Navigation -->
+  <div class="border-t border-[var(--border-primary)]">
+    <nav id="desktop-nav" class="hidden lg:flex mx-auto max-w-7xl items-center gap-0.5 px-4 h-10">
+      {catOrder.map((slug, idx) => {
+        const cat = catMap[slug];
+        const catData = categories[slug];
+        const catTools = cat.slugs.map(s => {
+          const t = tools[s];
+          return { name: t?.name ?? s, href: `/${lang}/${s}` };
+        });
+        const alignRight = idx >= 4;
+        return (
+          <div class="relative" data-dropdown>
+            <button data-dropdown-btn class="flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors whitespace-nowrap">
+              <span class="font-mono text-xs">{cat.icon}</span>
+              <span>{catData?.name ?? slug}</span>
+              <svg class="h-3 w-3 transition-transform" data-dropdown-arrow fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </button>
+            <div data-dropdown-menu class:list={["absolute top-full z-50 pt-1 hidden", alignRight ? "right-0" : "left-0"]}>
+              <div class="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 shadow-xl" style="display:grid;grid-template-columns:repeat(3,160px);gap:2px;">
+                {catTools.map((tool) => (
+                  <a href={tool.href} class="block rounded px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors">{tool.name}</a>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </nav>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-[var(--border-primary)] bg-[var(--bg-primary)]">
+    <div class="space-y-1 px-4 py-3">
+      {catOrder.map((slug) => {
+        const cat = catMap[slug];
+        const catData = categories[slug];
+        const catTools = cat.slugs.map(s => {
+          const t = tools[s];
+          return { name: t?.name ?? s, href: `/${lang}/${s}` };
+        });
+        return (
+          <details class="group">
+            <summary class="cursor-pointer rounded-md px-3 py-2 text-sm font-medium text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors list-none flex items-center justify-between">
+              <span>{cat.icon} {catData?.name ?? slug}</span>
+              <svg class="h-3 w-3 transition-transform group-open:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+            </summary>
+            <div class="ml-4 space-y-0.5 mt-1">
+              {catTools.map((tool) => (
+                <a href={tool.href} class="block rounded-md px-3 py-1.5 text-sm text-[var(--text-tertiary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors">{tool.name}</a>
+              ))}
+            </div>
+          </details>
+        );
+      })}
+      <div class="border-t border-[var(--border-primary)] pt-2 mt-2">
+        <div class="relative">
+          <select onchange="window.location.href=this.value" class="w-full appearance-none rounded-md border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2 pr-9 text-sm text-[var(--text-primary)] outline-none transition-all duration-200 focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[var(--accent-blue-rgb)]/25 hover:border-[var(--accent-blue)] cursor-pointer" style="color-scheme: dark;">
+            {langEntries.map(([code, name]) => (
+              <option value={`/${code}${currentPath}`} selected={code === lang}>{name}</option>
+            ))}
+          </select>
+          <svg class="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]" viewBox="0 0 16 16" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 011.06 0L8 8.94l2.72-2.72a.75.75 0 111.06 1.06l-3.25 3.25a.75.75 0 01-1.06 0L4.22 7.28a.75.75 0 010-1.06z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Desktop dropdown: click to toggle
+    (function() {
+      var nav = document.getElementById('desktop-nav');
+      if (!nav) return;
+
+      nav.addEventListener('click', function(e) {
+        var btn = e.target.closest('[data-dropdown-btn]');
+        if (!btn) return;
+        e.stopPropagation();
+
+        var wrapper = btn.closest('[data-dropdown]');
+        var menu = wrapper.querySelector('[data-dropdown-menu]');
+        var arrow = btn.querySelector('[data-dropdown-arrow]');
+        var isOpen = !menu.classList.contains('hidden');
+
+        // Close all other dropdowns
+        nav.querySelectorAll('[data-dropdown-menu]').forEach(function(m) {
+          m.classList.add('hidden');
+        });
+        nav.querySelectorAll('[data-dropdown-arrow]').forEach(function(a) {
+          a.style.transform = '';
+        });
+
+        // Toggle current
+        if (!isOpen) {
+          menu.classList.remove('hidden');
+          if (arrow) arrow.style.transform = 'rotate(180deg)';
+        }
+      });
+
+      // Close on click outside
+      document.addEventListener('click', function(e) {
+        if (!nav.contains(e.target)) {
+          nav.querySelectorAll('[data-dropdown-menu]').forEach(function(m) {
+            m.classList.add('hidden');
+          });
+          nav.querySelectorAll('[data-dropdown-arrow]').forEach(function(a) {
+            a.style.transform = '';
+          });
+        }
+      });
+    })();
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+      var menu = document.getElementById('mobile-menu');
+      if (menu) menu.classList.toggle('hidden');
+    });
+
+    // Dynamic color-scheme for native select elements
+    function updateSelectColorScheme() {
+      var isDark = !document.documentElement.classList.contains('light');
+      document.querySelectorAll('#mobile-menu select').forEach(function(sel) {
+        sel.style.colorScheme = isDark ? 'dark' : 'light';
+      });
+    }
+    updateSelectColorScheme();
+    var themeObserver = new MutationObserver(updateSelectColorScheme);
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  </script>
 </header>

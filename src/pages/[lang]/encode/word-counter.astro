@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/encode/word-counter.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import WordCounter from '@/components/tools/encode/WordCounter';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'encode/word-counter';
+const toolData = tools[toolKey];
+const catData = categories['encode'];
+const tc = getToolContent(langTyped, 'encode', 'word-counter');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'encode', url: `/${lang}/category/encode` },
+  { name: toolData?.name ?? 'word-counter', url: `/${lang}/encode/word-counter` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'word-counter'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/encode/word-counter"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'word-counter'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <WordCounter client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'word-counter'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

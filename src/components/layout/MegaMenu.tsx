@@ -1,5 +1,7 @@
 // src/components/layout/MegaMenu.tsx
 import { useState, useRef, useEffect } from 'react';
+import { getCategories as getCatTranslations, getCommon, getTools } from '@/i18n/t';
+import type { Lang } from '@/i18n/ui';
 
 interface ToolItem {
   name: string;
@@ -17,133 +19,47 @@ interface MegaMenuProps {
   lang?: string;
 }
 
-function getCategories(lang: string): CategoryGroup[] {
-  return [
-    {
-      label: 'JSON Tools',
-      icon: '{ }',
-      href: `/${lang}/category/json`,
-      tools: [
-        { name: 'JSON Formatter', href: `/${lang}/json/formatter` },
-        { name: 'JSON Viewer', href: `/${lang}/json/viewer` },
-        { name: 'JSON Compare', href: `/${lang}/json/compare` },
-        { name: 'JSON Minifier', href: `/${lang}/json/minifier` },
-        { name: 'JSON ↔ XML', href: `/${lang}/json/xml-converter` },
-        { name: 'JSON Tree View', href: `/${lang}/json/tree-view` },
-        { name: 'JSON to Go', href: `/${lang}/json/to-go` },
-        { name: 'JSON to C#', href: `/${lang}/json/to-csharp` },
-        { name: 'JSON to Excel', href: `/${lang}/json/to-excel` },
-        { name: 'JSON to Entity', href: `/${lang}/json/to-entity` },
-        { name: 'JSON Colorizer', href: `/${lang}/json/colorizer` },
-        { name: 'JSON Parser', href: `/${lang}/json/parser-side-by-side` },
-        { name: 'JSON Format Online', href: `/${lang}/json/format-online` },
-        { name: 'JSON Formatter (New)', href: `/${lang}/json/formatter-new` },
-        { name: 'JSON Compress/Escape', href: `/${lang}/json/compress-escape` },
-      ],
-    },
-    {
-      label: 'Encryption',
-      icon: '🔐',
-      href: `/${lang}/category/encrypt`,
-      tools: [
-        { name: 'Encrypt / Decrypt', href: `/${lang}/encrypt/aes` },
-        { name: 'Hash / Digest', href: `/${lang}/encrypt/hash-digest` },
-        { name: 'Base64 Encode/Decode', href: `/${lang}/encrypt/base64` },
-        { name: 'Image to Base64', href: `/${lang}/encrypt/image-base64` },
-        { name: 'Number Base', href: `/${lang}/encrypt/number-base` },
-        { name: 'Hex ↔ Text', href: `/${lang}/encrypt/hex-text` },
-        { name: 'URL Encode/Decode', href: `/${lang}/encrypt/url-codec` },
-        { name: 'MD5 Encrypt', href: `/${lang}/encrypt/md5` },
-        { name: 'JS Obfuscation', href: `/${lang}/encrypt/js-obfuscation` },
-        { name: 'JS Online Decrypt', href: `/${lang}/encrypt/js-online-decrypt` },
-        { name: 'JSFuck Encrypt', href: `/${lang}/encrypt/jsfuck` },
-        { name: 'All Encryption Tools', href: `/${lang}/category/encrypt` },
-      ],
-    },
-    // Remaining 8 categories will be populated in later phases
-    {
-      label: 'Formatting',
-      icon: '📐',
-      href: `/${lang}/category/format`,
-      tools: [
-        { name: 'JS/HTML Format', href: `/${lang}/format/js-html-format` },
-        { name: 'JS Format', href: `/${lang}/format/js-format` },
-        { name: 'CSS Format', href: `/${lang}/format/css-format` },
-        { name: 'XML Format', href: `/${lang}/format/xml-format` },
-        { name: 'SQL Format', href: `/${lang}/format/sql-format` },
-        { name: 'JS Obfuscate', href: `/${lang}/format/js-obfuscate-encrypt` },
-        { name: 'JS Obfuscate & Compress', href: `/${lang}/format/js-obfuscate-compress` },
-        { name: 'Regex Tester', href: `/${lang}/format/regex-tester` },
-        { name: 'Regex Code Generator', href: `/${lang}/format/regex-code-generator` },
-        { name: 'All Formatting Tools', href: `/${lang}/category/format` },
-      ],
-    },
-    {
-      label: 'Encoding',
-      icon: '🔄',
-      href: `/${lang}/category/encode`,
-      tools: [
-        { name: 'Timestamp Converter', href: `/${lang}/encode/timestamp` },
-        { name: 'HTML Escape', href: `/${lang}/encode/html-escape` },
-        { name: 'Word Counter', href: `/${lang}/encode/word-counter` },
-        { name: 'Unit Converter', href: `/${lang}/encode/unit-converter` },
-        { name: 'Subnet Calculator', href: `/${lang}/encode/subnet-calculator` },
-      ],
-    },
-    {
-      label: 'QR Code',
-      icon: '📱',
-      href: `/${lang}/category/qr`,
-      tools: [
-        { name: 'QR Generator', href: `/${lang}/qr/generate` },
-        { name: 'QR Beautifier', href: `/${lang}/qr/beautifier` },
-        { name: 'QR Decoder', href: `/${lang}/qr/decoder` },
-        { name: 'QR API Test', href: `/${lang}/qr/api-test` },
-        { name: 'QR Knowledge', href: `/${lang}/qr/knowledge` },
-      ],
-    },
-    {
-      label: 'Webmaster',
-      icon: '🌐',
-      href: `/${lang}/category/webmaster`,
-      tools: [
-        { name: 'HTTP Status', href: `/${lang}/webmaster/http-status` },
-        { name: 'robots.txt Gen', href: `/${lang}/webmaster/robots-txt` },
-        { name: 'Meta Tag Gen', href: `/${lang}/webmaster/meta-tag-generator` },
-        { name: 'HTTP Headers', href: `/${lang}/webmaster/http-headers` },
-        { name: 'UA Parser', href: `/${lang}/webmaster/user-agent-parser` },
-      ],
-    },
-    {
-      label: 'Frontend',
-      icon: '🎨',
-      href: `/${lang}/category/frontend`,
-      tools: [
-        { name: 'Color Picker', href: `/${lang}/frontend/color-picker` },
-        { name: 'Image Info', href: `/${lang}/frontend/image-info` },
-        { name: 'Favicon Gen', href: `/${lang}/frontend/favicon-generator` },
-      ],
-    },
-    {
-      label: 'Life & Other',
-      icon: '🕐',
-      href: `/${lang}/category/life`,
-      tools: [
-        { name: 'Date Calculator', href: `/${lang}/life/date-calculator` },
-        { name: 'Stopwatch', href: `/${lang}/life/stopwatch` },
-        { name: 'World Time', href: `/${lang}/life/world-time` },
-        { name: 'Morse Code', href: `/${lang}/life/morse-code` },
-        { name: 'Password Gen', href: `/${lang}/other/password-generator` },
-        { name: 'Cron Generator', href: `/${lang}/other/cron-generator` },
-      ],
-    },
-  ];
+const toolSlugs: Record<string, string[]> = {
+  json: ['json/formatter', 'json/viewer', 'json/compare', 'json/minifier', 'json/xml-converter', 'json/tree-view', 'json/to-go', 'json/to-csharp', 'json/to-excel', 'json/to-entity', 'json/colorizer', 'json/parser-side-by-side', 'json/format-online', 'json/formatter-new', 'json/compress-escape'],
+  encrypt: ['encrypt/aes', 'encrypt/hash-digest', 'encrypt/base64', 'encrypt/image-base64', 'encrypt/number-base', 'encrypt/hex-text', 'encrypt/url-codec', 'encrypt/md5', 'encrypt/js-obfuscation', 'encrypt/js-online-decrypt', 'encrypt/jsfuck', 'encrypt/aaencode', 'encrypt/jjencode'],
+  format: ['format/js-html-format', 'format/js-format', 'format/css-format', 'format/xml-format', 'format/sql-format', 'format/js-obfuscate-encrypt', 'format/js-obfuscate-compress', 'format/regex-tester', 'format/regex-code-generator'],
+  encode: ['encode/timestamp', 'encode/html-escape', 'encode/word-counter', 'encode/unit-converter', 'encode/subnet-calculator'],
+  qr: ['qr/generate', 'qr/beautifier', 'qr/decoder', 'qr/api-test', 'qr/knowledge'],
+  webmaster: ['webmaster/http-status', 'webmaster/robots-txt', 'webmaster/meta-tag-generator', 'webmaster/http-headers', 'webmaster/user-agent-parser'],
+  frontend: ['frontend/color-picker', 'frontend/image-info', 'frontend/favicon-generator'],
+  life: ['life/date-calculator', 'life/stopwatch', 'life/world-time', 'life/morse-code'],
+  other: ['other/password-generator', 'other/cron-generator'],
+};
+
+const catIcons: Record<string, string> = {
+  json: '{ }', encrypt: '🔐', format: '📐', encode: '🔄',
+  qr: '📱', webmaster: '🌐', frontend: '🎨', life: '🕐', other: '🛠️',
+};
+
+function buildMenuCategories(lang: string): CategoryGroup[] {
+  const langTyped = lang as Lang;
+  const categories = getCatTranslations(langTyped);
+  const tools = getTools(langTyped);
+
+  return Object.entries(toolSlugs).map(([catSlug, slugs]) => {
+    const catData = categories[catSlug];
+    return {
+      label: catData?.name ?? catSlug,
+      icon: catIcons[catSlug] ?? '',
+      href: `/${lang}/category/${catSlug}`,
+      tools: slugs.map(slug => ({
+        name: tools[slug]?.name ?? slug,
+        href: `/${lang}/${slug}`,
+      })),
+    };
+  });
 }
 
 export default function MegaMenu({ lang = 'en' }: MegaMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const categories = getCategories(lang);
+  const categories = buildMenuCategories(lang);
+  const common = getCommon(lang as Lang);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -163,7 +79,7 @@ export default function MegaMenu({ lang = 'en' }: MegaMenuProps) {
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
-        Online Tools
+        {common.onlineTools}
         <svg
           className={`h-3 w-3 transition-transform ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -181,7 +97,7 @@ export default function MegaMenu({ lang = 'en' }: MegaMenuProps) {
               <div key={cat.label}>
                 <a
                   href={cat.href}
-                  className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-semibold text-[var(--accent-blue)] hover:bg-[var(--bg-tertiary)]"
+                  className="flex items-center gap-2 rounded-md px-2 py-1.5 text-sm font-semibold text-accent-blue hover:bg-[var(--bg-tertiary)]"
                 >
                   <span className="font-mono text-xs">{cat.icon}</span>
                   {cat.label}

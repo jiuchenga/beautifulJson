@@ -1,5 +1,6 @@
 // src/components/tools/frontend/FaviconGenerator.tsx
 import { useState, useRef, useMemo } from 'react';
+import { useToolI18n } from '@/lib/react-i18n';
 
 type FaviconSize = 16 | 32 | 48 | 64 | 128 | 256;
 
@@ -27,7 +28,8 @@ function renderFaviconToCanvas(
 
 const SIZES: FaviconSize[] = [16, 32, 48, 64, 128, 256];
 
-export default function FaviconGenerator() {
+export default function FaviconGenerator({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [text, setText] = useState('DT');
   const [bgColor, setBgColor] = useState('#3b82f6');
   const [fgColor, setFgColor] = useState('#ffffff');
@@ -38,7 +40,7 @@ export default function FaviconGenerator() {
 
   function handleGenerate() {
     setError('');
-    if (!text.trim()) { setError('Please enter text'); return; }
+    if (!text.trim()) { setError(t.pleaseEnterText); return; }
     const canvas = canvasRef.current || document.createElement('canvas');
     const results: Record<number, string> = {};
     for (const size of SIZES) {
@@ -61,8 +63,8 @@ export default function FaviconGenerator() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Favicon Generator</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Generate favicon icons from text with custom colors.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Favicon Generator'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Generate favicon icons from text with custom colors.'}</p>
       </div>
 
       <canvas ref={canvasRef} className="hidden" />
@@ -70,25 +72,25 @@ export default function FaviconGenerator() {
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="space-y-3">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Text (1-2 chars)</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.textChars}</label>
             <input type="text" value={text} onChange={(e) => setText(e.target.value.slice(0, 2))} maxLength={2}
               className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 text-center text-2xl font-bold text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Background</label>
+              <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.background}</label>
               <input type="color" value={bgColor} onChange={(e) => setBgColor(e.target.value)} className="h-10 w-full rounded border cursor-pointer" />
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Text Color</label>
+              <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.textColor}</label>
               <input type="color" value={fgColor} onChange={(e) => setFgColor(e.target.value)} className="h-10 w-full rounded border cursor-pointer" />
             </div>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Font Size: {fontSize}px</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.fontSizeLabel}: {fontSize}px</label>
             <input type="range" min={8} max={40} value={fontSize} onChange={(e) => setFontSize(Number(e.target.value))} className="w-full" />
           </div>
-          <button onClick={handleGenerate} className="w-full rounded-lg bg-[var(--accent-blue)] py-2 text-sm font-medium text-white hover:opacity-90">Generate</button>
+          <button onClick={handleGenerate} className="w-full rounded-lg bg-[var(--accent-blue)] py-2 text-sm font-medium text-white hover:opacity-90">{t.generate}</button>
         </div>
 
         <div className="flex flex-col items-center gap-4">
@@ -114,7 +116,7 @@ export default function FaviconGenerator() {
               </div>
             </>
           ) : (
-            <span className="text-sm text-[var(--text-tertiary)]">Click Generate to preview</span>
+            <span className="text-sm text-[var(--text-tertiary)]">{t.clickGenerate}</span>
           )}
         </div>
       </div>

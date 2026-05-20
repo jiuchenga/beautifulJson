@@ -1,8 +1,10 @@
 // src/components/tools/frontend/ImageViewer.tsx
 import { useState } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
-export default function ImageViewer() {
+export default function ImageViewer({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [info, setInfo] = useState<{ name: string; size: string; type: string; width: number; height: number; ratio: string } | null>(null);
   const [preview, setPreview] = useState('');
   const [error, setError] = useState('');
@@ -36,12 +38,12 @@ export default function ImageViewer() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Image Info Viewer</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">View image dimensions, size, type, and aspect ratio.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Image Info Viewer'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'View image dimensions, size, type, and aspect ratio.'}</p>
       </div>
 
       <label className="cursor-pointer rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90 inline-block">
-        Choose Image
+        {t.chooseImage}
         <input type="file" accept="image/*" onChange={handleFile} className="hidden" />
       </label>
 
@@ -52,19 +54,19 @@ export default function ImageViewer() {
           <img src={preview} alt="Preview" className="max-h-72 rounded-lg border border-[var(--border-primary)]" />
           <div className="space-y-2">
             {[
-              ['File Name', info.name],
-              ['File Size', info.size],
-              ['MIME Type', info.type],
-              ['Width', `${info.width}px`],
-              ['Height', `${info.height}px`],
-              ['Aspect Ratio', info.ratio],
-              ['Megapixels', `${((info.width * info.height) / 1e6).toFixed(2)} MP`],
+              [t.fileName, info.name],
+              [t.fileSize, info.size],
+              [t.mimeType, info.type],
+              [t.widthLabel, `${info.width}px`],
+              [t.heightLabel, `${info.height}px`],
+              [t.aspectRatio, info.ratio],
+              [t.megapixels, `${((info.width * info.height) / 1e6).toFixed(2)} MP`],
             ].map(([label, value]) => (
               <div key={label} className="flex items-center justify-between rounded border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2">
                 <span className="text-sm text-[var(--text-tertiary)]">{label}</span>
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm text-[var(--text-primary)]">{value}</span>
-                  <CopyButton text={value} />
+                  <CopyButton text={value} lang={lang} />
                 </div>
               </div>
             ))}

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { validateJSON } from '@/lib/json-utils';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = '{"users": [{"id": 1, "name": "Alice", "email": "alice@example.com"}, {"id": 2, "name": "Bob", "email": "bob@example.com"}], "total": 2}';
 
@@ -49,6 +50,7 @@ function TypeBadge({ type }: { type: string }) {
 }
 
 function TreeLevel({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
+  const t = useToolI18n();
   const [collapsed, setCollapsed] = useState(depth > 2);
   const indent = depth * 20;
 
@@ -66,7 +68,7 @@ function TreeLevel({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
           </span>
           <span className="text-sm text-[var(--accent-blue)]">{node.key}</span>
           <TypeBadge type={node.type} />
-          <span className="text-xs text-[var(--text-tertiary)]">{count} items</span>
+          <span className="text-xs text-[var(--text-tertiary)]">{count} {t.itemsCount}</span>
         </div>
         {!collapsed && node.children?.map((child, i) => (
           <TreeLevel key={i} node={child} depth={depth + 1} />
@@ -86,14 +88,15 @@ function TreeLevel({ node, depth = 0 }: { node: TreeNode; depth?: number }) {
   );
 }
 
-export default function JsonViewer() {
+export default function JsonViewer({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [error, setError] = useState('');
 
   function handleView() {
     setError('');
-    if (!input.trim()) { setError('Please enter JSON'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterJson); return; }
     const validation = validateJSON(input);
     if (!validation.valid) { setError(validation.error || 'Invalid JSON'); return; }
     try {
@@ -107,23 +110,23 @@ export default function JsonViewer() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">JSON Viewer</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">View JSON in a structured, interactive tree.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'JSON Viewer'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'View JSON in a structured, interactive tree.'}</p>
       </div>
 
       <div className="flex gap-2">
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Paste your JSON here..."
+          placeholder={t.phPasteJson}
           className="flex-1 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 font-mono text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)] h-[200px] resize-none"
         />
       </div>
 
       <div className="flex gap-2">
-        <button onClick={handleView} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">View</button>
-        <button onClick={() => setInput(EXAMPLE)} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Example</button>
-        <button onClick={() => { setInput(''); setTree(null); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Clear</button>
+        <button onClick={handleView} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">{t.view}</button>
+        <button onClick={() => setInput(EXAMPLE)} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.example}</button>
+        <button onClick={() => { setInput(''); setTree(null); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.clear}</button>
       </div>
 
       {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
@@ -131,8 +134,8 @@ export default function JsonViewer() {
       {tree && (
         <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-[var(--text-secondary)]">Tree View</span>
-            <CopyButton text={JSON.stringify(tree.value, null, 2)} />
+            <span className="text-sm font-medium text-[var(--text-secondary)]">{t.treeView}</span>
+            <CopyButton text={JSON.stringify(tree.value, null, 2)} lang={lang} />
           </div>
           <TreeLevel node={tree} />
         </div>

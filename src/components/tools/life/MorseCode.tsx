@@ -1,6 +1,7 @@
 // src/components/tools/life/MorseCode.tsx
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const MORSE_MAP: Record<string, string> = {
   A: '.-', B: '-...', C: '-.-.', D: '-..', E: '.', F: '..-.', G: '--.', H: '....', I: '..', J: '.---',
@@ -22,7 +23,8 @@ function morseToText(morse: string): string {
 
 const EXAMPLE = 'HELLO WORLD';
 
-export default function MorseCode() {
+export default function MorseCode({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -30,12 +32,12 @@ export default function MorseCode() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter content'); return; }
+    if (!input.trim()) { setError(t.pleaseEnter); return; }
     try { setOutput(mode === 'text2morse' ? textToMorse(input) : morseToText(input)); } catch (e) { setError((e as Error).message); }
   }
 
   return (
-    <ToolShell title="Text ↔ Morse Code" description="Convert text to Morse code and back."
+    <ToolShell lang={lang} title={toolTitle ?? ''} description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
@@ -44,8 +46,8 @@ export default function MorseCode() {
       error={error}
       inputEditor={{ placeholder: mode === 'text2morse' ? 'Enter text...' : 'Enter Morse code...' }}
       options={<div className="flex gap-2">
-        <button onClick={() => setMode('text2morse')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'text2morse' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Text → Morse</button>
-        <button onClick={() => setMode('morse2text')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'morse2text' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>Morse → Text</button>
+        <button onClick={() => setMode('text2morse')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'text2morse' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>{t.textToMorse}</button>
+        <button onClick={() => setMode('morse2text')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'morse2text' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>{t.morseToText}</button>
       </div>}
     />
   );

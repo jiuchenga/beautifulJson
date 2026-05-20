@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/life/morse-code.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import MorseCode from '@/components/tools/life/MorseCode';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'life/morse-code';
+const toolData = tools[toolKey];
+const catData = categories['life'];
+const tc = getToolContent(langTyped, 'life', 'morse-code');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'life', url: `/${lang}/category/life` },
+  { name: toolData?.name ?? 'morse-code', url: `/${lang}/life/morse-code` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'morse-code'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/life/morse-code"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'morse-code'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <MorseCode client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'morse-code'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

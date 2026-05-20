@@ -2,16 +2,20 @@
 import { type ReactNode } from 'react';
 import CodeEditor from './CodeEditor';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
+
+type EditorLang = 'json' | 'javascript' | 'html' | 'css' | 'xml' | 'sql';
 
 interface ToolShellProps {
   title: string;
   description?: string;
+  lang?: string;
   inputEditor?: {
-    language?: 'json' | 'javascript';
+    language?: EditorLang;
     placeholder?: string;
   };
   outputEditor?: {
-    language?: 'json' | 'javascript';
+    language?: EditorLang;
     readOnly?: boolean;
   };
   inputValue: string;
@@ -31,6 +35,7 @@ interface ToolShellProps {
 export default function ToolShell({
   title,
   description,
+  lang,
   inputEditor,
   outputEditor,
   inputValue,
@@ -46,6 +51,7 @@ export default function ToolShell({
   onDownload,
   error,
 }: ToolShellProps) {
+  const t = useToolI18n(lang);
   return (
     <div className="space-y-4">
       {/* Title */}
@@ -68,14 +74,14 @@ export default function ToolShell({
         {/* Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-[var(--text-secondary)]">Input</label>
-            <CopyButton text={inputValue} />
+            <label className="text-sm font-medium text-[var(--text-secondary)]">{t.input}</label>
+            <CopyButton text={inputValue} lang={lang} />
           </div>
           <CodeEditor
             value={inputValue}
             onChange={onInputChange}
             language={inputEditor?.language || 'json'}
-            placeholder={inputEditor?.placeholder || 'Paste your content here...'}
+            placeholder={inputEditor?.placeholder || t.inputPlaceholder}
             height="350px"
           />
         </div>
@@ -83,14 +89,14 @@ export default function ToolShell({
         {/* Output */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-sm font-medium text-[var(--text-secondary)]">Output</label>
-            <CopyButton text={outputValue} />
+            <label className="text-sm font-medium text-[var(--text-secondary)]">{t.output}</label>
+            <CopyButton text={outputValue} lang={lang} />
           </div>
           <CodeEditor
             value={outputValue}
             language={outputEditor?.language || 'json'}
             readOnly={outputEditor?.readOnly !== false}
-            placeholder="Result will appear here..."
+            placeholder={t.outputPlaceholder}
             height="350px"
           />
         </div>
@@ -109,14 +115,14 @@ export default function ToolShell({
           onClick={onExecute}
           className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90 transition-opacity"
         >
-          Execute
+          {t.execute}
         </button>
         {onClear && (
           <button
             onClick={onClear}
             className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
           >
-            Clear
+            {t.clear}
           </button>
         )}
         {onExample && (
@@ -124,7 +130,7 @@ export default function ToolShell({
             onClick={onExample}
             className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
           >
-            Example
+            {t.example}
           </button>
         )}
         {onSwap && (
@@ -132,7 +138,7 @@ export default function ToolShell({
             onClick={onSwap}
             className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
           >
-            ⇄ Swap
+            {t.swap}
           </button>
         )}
         {onDownload && (
@@ -140,7 +146,7 @@ export default function ToolShell({
             onClick={onDownload}
             className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] transition-colors"
           >
-            ⬇ Download
+            {t.download}
           </button>
         )}
         {actions}

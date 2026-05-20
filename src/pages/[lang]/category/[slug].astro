@@ -1,0 +1,85 @@
+---
+// src/pages/[lang]/category/[slug].astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import ToolCard from '@/components/common/ToolCard.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools } from '@/i18n/t';
+
+export function getStaticPaths() {
+  const categorySlugs = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'frontend', 'life', 'other'];
+  return Object.keys(languages).flatMap(lang =>
+    categorySlugs.map(slug => ({
+      params: { lang, slug },
+    }))
+  );
+}
+
+const { lang, slug } = Astro.params;
+const langTyped = lang as Lang;
+const categories = getCategories(langTyped);
+const common = getCommon(langTyped);
+const tools = getTools(langTyped);
+const catData = categories[slug!];
+
+// Map category slug to tool slugs
+const toolSlugMap: Record<string, string[]> = {
+  json: ['json/formatter', 'json/formatter-new', 'json/compress-escape', 'json/viewer', 'json/colorizer', 'json/xml-converter', 'json/compare', 'json/to-entity', 'json/minifier', 'json/to-csharp', 'json/to-go', 'json/to-excel', 'json/tree-view', 'json/format-online', 'json/parser-side-by-side'],
+  encrypt: ['encrypt/aes', 'encrypt/hash-digest', 'encrypt/base64', 'encrypt/image-base64', 'encrypt/number-base', 'encrypt/hex-text', 'encrypt/url-codec', 'encrypt/md5', 'encrypt/ascii', 'encrypt/htpasswd', 'encrypt/utf8', 'encrypt/thunder-url', 'encrypt/js-obfuscation', 'encrypt/js-online-decrypt', 'encrypt/jsfuck', 'encrypt/aaencode', 'encrypt/jjencode', 'encrypt/js-advanced', 'encrypt/js-compress', 'encrypt/js-hex', 'encrypt/js-html-convert', 'encrypt/js-html-css', 'encrypt/js-irreversible', 'encrypt/js-manual-decrypt'],
+  format: ['format/js-html-format', 'format/js-format', 'format/css-format', 'format/xml-format', 'format/sql-format', 'format/js-obfuscate-encrypt', 'format/js-obfuscate-compress', 'format/regex-tester', 'format/regex-code-generator'],
+  encode: ['encode/timestamp', 'encode/html-escape', 'encode/word-counter', 'encode/unit-converter', 'encode/subnet-calculator'],
+  qr: ['qr/generate', 'qr/beautifier', 'qr/decoder', 'qr/api-test', 'qr/knowledge'],
+  webmaster: ['webmaster/http-status', 'webmaster/robots-txt', 'webmaster/meta-tag-generator', 'webmaster/http-headers', 'webmaster/user-agent-parser'],
+  frontend: ['frontend/color-picker', 'frontend/image-info', 'frontend/favicon-generator'],
+  life: ['life/date-calculator', 'life/stopwatch', 'life/world-time', 'life/morse-code'],
+  other: ['other/password-generator', 'other/cron-generator'],
+};
+
+const catTools = (toolSlugMap[slug!] || []).map(ts => {
+  const tool = tools[ts];
+  const iconMap: Record<string, string> = {
+    json: '{ }', encrypt: '🔐', format: '📐', encode: '🔄',
+    qr: '📱', webmaster: '🌐', frontend: '🎨', life: '🕐', other: '🛠️',
+  };
+  const catKey = ts.split('/')[0];
+  return {
+    title: tool?.name ?? ts,
+    description: tool?.description ?? '',
+    href: `/${lang}/${ts}`,
+    icon: iconMap[catKey] ?? '',
+  };
+});
+
+const catIcons: Record<string, string> = {
+  json: '{ }', encrypt: '🔐', format: '📐', encode: '🔄',
+  qr: '📱', webmaster: '🌐', frontend: '🎨', life: '🕐', other: '🛠️',
+};
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? slug!, url: `/${lang}/category/${slug}` },
+];
+---
+
+<BaseLayout
+  title={`${catData?.name ?? slug!} - BeautifulJSON`}
+  description={catData?.description ?? ''}
+  path={`/category/${slug}`}
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">
+      <span class="mr-2">{catIcons[slug!]}</span>{catData?.name ?? slug!}
+    </h1>
+    <p class="mt-2 text-[var(--text-secondary)]">
+      {catData?.description ?? ''}
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {catTools.map((tool) => (<ToolCard {...tool} />))}
+  </div>
+</BaseLayout>

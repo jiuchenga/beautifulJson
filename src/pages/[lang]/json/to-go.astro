@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/json/to-go.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import JsonToGo from '@/components/tools/json/JsonToGo';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'json/to-go';
+const toolData = tools[toolKey];
+const catData = categories['json'];
+const tc = getToolContent(langTyped, 'json', 'to-go');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
+  { name: toolData?.name ?? 'to-go', url: `/${lang}/json/to-go` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'to-go'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/json/to-go"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'to-go'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <JsonToGo client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'to-go'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

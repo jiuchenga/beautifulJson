@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
 import { validateJSON } from '@/lib/json-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = '{"company": {"name": "DevToolkit", "founded": 2024, "products": [{"id": 1, "name": "JSON Formatter", "users": 50000}, {"id": 2, "name": "QR Generator", "users": 30000}]}, "active": true}';
 
@@ -38,6 +39,7 @@ function TypeTag({ type }: { type: string }) {
 }
 
 function TreeRow({ node, onToggle, collapsed }: { node: TreeNode; onToggle: (key: string) => void; collapsed: Set<string> }) {
+  const t = useToolI18n();
   const isContainer = node.type === 'object' || node.type === 'array';
   const isCollapsed = collapsed.has(`${node.depth}-${node.key}`);
   const indent = node.depth * 16;
@@ -58,7 +60,7 @@ function TreeRow({ node, onToggle, collapsed }: { node: TreeNode; onToggle: (key
           </span>
         )}
         {isContainer && (
-          <span className="text-xs text-[var(--text-tertiary)]">{node.children?.length || 0} items</span>
+          <span className="text-xs text-[var(--text-tertiary)]">{node.children?.length || 0} {t.itemsCount}</span>
         )}
       </div>
       {isContainer && !isCollapsed && node.children?.map((child, i) => (
@@ -68,7 +70,8 @@ function TreeRow({ node, onToggle, collapsed }: { node: TreeNode; onToggle: (key
   );
 }
 
-export default function JsonTreeView() {
+export default function JsonTreeView({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [tree, setTree] = useState<TreeNode | null>(null);
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
@@ -85,7 +88,7 @@ export default function JsonTreeView() {
 
   function handleView() {
     setError('');
-    if (!input.trim()) { setError('Please enter JSON'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterJson); return; }
     const validation = validateJSON(input);
     if (!validation.valid) { setError(validation.error || 'Invalid JSON'); return; }
     try {
@@ -116,25 +119,25 @@ export default function JsonTreeView() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">JSON Tree Viewer</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Interactive tree view with collapse/expand and type info.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'JSON Tree Viewer'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Interactive tree view with collapse/expand and type info.'}</p>
       </div>
 
       <textarea
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        placeholder="Paste your JSON here..."
+        placeholder={t.phPasteJson}
         className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 font-mono text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)] h-[200px] resize-none"
       />
 
       <div className="flex gap-2">
-        <button onClick={handleView} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">View Tree</button>
-        <button onClick={() => setInput(EXAMPLE)} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Example</button>
+        <button onClick={handleView} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">{t.viewTree}</button>
+        <button onClick={() => setInput(EXAMPLE)} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.example}</button>
         {tree && <>
-          <button onClick={expandAll} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Expand All</button>
-          <button onClick={collapseAll} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Collapse All</button>
+          <button onClick={expandAll} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.expandAll}</button>
+          <button onClick={collapseAll} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.collapseAll}</button>
         </>}
-        <button onClick={() => { setInput(''); setTree(null); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Clear</button>
+        <button onClick={() => { setInput(''); setTree(null); setError(''); }} className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.clear}</button>
       </div>
 
       {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
@@ -142,8 +145,8 @@ export default function JsonTreeView() {
       {tree && (
         <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-[var(--text-secondary)]">Tree View</span>
-            <CopyButton text={JSON.stringify(tree.value, null, 2)} />
+            <span className="text-sm font-medium text-[var(--text-secondary)]">{t.treeView}</span>
+            <CopyButton text={JSON.stringify(tree.value, null, 2)} lang={lang} />
           </div>
           <TreeRow node={tree} onToggle={handleToggle} collapsed={collapsed} />
         </div>

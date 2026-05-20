@@ -3,7 +3,7 @@
 /**
  * Format / beautify JSON string with configurable indent
  */
-export function formatJSON(input: string, indent: number = 2, sortKeys: boolean = false): string {
+export function formatJSON(input: string, indent: string | number = 2, sortKeys: boolean = false): string {
   const parsed = JSON.parse(input);
   if (sortKeys) {
     return JSON.stringify(sortObjectKeys(parsed), null, indent);
@@ -54,11 +54,11 @@ export function escapeJSON(input: string): string {
  */
 export function unescapeJSON(input: string): string {
   return input
+    .replace(/\\\\/g, '\\')
     .replace(/\\n/g, '\n')
     .replace(/\\r/g, '\r')
     .replace(/\\t/g, '\t')
-    .replace(/\\"/g, '"')
-    .replace(/\\\\/g, '\\');
+    .replace(/\\"/g, '"');
 }
 
 /**
@@ -155,16 +155,23 @@ export function jsonToXML(input: string, rootName: string = 'root'): string {
   return `<?xml version="1.0" encoding="UTF-8"?>\n${objToXML(obj, rootName)}`;
 }
 
+function sanitizeTagName(name: string): string {
+  let safe = name.replace(/[^a-zA-Z0-9_-]/g, '_');
+  if (/^[0-9]/.test(safe)) safe = '_' + safe;
+  return safe || 'item';
+}
+
 function objToXML(obj: unknown, tagName: string): string {
-  if (obj === null || obj === undefined) return `<${tagName}/>`;
-  if (typeof obj !== 'object') return `<${tagName}>${escapeXML(String(obj))}</${tagName}>`;
+  const tag = sanitizeTagName(tagName);
+  if (obj === null || obj === undefined) return `<${tag}/>`;
+  if (typeof obj !== 'object') return `<${tag}>${escapeXML(String(obj))}</${tag}>`;
   if (Array.isArray(obj)) {
     return obj.map((item) => objToXML(item, 'item')).join('\n');
   }
   const inner = Object.entries(obj as Record<string, unknown>)
     .map(([key, val]) => objToXML(val, key))
     .join('\n  ');
-  return `<${tagName}>\n  ${inner}\n</${tagName}>`;
+  return `<${tag}>\n  ${inner}\n</${tag}>`;
 }
 
 function escapeXML(str: string): string {
@@ -361,13 +368,13 @@ function goType(value: unknown, name: string): { type: string; innerStruct?: str
 /**
  * Get JSON data types summary
  */
-export function analyzeJSONTypes(input: string): string {
+export function analyzeJSONTypes(input: string, showIndex: boolean = true): string {
   const parsed = JSON.parse(input);
-  const analysis = describeTypes(parsed, 0);
+  const analysis = describeTypes(parsed, 0, showIndex);
   return analysis;
 }
 
-function describeTypes(value: unknown, depth: number): string {
+function describeTypes(value: unknown, depth: number, showIndex: boolean): string {
   const indent = '  '.repeat(depth);
   if (value === null) return `${indent}null`;
   if (typeof value === 'boolean') return `${indent}boolean`;
@@ -375,8 +382,10 @@ function describeTypes(value: unknown, depth: number): string {
   if (typeof value === 'string') return `${indent}string (length: ${(value as string).length})`;
   if (Array.isArray(value)) {
     let result = `${indent}array[${value.length}]\n`;
-    for (let i = 0; i < Math.min(value.length, 5); i++) {
-      result += `${indent}  [${i}]: ${describeTypes(value[i], depth + 2)}\n`;
+    const limit = Math.min(value.length, 5);
+    for (let i = 0; i < limit; i++) {
+      const prefix = showIndex ? `[${i}]: ` : '- ';
+      result += `${indent}  ${prefix}${describeTypes(value[i], depth + 2, showIndex)}\n`;
     }
     if (value.length > 5) result += `${indent}  ... and ${value.length - 5} more items\n`;
     return result;
@@ -384,7 +393,7 @@ function describeTypes(value: unknown, depth: number): string {
   if (typeof value === 'object') {
     let result = `${indent}object\n`;
     for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
-      result += `${indent}  "${key}": ${describeTypes(val, depth + 2)}\n`;
+      result += `${indent}  "${key}": ${describeTypes(val, depth + 2, showIndex)}\n`;
     }
     return result;
   }

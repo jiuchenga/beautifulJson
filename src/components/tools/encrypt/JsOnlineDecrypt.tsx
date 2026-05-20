@@ -2,17 +2,19 @@
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import { jsDeobfuscateSimple, jsHexDecode } from '@/lib/crypto-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = "eval(decodeURIComponent(escape(atob('YWxlcnQoIkhlbGxvISIpOw=='))));";
 
-export default function JsOnlineDecrypt() {
+export default function JsOnlineDecrypt({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter encrypted JS'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterEncrypted); return; }
     try {
       // Try multiple deobfuscation strategies
       let result = input;
@@ -23,13 +25,13 @@ export default function JsOnlineDecrypt() {
   }
 
   return (
-    <ToolShell title="JS Online Decrypt" description="Automatic JavaScript de-obfuscation with multi-strategy support."
+    <ToolShell lang={lang} title={toolTitle ?? ''} description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
       onExample={() => setInput(EXAMPLE)}
       error={error}
-      inputEditor={{ language: 'javascript', placeholder: 'Paste obfuscated JS...' }}
+      inputEditor={{ language: 'javascript', placeholder: t.pleaseEnterEncrypted }}
       outputEditor={{ language: 'javascript', readOnly: true }}
     />
   );

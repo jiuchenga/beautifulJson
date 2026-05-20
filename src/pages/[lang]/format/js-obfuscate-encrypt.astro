@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/format/js-obfuscate-encrypt.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import JsObfuscateEncrypt from '@/components/tools/format/JsObfuscateEncrypt';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'format/js-obfuscate-encrypt';
+const toolData = tools[toolKey];
+const catData = categories['format'];
+const tc = getToolContent(langTyped, 'format', 'js-obfuscate-encrypt');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'format', url: `/${lang}/category/format` },
+  { name: toolData?.name ?? 'js-obfuscate-encrypt', url: `/${lang}/format/js-obfuscate-encrypt` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'js-obfuscate-encrypt'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/format/js-obfuscate-encrypt"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'js-obfuscate-encrypt'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <JsObfuscateEncrypt client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'js-obfuscate-encrypt'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

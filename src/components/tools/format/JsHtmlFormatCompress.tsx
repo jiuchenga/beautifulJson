@@ -2,13 +2,15 @@
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import OptionBar, { SelectOption } from '../shared/OptionBar';
-import { jsFormat, jsCompress, htmlFormat, htmlCompress } from '@/lib/format-utils';
+import { htmlFormat, htmlCompress } from '@/lib/format-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = '<div><script>function hello(){console.log("Hello World");}</script><p class="text">Test</p></div>';
 
 type Mode = 'format' | 'compress';
 
-export default function JsHtmlFormatCompress() {
+export default function JsHtmlFormatCompress({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -16,7 +18,7 @@ export default function JsHtmlFormatCompress() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter code'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterCode); return; }
     try {
       if (mode === 'format') {
         // Format HTML first, then format inline JS
@@ -31,19 +33,19 @@ export default function JsHtmlFormatCompress() {
   }
 
   return (
-    <ToolShell title="JS/HTML Format & Compress" description="Smart mixed JS and HTML code formatting and compression."
+    <ToolShell lang={lang} title={toolTitle ?? ''} description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
       onExample={() => setInput(EXAMPLE)}
       onSwap={() => { const tmp = input; setInput(output); setOutput(tmp); }}
       error={error}
-      inputEditor={{ language: 'javascript', placeholder: 'Paste JS/HTML code...' }}
-      outputEditor={{ language: 'javascript', readOnly: true }}
-      options={<OptionBar label="Mode">
+      inputEditor={{ language: 'html', placeholder: t.pleaseEnterHtml }}
+      outputEditor={{ language: 'html', readOnly: true }}
+      options={<OptionBar label={t.mode}>
         <SelectOption label="" value={mode} options={[
-          { label: 'Format', value: 'format' },
-          { label: 'Compress', value: 'compress' },
+          { label: t.format, value: 'format' },
+          { label: t.compress, value: 'compress' },
         ]} onChange={(v) => setMode(v as Mode)} />
       </OptionBar>}
     />

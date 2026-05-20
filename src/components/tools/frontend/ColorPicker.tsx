@@ -1,6 +1,7 @@
 // src/components/tools/frontend/ColorPicker.tsx
 import { useState } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
 function hexToRgb(hex: string): [number, number, number] {
   const h = hex.replace('#', '');
@@ -18,7 +19,8 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
   return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
 }
 
-export default function ColorPicker() {
+export default function ColorPicker({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [hex, setHex] = useState('#3b82f6');
   const [r, setR] = useState(59);
   const [g, setG] = useState(130);
@@ -49,14 +51,14 @@ export default function ColorPicker() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Web Color Picker</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Pick colors and get HEX, RGB, HSL values.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Web Color Picker'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Pick colors and get HEX, RGB, HSL values.'}</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="space-y-3">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Color</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.color}</label>
             <div className="flex gap-3">
               <input type="color" value={hex} onChange={(e) => updateFromHex(e.target.value)} className="h-12 w-20 rounded border cursor-pointer" />
               <input type="text" value={hex} onChange={(e) => updateFromHex(e.target.value)} className="flex-1 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 font-mono text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
@@ -64,7 +66,7 @@ export default function ColorPicker() {
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">RGB</label>
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.rgb}</label>
             <div className="flex gap-3">
               {['R', 'G', 'B'].map((ch, i) => (
                 <div key={ch} className="flex-1">
@@ -87,7 +89,7 @@ export default function ColorPicker() {
               <span className="text-xs font-medium uppercase text-[var(--text-tertiary)]">{key}</span>
               <div className="flex items-center gap-2">
                 <code className="font-mono text-sm text-[var(--text-primary)]">{value}</code>
-                <CopyButton text={value} />
+                <CopyButton text={value} lang={lang} />
               </div>
             </div>
           ))}

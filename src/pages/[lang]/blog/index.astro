@@ -1,0 +1,56 @@
+---
+// src/pages/[lang]/blog/index.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCommon } from '@/i18n/t';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: common.blog, url: `/${lang}/blog` },
+];
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout
+  title={`${common.blog} - BeautifulJSON`}
+  description={common.blog}
+  path="/blog"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">{common.blog}</h1>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {posts.map((post) => (
+      <a href={`/${lang}/blog/${post.id}`}
+        class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-accent-blue/50">
+        <div class="mb-2 flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
+          <time datetime={post.data.date.toISOString().split('T')[0]}>
+            {post.data.date.toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' })}
+          </time>
+          <span>·</span>
+          <span>{post.data.author}</span>
+        </div>
+        <h2 class="text-lg font-semibold text-[var(--text-primary)] group-hover:text-accent-blue">{post.data.title}</h2>
+        <p class="mt-2 text-sm text-[var(--text-secondary)]">{post.data.description}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

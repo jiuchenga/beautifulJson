@@ -1,15 +1,35 @@
 // src/components/tools/encode/UnitConverter.tsx
 import { useState, useMemo, useEffect } from 'react';
 import { convertUnit, unitTables, type UnitCategory } from '@/lib/convert-utils';
+import { useToolI18n, getUnitLabel } from '@/lib/react-i18n';
+import { StyledSelect } from '@/components/tools/shared/OptionBar';
 
-const CATEGORY_LABELS: Record<UnitCategory, string> = {
+const CATEGORY_LABELS_EN: Record<UnitCategory, string> = {
   length: 'Length', area: 'Area', volume: 'Volume', temperature: 'Temperature',
   weight: 'Weight', speed: 'Speed', time: 'Time', data: 'Data Storage',
   angle: 'Angle', energy: 'Energy', power: 'Power', pressure: 'Pressure',
   density: 'Density', force: 'Force',
 };
 
-export default function UnitConverter() {
+export default function UnitConverter({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
+
+  const CATEGORY_LABELS: Record<UnitCategory, string> = {
+    length: t.unitCatLength ?? CATEGORY_LABELS_EN.length,
+    area: t.unitCatArea ?? CATEGORY_LABELS_EN.area,
+    volume: t.unitCatVolume ?? CATEGORY_LABELS_EN.volume,
+    temperature: t.unitCatTemp ?? CATEGORY_LABELS_EN.temperature,
+    weight: t.unitCatWeight ?? CATEGORY_LABELS_EN.weight,
+    speed: t.unitCatSpeed ?? CATEGORY_LABELS_EN.speed,
+    time: t.unitCatTime ?? CATEGORY_LABELS_EN.time,
+    data: t.unitCatData ?? CATEGORY_LABELS_EN.data,
+    angle: t.unitCatAngle ?? CATEGORY_LABELS_EN.angle,
+    energy: t.unitCatEnergy ?? CATEGORY_LABELS_EN.energy,
+    power: t.unitCatPower ?? CATEGORY_LABELS_EN.power,
+    pressure: t.unitCatPressure ?? CATEGORY_LABELS_EN.pressure,
+    density: t.unitCatDensity ?? CATEGORY_LABELS_EN.density,
+    force: t.unitCatForce ?? CATEGORY_LABELS_EN.force,
+  };
   const [category, setCategory] = useState<UnitCategory>('length');
   const [fromUnit, setFromUnit] = useState('');
   const [toUnit, setToUnit] = useState('');
@@ -18,8 +38,8 @@ export default function UnitConverter() {
   const units = useMemo(() => {
     const table = unitTables[category];
     const keys = Object.keys(table);
-    return keys.map((k) => ({ key: k, ...table[k] }));
-  }, [category]);
+    return keys.map((k) => ({ key: k, ...table[k], label: getUnitLabel(category, k, lang) }));
+  }, [category, lang]);
 
   // Reset unit selection when category changes
   useEffect(() => {
@@ -43,8 +63,8 @@ export default function UnitConverter() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Unit Converter</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Convert between 14 categories of units: length, area, volume, temperature, and more.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Unit Converter'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Convert between different units.'}</p>
       </div>
 
       {/* Category selector */}
@@ -61,28 +81,26 @@ export default function UnitConverter() {
       <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 space-y-4">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">From</label>
-            <select value={fromUnit} onChange={(e) => setFromUnit(e.target.value)}
-              className="w-full rounded-md border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]">
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.from}</label>
+            <StyledSelect value={fromUnit} onChange={(e) => setFromUnit(e.target.value)} className="w-full">
               {units.map((u) => <option key={u.key} value={u.key}>{u.label}</option>)}
-            </select>
+            </StyledSelect>
           </div>
           <div className="flex items-end justify-center">
             <span className="text-2xl text-[var(--text-tertiary)]">→</span>
           </div>
           <div>
-            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">To</label>
-            <select value={toUnit} onChange={(e) => setToUnit(e.target.value)}
-              className="w-full rounded-md border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-3 py-2 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]">
+            <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.to}</label>
+            <StyledSelect value={toUnit} onChange={(e) => setToUnit(e.target.value)} className="w-full">
               {units.map((u) => <option key={u.key} value={u.key}>{u.label}</option>)}
-            </select>
+            </StyledSelect>
           </div>
         </div>
 
         <div>
-          <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">Value</label>
+          <label className="mb-1 block text-sm font-medium text-[var(--text-secondary)]">{t.value}</label>
           <input type="text" value={value} onChange={(e) => setValue(e.target.value)}
-            placeholder="Enter value..."
+            placeholder={t.placeholderEnterValue}
             className="w-full rounded-lg border border-[var(--border-primary)] bg-[var(--bg-tertiary)] p-3 font-mono text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
         </div>
 
@@ -95,7 +113,7 @@ export default function UnitConverter() {
       </div>
 
       <button onClick={() => { const tmp = fromUnit; setFromUnit(toUnit); setToUnit(tmp); }}
-        className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Swap Units</button>
+        className="rounded-lg border border-[var(--border-primary)] px-4 py-2 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.swapUnits}</button>
     </div>
   );
 }

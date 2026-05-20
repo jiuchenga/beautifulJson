@@ -2,10 +2,12 @@
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import { formatJSON, validateJSON } from '@/lib/json-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = '{"products":[{"id":1,"name":"Laptop","price":999.99,"inStock":true},{"id":2,"name":"Mouse","price":29.99,"inStock":false}],"total":2}';
 
-export default function JsonFormatOnline() {
+export default function JsonFormatOnline({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -14,7 +16,7 @@ export default function JsonFormatOnline() {
   function handleExecute() {
     setError('');
     setValidation(null);
-    if (!input.trim()) { setError('Please enter JSON'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterJson); return; }
     const result = validateJSON(input);
     setValidation(result);
     if (result.valid) {
@@ -29,9 +31,9 @@ export default function JsonFormatOnline() {
   }
 
   return (
-    <ToolShell
-      title="JSON Format Online"
-      description="Online JSON formatting and validation tool."
+    <ToolShell lang={lang}
+      title={toolTitle ?? ''}
+      description={toolDesc ?? ''}
       inputValue={input}
       onInputChange={setInput}
       outputValue={output}
@@ -51,7 +53,7 @@ export default function JsonFormatOnline() {
     >
       {validation?.valid && (
         <div className="mt-4 rounded-lg border border-[var(--accent-green)]/30 bg-[var(--accent-green)]/10 px-4 py-2 text-sm text-[var(--accent-green)]">
-          ✓ Valid JSON
+          {t.validJson}
         </div>
       )}
     </ToolShell>

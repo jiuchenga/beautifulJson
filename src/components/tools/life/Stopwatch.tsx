@@ -1,7 +1,9 @@
 // src/components/tools/life/Stopwatch.tsx
 import { useState, useRef, useCallback } from 'react';
+import { useToolI18n } from '@/lib/react-i18n';
 
-export default function Stopwatch() {
+export default function Stopwatch({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [time, setTime] = useState(0);
   const [running, setRunning] = useState(false);
   const [laps, setLaps] = useState<number[]>([]);
@@ -59,8 +61,8 @@ export default function Stopwatch() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">Online Stopwatch</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Simple online stopwatch with lap timer.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'Online Stopwatch'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Simple online stopwatch with lap timer.'}</p>
       </div>
 
       <div className="flex flex-col items-center gap-6 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-8">
@@ -68,27 +70,27 @@ export default function Stopwatch() {
 
         <div className="flex gap-3">
           {!running ? (
-            <button onClick={startStopwatch} className="rounded-lg bg-green-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">{time === 0 ? 'Start' : 'Resume'}</button>
+            <button onClick={startStopwatch} className="rounded-lg bg-green-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">{time === 0 ? t.start : t.resume}</button>
           ) : (
-            <button onClick={stop} className="rounded-lg bg-red-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">Stop</button>
+            <button onClick={stop} className="rounded-lg bg-red-600 px-8 py-3 text-sm font-medium text-white hover:opacity-90">{t.stop}</button>
           )}
-          <button onClick={lap} disabled={!running} className="rounded-lg bg-[var(--accent-blue)] px-6 py-3 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40">Lap</button>
-          <button onClick={reset} className="rounded-lg border border-[var(--border-primary)] px-6 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">Reset</button>
+          <button onClick={lap} disabled={!running} className="rounded-lg bg-[var(--accent-blue)] px-6 py-3 text-sm font-medium text-white hover:opacity-90 disabled:opacity-40">{t.lap}</button>
+          <button onClick={reset} className="rounded-lg border border-[var(--border-primary)] px-6 py-3 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)]">{t.reset}</button>
         </div>
       </div>
 
       {laps.length > 0 && (
         <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-          <h3 className="mb-2 text-sm font-medium text-[var(--text-secondary)]">Laps</h3>
+          <h3 className="mb-2 text-sm font-medium text-[var(--text-secondary)]">{t.laps}</h3>
           <div className="space-y-1">
             {laps.map((l, i) => (
               <div key={i} className="flex justify-between rounded px-3 py-1 text-sm hover:bg-[var(--bg-tertiary)]">
-                <span className="text-[var(--text-tertiary)]">Lap {i + 1}</span>
+                <span className="text-[var(--text-tertiary)]">{t.lap} {i + 1}</span>
                 <span className="font-mono text-[var(--text-primary)]">{format(l)}</span>
               </div>
             ))}
             <div className="flex justify-between rounded bg-[var(--bg-tertiary)] px-3 py-1 text-sm font-medium">
-              <span className="text-[var(--text-secondary)]">Current</span>
+              <span className="text-[var(--text-secondary)]">{t.current}</span>
               <span className="font-mono text-[var(--accent-blue)]">{format(time)}</span>
             </div>
           </div>

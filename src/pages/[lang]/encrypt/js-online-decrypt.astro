@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/encrypt/js-online-decrypt.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import JsOnlineDecrypt from '@/components/tools/encrypt/JsOnlineDecrypt';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'encrypt/js-online-decrypt';
+const toolData = tools[toolKey];
+const catData = categories['encrypt'];
+const tc = getToolContent(langTyped, 'encrypt', 'js-online-decrypt');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'js-online-decrypt', url: `/${lang}/encrypt/js-online-decrypt` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'js-online-decrypt'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/encrypt/js-online-decrypt"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'js-online-decrypt'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <JsOnlineDecrypt client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'js-online-decrypt'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

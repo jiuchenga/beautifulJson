@@ -1,6 +1,7 @@
 // src/components/tools/webmaster/HttpStatusCheck.tsx
 import { useState } from 'react';
 import CopyButton from '@/components/ui/CopyButton';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const HTTP_CODES: Record<number, string> = {
   200: 'OK - The request has succeeded.',
@@ -22,7 +23,8 @@ const HTTP_CODES: Record<number, string> = {
   504: 'Gateway Timeout - The upstream server did not respond in time.',
 };
 
-export default function HttpStatusCheck() {
+export default function HttpStatusCheck({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [code, setCode] = useState('');
   const [result, setResult] = useState<{ code: number; category: string; description: string } | null>(null);
   const [error, setError] = useState('');
@@ -30,26 +32,26 @@ export default function HttpStatusCheck() {
   function handleLookup() {
     setError('');
     const num = parseInt(code);
-    if (isNaN(num) || num < 100 || num > 599) { setError('Enter a valid HTTP status code (100-599)'); return; }
-    const category = num < 200 ? 'Informational' : num < 300 ? 'Success' : num < 400 ? 'Redirection' : num < 500 ? 'Client Error' : 'Server Error';
+    if (isNaN(num) || num < 100 || num > 599) { setError(t.enterValidHttpCode); return; }
+    const category = num < 200 ? t.informational : num < 300 ? t.successLabel : num < 400 ? t.redirection : num < 500 ? t.clientError : t.serverError;
     setResult({
       code: num,
       category,
-      description: HTTP_CODES[num] || 'No detailed description available for this status code.',
+      description: HTTP_CODES[num] || t.noDescriptionAvailable,
     });
   }
 
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">HTTP Status Code Lookup</h1>
-        <p className="mt-1 text-sm text-[var(--text-secondary)]">Look up HTTP status codes and their meanings.</p>
+        <h1 className="text-2xl font-bold text-[var(--text-primary)]">{toolTitle ?? 'HTTP Status Code Lookup'}</h1>
+        <p className="mt-1 text-sm text-[var(--text-secondary)]">{toolDesc ?? 'Look up HTTP status codes and their meanings.'}</p>
       </div>
 
       <div className="flex gap-3">
-        <input type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder="Enter HTTP status code (e.g., 404)"
+        <input type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder={t.phHttpCode}
           className="w-64 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-3 font-mono text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)]" />
-        <button onClick={handleLookup} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">Look Up</button>
+        <button onClick={handleLookup} className="rounded-lg bg-[var(--accent-blue)] px-6 py-2 text-sm font-medium text-white hover:opacity-90">{t.lookUp}</button>
       </div>
 
       {error && <div className="rounded-lg border border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 px-4 py-3 text-sm text-[var(--accent-red)]">{error}</div>}
@@ -58,10 +60,10 @@ export default function HttpStatusCheck() {
         <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-4xl font-bold text-[var(--accent-blue)]">{result.code}</span>
-            <CopyButton text={`${result.code} - ${result.description}`} />
+            <CopyButton text={`${result.code} - ${result.description}`} lang={lang} />
           </div>
           <div className="rounded bg-[var(--bg-tertiary)] px-3 py-1.5 text-sm">
-            <span className="font-medium text-[var(--text-secondary)]">Category: </span>
+            <span className="font-medium text-[var(--text-secondary)]">{t.category}: </span>
             <span className="text-[var(--text-primary)]">{result.category}</span>
           </div>
           <p className="text-sm text-[var(--text-primary)]">{result.description}</p>
@@ -70,7 +72,7 @@ export default function HttpStatusCheck() {
 
       {/* Quick reference */}
       <div className="rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4">
-        <h3 className="mb-2 text-sm font-medium text-[var(--text-secondary)]">Common Status Codes</h3>
+        <h3 className="mb-2 text-sm font-medium text-[var(--text-secondary)]">{t.commonStatusCodes}</h3>
         <div className="grid grid-cols-2 gap-1 sm:grid-cols-3 lg:grid-cols-4">
           {Object.entries(HTTP_CODES).map(([code, desc]) => (
             <button key={code} onClick={() => { setCode(code); handleLookup(); }}

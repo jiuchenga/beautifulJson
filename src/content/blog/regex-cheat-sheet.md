@@ -2,7 +2,7 @@
 title: "Regex Cheat Sheet for Web Developers"
 description: "A practical regex cheat sheet with examples for common web development tasks."
 date: 2026-05-11
-author: "DevToolkit"
+author: "BeautifulJSON"
 tags: ["regex", "tutorial", "web-development"]
 ---
 

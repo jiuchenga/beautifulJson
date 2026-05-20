@@ -3,10 +3,12 @@ import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import OptionBar from '../shared/OptionBar';
 import { jsonToGoStruct } from '@/lib/json-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = '{"user": {"name": "Alice", "age": 30, "active": true}, "projects": [{"id": 1, "title": "Project A"}]}';
 
-export default function JsonToGo() {
+export default function JsonToGo({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -14,7 +16,7 @@ export default function JsonToGo() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter JSON'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterJson); return; }
     try {
       setOutput(jsonToGoStruct(input, structName));
     } catch (e) {
@@ -23,9 +25,9 @@ export default function JsonToGo() {
   }
 
   return (
-    <ToolShell
-      title="JSON to Go Struct"
-      description="Generate Go struct definitions from JSON data."
+    <ToolShell lang={lang}
+      title={toolTitle ?? ''}
+      description={toolDesc ?? ''}
       inputValue={input}
       onInputChange={setInput}
       outputValue={output}
@@ -45,9 +47,9 @@ export default function JsonToGo() {
       inputEditor={{ language: 'json' }}
       outputEditor={{ language: 'javascript', readOnly: true }}
       options={
-        <OptionBar label="Options">
+        <OptionBar label={t.options}>
           <label className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-            Struct Name
+            {t.structName}
             <input
               type="text"
               value={structName}

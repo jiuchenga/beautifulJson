@@ -1,11 +1,13 @@
 // src/components/tools/encrypt/JsHtmlConvert.tsx
 import { useState } from 'react';
 import ToolShell from '../ToolShell';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE_JS = 'document.getElementById("demo").innerHTML = "Hello";';
 const EXAMPLE_HTML = '<script>document.getElementById("demo").innerHTML = "Hello";</script>';
 
-export default function JsHtmlConvert() {
+export default function JsHtmlConvert({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -13,7 +15,7 @@ export default function JsHtmlConvert() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter code'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterCode); return; }
     try {
       if (mode === 'js2html') {
         setOutput(`<script>\n${input}\n</script>`);
@@ -25,7 +27,7 @@ export default function JsHtmlConvert() {
   }
 
   return (
-    <ToolShell title="JS ↔ HTML Convert" description="Convert between standalone JS code and HTML script tags."
+    <ToolShell lang={lang} title={toolTitle ?? ''} description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
@@ -33,10 +35,10 @@ export default function JsHtmlConvert() {
       onExample={() => setInput(mode === 'js2html' ? EXAMPLE_JS : EXAMPLE_HTML)}
       error={error}
       inputEditor={{ language: 'javascript' }}
-      outputEditor={{ language: 'javascript', readOnly: true }}
+      outputEditor={{ language: 'html', readOnly: true }}
       options={<div className="flex gap-2">
-        <button onClick={() => setMode('js2html')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'js2html' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>JS → HTML</button>
-        <button onClick={() => setMode('html2js')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'html2js' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>HTML → JS</button>
+        <button onClick={() => setMode('js2html')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'js2html' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>{t.jsToHtml}</button>
+        <button onClick={() => setMode('html2js')} className={`rounded-lg px-3 py-1 text-sm ${mode === 'html2js' ? 'bg-[var(--accent-blue)] text-white' : 'border border-[var(--border-primary)] text-[var(--text-secondary)]'}`}>{t.htmlToJs}</button>
       </div>}
     />
   );

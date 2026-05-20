@@ -2,14 +2,20 @@
 
 // === Timestamp Conversion ===
 
+function formatDate(d: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
 export function timestampToDate(timestamp: string): string {
   const ts = Number(timestamp);
   if (isNaN(ts)) throw new Error('Invalid timestamp');
   // Auto-detect seconds vs milliseconds
-  const ms = ts > 1e12 ? ts : ts * 1000;
+  // Values below 10^10 (9999999999 → year 2286) are treated as seconds
+  const ms = ts < 1e10 ? ts * 1000 : ts;
   const d = new Date(ms);
   if (isNaN(d.getTime())) throw new Error('Invalid timestamp');
-  return d.toISOString();
+  return formatDate(d);
 }
 
 export function dateToTimestamp(dateStr: string, unit: 's' | 'ms' = 's'): string {
@@ -23,7 +29,7 @@ export function getCurrentTimestamp(): { seconds: number; milliseconds: number; 
   return {
     seconds: Math.floor(now.getTime() / 1000),
     milliseconds: now.getTime(),
-    iso: now.toISOString(),
+    iso: formatDate(now),
   };
 }
 
@@ -46,6 +52,8 @@ export function htmlUnescape(text: string): string {
     return el.value;
   }
   return text
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, hex) => String.fromCodePoint(parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => String.fromCodePoint(parseInt(dec)))
     .replace(/&#039;/g, "'")
     .replace(/&quot;/g, '"')
     .replace(/&gt;/g, '>')

@@ -79,11 +79,12 @@ export function generateHreflangTags(
   siteUrl: string,
   langs: string[] = ['en', 'zh', 'ja', 'ko', 'fr', 'de', 'es', 'pt', 'ru', 'ar', 'hi', 'zh-tw']
 ): Array<{ lang: string; href: string }> {
+  const normalizedPath = path.startsWith('/') ? path : '/' + path;
   const tags = langs.map((lang) => ({
     lang,
-    href: `${siteUrl}/${lang}${path}`,
+    href: `${siteUrl}/${lang}${normalizedPath}`,
   }));
-  tags.push({ lang: 'x-default', href: `${siteUrl}/en${path}` });
+  tags.push({ lang: 'x-default', href: `${siteUrl}/en${normalizedPath}` });
   return tags;
 }
 
@@ -95,18 +96,18 @@ export function buildMetaTags(props: SEOProps): {
   twitter: { card: string; title: string; description: string };
 } {
   const fullTitle = props.toolName
-    ? `${props.toolName} - DevToolkit`
-    : `${props.title} - DevToolkit`;
+    ? `${props.toolName} - BeautifulJSON`
+    : `${props.title} - BeautifulJSON`;
   return {
     title: fullTitle,
     description: props.description,
-    canonical: `${props.siteUrl}/${props.lang}${props.path}`,
+    canonical: `${props.siteUrl}/${props.lang}${props.path === '/' ? '' : props.path}`,
     og: {
       title: fullTitle,
       description: props.description,
-      url: `${props.siteUrl}/${props.lang}${props.path}`,
+      url: `${props.siteUrl}/${props.lang}${props.path === '/' ? '' : props.path}`,
       type: 'website',
-      siteName: 'DevToolkit',
+      siteName: 'BeautifulJSON',
     },
     twitter: {
       card: 'summary_large_image',

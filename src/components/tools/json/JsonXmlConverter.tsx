@@ -3,13 +3,15 @@ import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import OptionBar, { SelectOption } from '../shared/OptionBar';
 import { jsonToXML, xmlToJSON } from '@/lib/json-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const JSON_EXAMPLE = '{"book": {"title": "Developer Guide", "author": "DevToolkit", "chapters": ["Intro", "Setup", "Advanced"]}}';
 const XML_EXAMPLE = '<?xml version="1.0" encoding="UTF-8"?>\n<root>\n  <name>DevToolkit</name>\n  <version>1.0</version>\n</root>';
 
 type Direction = 'json2xml' | 'xml2json';
 
-export default function JsonXmlConverter() {
+export default function JsonXmlConverter({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -18,7 +20,7 @@ export default function JsonXmlConverter() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter content'); return; }
+    if (!input.trim()) { setError(t.pleaseEnter); return; }
     try {
       if (direction === 'json2xml') {
         setOutput(jsonToXML(input, rootName));
@@ -38,9 +40,9 @@ export default function JsonXmlConverter() {
   }
 
   return (
-    <ToolShell
-      title="JSON ↔ XML Converter"
-      description="Bidirectional JSON to XML and XML to JSON conversion."
+    <ToolShell lang={lang}
+      title={toolTitle ?? ''}
+      description={toolDesc ?? ''}
       inputValue={input}
       onInputChange={setInput}
       outputValue={output}
@@ -59,10 +61,10 @@ export default function JsonXmlConverter() {
         URL.revokeObjectURL(url);
       }}
       error={error}
-      inputEditor={{ language: direction === 'json2xml' ? 'json' : 'javascript', placeholder: direction === 'json2xml' ? 'Paste JSON here...' : 'Paste XML here...' }}
-      outputEditor={{ language: direction === 'json2xml' ? 'javascript' : 'json' }}
+      inputEditor={{ language: direction === 'json2xml' ? 'json' : 'xml', placeholder: direction === 'json2xml' ? t.phPasteJson : t.phPasteJson }}
+      outputEditor={{ language: direction === 'json2xml' ? 'xml' : 'json' }}
       options={
-        <OptionBar label="Direction">
+        <OptionBar label={t.direction}>
           <SelectOption
             label=""
             value={direction}
@@ -74,7 +76,7 @@ export default function JsonXmlConverter() {
           />
           {direction === 'json2xml' && (
             <label className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-              Root Name
+              {t.rootName}
               <input
                 type="text"
                 value={rootName}

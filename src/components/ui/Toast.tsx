@@ -30,9 +30,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const typeStyles = {
-    success: 'border-[var(--accent-green)]/30 bg-[var(--accent-green)]/10 text-[var(--accent-green)]',
-    error: 'border-[var(--accent-red)]/30 bg-[var(--accent-red)]/10 text-[var(--accent-red)]',
-    info: 'border-[var(--accent-blue)]/30 bg-[var(--accent-blue)]/10 text-[var(--accent-blue)]',
+    success: 'border-accent-green/30 bg-accent-green/10 text-accent-green',
+    error: 'border-accent-red/30 bg-accent-red/10 text-accent-red',
+    info: 'border-accent-blue/30 bg-accent-blue/10 text-accent-blue',
   };
 
   return (

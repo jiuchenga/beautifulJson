@@ -4,10 +4,12 @@ import ToolShell from '../ToolShell';
 import OptionBar, { CheckboxOption } from '../shared/OptionBar';
 import { jsObfuscateSimple } from '@/lib/crypto-utils';
 import { jsCompress } from '@/lib/format-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = 'function calculatePrice(base, tax, discount) { return base * (1 + tax) - discount; }';
 
-export default function JsObfuscateCompress() {
+export default function JsObfuscateCompress({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [error, setError] = useState('');
@@ -15,7 +17,7 @@ export default function JsObfuscateCompress() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter JS code'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterJs); return; }
     try {
       const code = compressFirst ? jsCompress(input) : input;
       setOutput(jsObfuscateSimple(code));
@@ -23,7 +25,7 @@ export default function JsObfuscateCompress() {
   }
 
   return (
-    <ToolShell title="JS Obfuscate & Compress" description="Combine compression and obfuscation for JavaScript protection."
+    <ToolShell lang={lang} title={toolTitle ?? ''} description={toolDesc ?? ''}
       inputValue={input} onInputChange={setInput} outputValue={output}
       onExecute={handleExecute}
       onClear={() => { setInput(''); setOutput(''); setError(''); }}
@@ -31,8 +33,8 @@ export default function JsObfuscateCompress() {
       error={error}
       inputEditor={{ language: 'javascript', placeholder: 'Paste JS code...' }}
       outputEditor={{ language: 'javascript', readOnly: true }}
-      options={<OptionBar label="Options">
-        <CheckboxOption label="Compress before obfuscation" checked={compressFirst} onChange={setCompressFirst} />
+      options={<OptionBar label={t.options}>
+        <CheckboxOption label={t.compress} checked={compressFirst} onChange={setCompressFirst} />
       </OptionBar>}
     />
   );

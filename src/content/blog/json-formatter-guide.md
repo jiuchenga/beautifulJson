@@ -2,7 +2,7 @@
 title: "How to Use JSON Formatter: A Complete Guide"
 description: "Learn how to format, validate, and minify JSON data with our free online JSON formatter tool."
 date: 2026-05-13
-author: "DevToolkit"
+author: "BeautifulJSON"
 tags: ["json", "formatter", "tutorial"]
 ---
 

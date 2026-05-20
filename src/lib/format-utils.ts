@@ -10,8 +10,13 @@ export function jsFormat(code: string): string {
 }
 
 export function jsCompress(code: string): string {
-  // Simple minification: strip comments, collapse whitespace
-  let result = code;
+  // Protect string literals from regex damage
+  const strings: string[] = [];
+  let result = code.replace(/(["'`])(?:(?!\1|\\).|\\.)*\1/g, (match) => {
+    strings.push(match);
+    return `__STR${strings.length - 1}__`;
+  });
+
   // Remove single-line comments (but not URLs with //)
   result = result.replace(/([^:]|^)\/\/.*$/gm, '$1');
   // Remove multi-line comments
@@ -20,6 +25,9 @@ export function jsCompress(code: string): string {
   result = result.replace(/\s+/g, ' ');
   // Remove spaces around operators and punctuation
   result = result.replace(/\s*([{}();,=+\-*/<>!&|?:])\s*/g, '$1');
+
+  // Restore string literals
+  result = result.replace(/__STR(\d+)__/g, (_, i) => strings[parseInt(i)]);
   return result.trim();
 }
 
@@ -47,10 +55,16 @@ export function htmlFormat(code: string): string {
 export function htmlCompress(code: string): string {
   let result = code;
   result = result.replace(/<!--[\s\S]*?-->/g, '');
+  // Preserve whitespace between inline elements (not block-level tags)
+  result = result.replace(/>\s+</g, (match, offset) => {
+    // Check if surrounding tags are inline elements
+    const inlineTags = /^(a|span|b|i|em|strong|small|sub|sup|abbr|code|time|mark)/i;
+    const afterClose = result.slice(offset + 1).trimStart();
+    return inlineTags.test(afterClose) ? match : '><';
+  });
   result = result.replace(/\s+/g, ' ');
-  result = result.replace(/\s*([<>])\s*/g, '$1');
-  result = result.replace(/>\s+</g, '><');
-  return result.trim();
+  result = result.trim();
+  return result;
 }
 
 // === XML Format & Compress ===
@@ -59,18 +73,25 @@ export function xmlFormat(xml: string): string {
   let formatted = '';
   let indent = '';
   const tab = '  ';
-  // Simple XML formatter
-  xml.split(/>\s*</).forEach((node) => {
-    if (node.match(/^\/\w/)) {
-      // Closing tag
+  // Simple XML formatter - split on tag boundaries
+  const tokens = xml.replace(/>\s*</g, '><').split(/(<[^>]+>)/g).filter(Boolean);
+  for (const token of tokens) {
+    if (!token.startsWith('<')) {
+      // Text content
+      formatted += indent + token.trim() + '\n';
+      continue;
+    }
+    const isClosing = /^<\//.test(token);
+    const isSelfClosing = /\/\s*>$/.test(token);
+    if (isClosing) {
       indent = indent.substring(tab.length);
     }
-    formatted += indent + '<' + node + '>\n';
-    if (node.match(/^<?\w[^>]*[^/]>.*$/) && !node.match(/^<?\w[^>]*\/\s*>$/)) {
+    formatted += indent + token + '\n';
+    if (!isClosing && !isSelfClosing && !/^<\?|^<!/.test(token)) {
       indent += tab;
     }
-  });
-  return formatted.substring(1, formatted.length - 2);
+  }
+  return formatted.trimEnd();
 }
 
 export function xmlCompress(xml: string): string {
@@ -118,17 +139,26 @@ export function regexTest(pattern: string, flags: string, text: string): RegexMa
 }
 
 export function generateRegexCode(pattern: string, flags: string, language: string): string {
+  // Escape pattern for target language string contexts
+  const escDQ = (s: string) => s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+  const escSQ = (s: string) => s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const escPHP = (s: string) => s.replace(/\\/g, '\\\\').replace(/\//g, '\\/');
+  const pyFlags: string[] = [];
+  if (flags.includes('i')) pyFlags.push('re.IGNORECASE');
+  if (flags.includes('m')) pyFlags.push('re.MULTILINE');
+  if (flags.includes('s')) pyFlags.push('re.DOTALL');
+
   switch (language) {
     case 'javascript':
       return `const regex = /${pattern}/${flags};\nconst matches = str.match(regex);`;
     case 'python':
-      return `import re\npattern = r'${pattern}'\nmatches = re.findall(pattern, text${flags.includes('i') ? ', re.IGNORECASE' : ''}${flags.includes('m') ? ' | re.MULTILINE' : ''})`;
+      return `import re\npattern = r'${escSQ(pattern)}'\nmatches = re.findall(pattern, text${pyFlags.length ? ', ' + pyFlags.join(' | ') : ''})`;
     case 'java':
-      return `Pattern pattern = Pattern.compile("${pattern}"${flags.includes('i') ? ', Pattern.CASE_INSENSITIVE' : ''});\nMatcher matcher = pattern.matcher(text);\nwhile (matcher.find()) {\n    System.out.println(matcher.group());\n}`;
+      return `Pattern pattern = Pattern.compile("${escDQ(pattern)}"${flags.includes('i') ? ', Pattern.CASE_INSENSITIVE' : ''});\nMatcher matcher = pattern.matcher(text);\nwhile (matcher.find()) {\n    System.out.println(matcher.group());\n}`;
     case 'go':
-      return `re := regexp.MustCompile(\`(?:${pattern})\`)\nmatches := re.FindAllString(text, -1)`;
+      return `re := regexp.MustCompile(\`${pattern}\`)\nmatches := re.FindAllString(text, -1)`;
     case 'php':
-      return `preg_match_all('/${pattern}/${flags}/', $text, $matches);`;
+      return `preg_match_all('/${escPHP(pattern)}/${flags}/', $text, $matches);`;
     case 'ruby':
       return `matches = text.scan(/${pattern}/${flags})`;
     default:

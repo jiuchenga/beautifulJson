@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/encrypt/thunder-url.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import ThunderUrlCodec from '@/components/tools/encrypt/ThunderUrlCodec';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'encrypt/thunder-url';
+const toolData = tools[toolKey];
+const catData = categories['encrypt'];
+const tc = getToolContent(langTyped, 'encrypt', 'thunder-url');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'thunder-url', url: `/${lang}/encrypt/thunder-url` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'thunder-url'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/encrypt/thunder-url"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'thunder-url'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <ThunderUrlCodec client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'thunder-url'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

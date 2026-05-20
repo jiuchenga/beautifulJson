@@ -1,0 +1,51 @@
+---
+// src/pages/[lang]/tutorials.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Breadcrumb from '@/components/common/Breadcrumb.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCommon } from '@/i18n/t';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: common.tutorials, url: `/${lang}/tutorials` },
+];
+
+const tutorials = [
+  { title: 'JSON Formatter Guide', description: 'Learn how to format, validate, and minify JSON data.', href: `/${lang}/blog/json-formatter-guide`, icon: '{ }' },
+  { title: 'Encryption Algorithms Overview', description: 'Top 10 encryption algorithms every developer should know.', href: `/${lang}/blog/encryption-algorithms`, icon: '🔐' },
+  { title: 'Regex Cheat Sheet', description: 'Practical regex patterns for web development.', href: `/${lang}/blog/regex-cheat-sheet`, icon: '🔍' },
+];
+---
+
+<BaseLayout
+  title={`${common.tutorials} - BeautifulJSON`}
+  description={common.tutorials}
+  path="/tutorials"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+>
+  <Breadcrumb items={breadcrumbs} siteUrl="https://devtoolkit.com" />
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-[var(--text-primary)]">{common.tutorials}</h1>
+  </div>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    {tutorials.map((t) => (
+      <a href={t.href}
+        class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-accent-blue/50">
+        <span class="text-2xl">{t.icon}</span>
+        <h2 class="mt-2 text-lg font-semibold text-[var(--text-primary)] group-hover:text-accent-blue">{t.title}</h2>
+        <p class="mt-1 text-sm text-[var(--text-secondary)]">{t.description}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

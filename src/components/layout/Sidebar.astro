@@ -1,48 +1,49 @@
 ---
 // src/components/layout/Sidebar.astro
 import { type Lang } from '@/i18n/ui';
+import { getCategories, getCommon } from '@/i18n/t';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const categories = getCategories(lang);
+const common = getCommon(lang);
 
-const jsonTools = [
-  { name: 'JSON Formatter', href: `/${lang}/json/formatter` },
-  { name: 'JSON Formatter (New)', href: `/${lang}/json/formatter-new` },
-  { name: 'JSON Compress/Escape', href: `/${lang}/json/compress-escape` },
-  { name: 'JSON Viewer', href: `/${lang}/json/viewer` },
-  { name: 'JSON Colorizer', href: `/${lang}/json/colorizer` },
-  { name: 'JSON ↔ XML', href: `/${lang}/json/xml-converter` },
-  { name: 'JSON Compare', href: `/${lang}/json/compare` },
-  { name: 'JSON to Entity', href: `/${lang}/json/to-entity` },
-  { name: 'JSON Minifier', href: `/${lang}/json/minifier` },
-  { name: 'JSON to C#', href: `/${lang}/json/to-csharp` },
-  { name: 'JSON to Go', href: `/${lang}/json/to-go` },
-  { name: 'JSON Tree View', href: `/${lang}/json/tree-view` },
-  { name: 'JSON Format Online', href: `/${lang}/json/format-online` },
-  { name: 'JSON Parser', href: `/${lang}/json/parser-side-by-side` },
-  { name: 'JSON to Excel', href: `/${lang}/json/to-excel` },
+const catList = [
+  { slug: 'json', icon: '{ }' },
+  { slug: 'encrypt', icon: '🔐' },
+  { slug: 'format', icon: '📐' },
+  { slug: 'encode', icon: '🔄' },
+  { slug: 'qr', icon: '📱' },
+  { slug: 'webmaster', icon: '🌐' },
+  { slug: 'frontend', icon: '🎨' },
+  { slug: 'life', icon: '🕐' },
+  { slug: 'other', icon: '🛠️' },
 ];
 ---
 
-<nav class="sticky top-20 space-y-6">
+<nav class="sticky top-20 space-y-4">
   <div>
     <h3 class="mb-2 text-xs font-semibold uppercase tracking-wider text-[var(--text-tertiary)]">
-      JSON Tools
+      {common.categories}
     </h3>
     <ul class="space-y-1">
-      {jsonTools.map((tool) => (
-        <li>
-          <a
-            href={tool.href}
-            class="block rounded-md px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors"
-          >
-            {tool.name}
-          </a>
-        </li>
-      ))}
+      {catList.map((cat) => {
+        const catData = categories[cat.slug];
+        return (
+          <li>
+            <a
+              href={`/${lang}/category/${cat.slug}`}
+              class="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors"
+            >
+              <span>{cat.icon}</span>
+              <span>{catData?.name ?? cat.slug}</span>
+            </a>
+          </li>
+        );
+      })}
     </ul>
   </div>
 </nav>

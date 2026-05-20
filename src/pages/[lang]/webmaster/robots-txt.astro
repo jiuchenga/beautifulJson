@@ -1,0 +1,61 @@
+---
+// src/pages/[lang]/webmaster/robots-txt.astro
+import ToolLayout from '@/layouts/ToolLayout.astro';
+import ToolContent from '@/components/common/ToolContent.astro';
+import { languages, type Lang } from '@/i18n/ui';
+import { getCategories, getCommon, getTools, getToolContent } from '@/i18n/t';
+import RobotsTxtGenerator from '@/components/tools/webmaster/RobotsTxtGenerator';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map(lang => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+const langTyped = lang as Lang;
+const common = getCommon(langTyped);
+const categories = getCategories(langTyped);
+const tools = getTools(langTyped);
+const toolKey = 'webmaster/robots-txt';
+const toolData = tools[toolKey];
+const catData = categories['webmaster'];
+const tc = getToolContent(langTyped, 'webmaster', 'robots-txt');
+
+const breadcrumbs = [
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'robots-txt', url: `/${lang}/webmaster/robots-txt` },
+];
+
+const features = tc?.features ?? [];
+
+const steps = tc?.steps ?? [];
+
+const faq = tc?.faq ?? [];
+
+const relatedTools: { title: string; href: string }[] = [
+
+];
+---
+
+<ToolLayout
+  title={`${toolData?.name ?? 'robots-txt'} - Free Online Tool | BeautifulJSON`}
+  description={toolData?.description ?? ''}
+  path="/webmaster/robots-txt"
+  siteUrl="https://devtoolkit.com"
+  lang={langTyped}
+  toolName={toolData?.name ?? 'robots-txt'}
+  toolDescription={toolData?.description ?? ''}
+  breadcrumbs={breadcrumbs}
+>
+  <RobotsTxtGenerator client:load lang={langTyped} title={toolData?.name ?? ''} description={toolData?.description ?? ''} />
+
+  <ToolContent
+    toolName={toolData?.name ?? 'robots-txt'}
+    features={features}
+    steps={steps}
+    faq={faq}
+    relatedTools={relatedTools}
+    siteUrl="https://devtoolkit.com"
+    lang={langTyped}
+  />
+</ToolLayout>

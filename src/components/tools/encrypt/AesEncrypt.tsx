@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ToolShell from '../ToolShell';
 import OptionBar, { SelectOption } from '../shared/OptionBar';
 import { symmetricEncrypt, symmetricDecrypt, type SymmetricAlgorithm } from '@/lib/crypto-utils';
+import { useToolI18n } from '@/lib/react-i18n';
 
 const EXAMPLE = 'Hello, DevToolkit!';
 
@@ -15,7 +16,8 @@ const ALGORITHMS = [
   { label: 'PBKDF2', value: 'PBKDF2' },
 ];
 
-export default function AesEncrypt() {
+export default function AesEncrypt({ title: toolTitle, description: toolDesc, lang }: { title?: string; description?: string; lang?: string } = {}) {
+  const t = useToolI18n(lang);
   const [input, setInput] = useState('');
   const [output, setOutput] = useState('');
   const [key, setKey] = useState('');
@@ -25,14 +27,14 @@ export default function AesEncrypt() {
 
   function handleExecute() {
     setError('');
-    if (!input.trim()) { setError('Please enter text'); return; }
-    if (!key.trim()) { setError('Please enter a key'); return; }
+    if (!input.trim()) { setError(t.pleaseEnterText); return; }
+    if (!key.trim()) { setError(t.pleaseEnterKey); return; }
     try {
       if (mode === 'encrypt') {
         setOutput(symmetricEncrypt(input, key, algorithm));
       } else {
         const result = symmetricDecrypt(input, key, algorithm);
-        if (!result) throw new Error('Decryption failed. Check key and ciphertext.');
+        if (!result) throw new Error(t.decryptionFailedCheck);
         setOutput(result);
       }
     } catch (e) {
@@ -41,9 +43,9 @@ export default function AesEncrypt() {
   }
 
   return (
-    <ToolShell
-      title="Encrypt / Decrypt"
-      description="Symmetric encryption and decryption with AES, DES, TripleDES, RC4, Rabbit, PBKDF2."
+    <ToolShell lang={lang}
+      title={toolTitle ?? ''}
+      description={toolDesc ?? ''}
       inputValue={input}
       onInputChange={setInput}
       outputValue={output}
@@ -59,17 +61,17 @@ export default function AesEncrypt() {
       }}
       error={error}
       options={
-        <OptionBar label="Options">
-          <SelectOption label="Mode" value={mode} options={[
-            { label: 'Encrypt', value: 'encrypt' },
-            { label: 'Decrypt', value: 'decrypt' },
+        <OptionBar label={t.options}>
+          <SelectOption label={t.mode} value={mode} options={[
+            { label: t.encrypt, value: 'encrypt' },
+            { label: t.decrypt, value: 'decrypt' },
           ]} onChange={(v) => setMode(v as 'encrypt' | 'decrypt')} />
-          <SelectOption label="Algorithm" value={algorithm} options={ALGORITHMS} onChange={(v) => setAlgorithm(v as SymmetricAlgorithm)} />
+          <SelectOption label={t.algorithm} value={algorithm} options={ALGORITHMS} onChange={(v) => setAlgorithm(v as SymmetricAlgorithm)} />
           <label className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             Key
             <input type="text" value={key} onChange={(e) => setKey(e.target.value)}
               className="rounded-md border border-[var(--border-primary)] bg-[var(--bg-tertiary)] px-2 py-1 text-sm text-[var(--text-primary)] outline-none focus:border-[var(--accent-blue)] w-40"
-              placeholder="Enter key..." />
+              placeholder={t.placeholderEnterKey} />
           </label>
         </OptionBar>
       }

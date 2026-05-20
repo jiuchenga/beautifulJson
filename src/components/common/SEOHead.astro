@@ -14,6 +14,13 @@ const schemas: object[] = [];
 if (props.toolName) {
   schemas.push(generateWebApplicationSchema(props));
 }
+
+const localeMap: Record<string, string> = {
+  en: 'en_US', zh: 'zh_CN', 'zh-tw': 'zh_TW', ja: 'ja_JP', ko: 'ko_KR',
+  fr: 'fr_FR', de: 'de_DE', es: 'es_ES', pt: 'pt_BR', ru: 'ru_RU',
+  ar: 'ar_SA', hi: 'hi_IN',
+};
+const ogLocale = localeMap[props.lang] ?? 'en_US';
 ---
 
 <title>{meta.title}</title>
@@ -26,12 +33,14 @@ if (props.toolName) {
 <meta property="og:url" content={meta.og.url} />
 <meta property="og:type" content={meta.og.type} />
 <meta property="og:site_name" content={meta.og.siteName} />
-<meta property="og:locale" content={props.lang} />
+<meta property="og:locale" content={ogLocale} />
+<meta property="og:image" content={props.siteUrl + '/og-image.png'} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content={meta.twitter.card} />
 <meta name="twitter:title" content={meta.twitter.title} />
 <meta name="twitter:description" content={meta.twitter.description} />
+<meta name="twitter:image" content={props.siteUrl + '/og-image.png'} />
 
 <!-- Hreflang -->
 {hreflangs.map((h) => (
@@ -42,7 +51,3 @@ if (props.toolName) {
 {schemas.map((schema) => (
   <script type="application/ld+json" set:html={JSON.stringify(schema)} />
 ))}
-
-<!-- Preconnect -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
