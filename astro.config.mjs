@@ -7,7 +7,8 @@ import autoprefixer from 'autoprefixer';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://devtoolkit.com',
+  site: 'https://jiuchenga.github.io/beautifulJson',
+  base: '/beautifulJson',
   integrations: [
     react(),
     sitemap(),
