@@ -1,5 +1,5 @@
 ---
 // src/pages/index.astro
 // Redirect to /en homepage
-return Astro.redirect('/en/');
+return Astro.redirect(new URL('/en/', Astro.site).pathname);
 ---
