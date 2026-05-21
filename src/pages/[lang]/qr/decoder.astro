@@ -21,9 +21,9 @@ const catData = categories['qr'];
 const tc = getToolContent(langTyped, 'qr', 'decoder');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'qr', url: `/${lang}/category/qr` },
-  { name: toolData?.name ?? 'decoder', url: `/${lang}/qr/decoder` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'qr', url: `${import.meta.env.BASE_URL}${lang}/category/qr` },
+  { name: toolData?.name ?? 'decoder', url: `${import.meta.env.BASE_URL}${lang}/qr/decoder` },
 ];
 
 const features = tc?.features ?? [];

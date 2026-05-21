@@ -35,7 +35,7 @@ const catList = [
         return (
           <li>
             <a
-              href={`/${lang}/category/${cat.slug}`}
+              href={`${import.meta.env.BASE_URL}${lang}/category/${cat.slug}`}
               class="flex items-center gap-2 rounded-md px-3 py-1.5 text-sm text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)] transition-colors"
             >
               <span>{cat.icon}</span>

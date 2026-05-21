@@ -21,9 +21,9 @@ const catData = categories['format'];
 const tc = getToolContent(langTyped, 'format', 'js-format');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'format', url: `/${lang}/category/format` },
-  { name: toolData?.name ?? 'js-format', url: `/${lang}/format/js-format` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'format', url: `${import.meta.env.BASE_URL}${lang}/category/format` },
+  { name: toolData?.name ?? 'js-format', url: `${import.meta.env.BASE_URL}${lang}/format/js-format` },
 ];
 
 const features = tc?.features ?? [];

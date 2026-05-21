@@ -21,9 +21,9 @@ const catData = categories['webmaster'];
 const tc = getToolContent(langTyped, 'webmaster', 'user-agent-parser');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
-  { name: toolData?.name ?? 'user-agent-parser', url: `/${lang}/webmaster/user-agent-parser` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `${import.meta.env.BASE_URL}${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'user-agent-parser', url: `${import.meta.env.BASE_URL}${lang}/webmaster/user-agent-parser` },
 ];
 
 const features = tc?.features ?? [];

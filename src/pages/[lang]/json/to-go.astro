@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'to-go');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
-  { name: toolData?.name ?? 'to-go', url: `/${lang}/json/to-go` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
+  { name: toolData?.name ?? 'to-go', url: `${import.meta.env.BASE_URL}${lang}/json/to-go` },
 ];
 
 const features = tc?.features ?? [];

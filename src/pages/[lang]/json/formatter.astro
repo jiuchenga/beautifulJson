@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'formatter');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
-  { name: toolData?.name ?? 'formatter', url: `/${lang}/json/formatter` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
+  { name: toolData?.name ?? 'formatter', url: `${import.meta.env.BASE_URL}${lang}/json/formatter` },
 ];
 
 const features = tc?.features ?? [];
@@ -34,7 +34,7 @@ const faq = tc?.faq ?? [];
 
 const relatedSlugs = ['json/viewer', 'json/minifier', 'json/compare', 'json/colorizer', 'json/format-online'];
 const relatedTools: { title: string; href: string }[] = relatedSlugs
-  .map(slug => ({ title: tools[slug]?.name ?? slug.split('/')[1], href: `/${lang}/${slug}` }));
+  .map(slug => ({ title: tools[slug]?.name ?? slug.split('/')[1], href: `${import.meta.env.BASE_URL}${lang}/${slug}` }));
 ---
 
 <ToolLayout

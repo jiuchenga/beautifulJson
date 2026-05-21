@@ -46,10 +46,10 @@ function buildMenuCategories(lang: string): CategoryGroup[] {
     return {
       label: catData?.name ?? catSlug,
       icon: catIcons[catSlug] ?? '',
-      href: `/${lang}/category/${catSlug}`,
+      href: `${import.meta.env.BASE_URL}${lang}/category/${catSlug}`,
       tools: slugs.map(slug => ({
         name: tools[slug]?.name ?? slug,
-        href: `/${lang}/${slug}`,
+        href: `${import.meta.env.BASE_URL}${lang}/${slug}`,
       })),
     };
   });

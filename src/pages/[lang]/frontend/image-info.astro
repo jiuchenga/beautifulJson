@@ -21,9 +21,9 @@ const catData = categories['frontend'];
 const tc = getToolContent(langTyped, 'frontend', 'image-info');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'frontend', url: `/${lang}/category/frontend` },
-  { name: toolData?.name ?? 'image-info', url: `/${lang}/frontend/image-info` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'frontend', url: `${import.meta.env.BASE_URL}${lang}/category/frontend` },
+  { name: toolData?.name ?? 'image-info', url: `${import.meta.env.BASE_URL}${lang}/frontend/image-info` },
 ];
 
 const features = tc?.features ?? [];

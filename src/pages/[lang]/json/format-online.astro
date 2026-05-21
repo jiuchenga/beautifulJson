@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'format-online');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
-  { name: toolData?.name ?? 'format-online', url: `/${lang}/json/format-online` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
+  { name: toolData?.name ?? 'format-online', url: `${import.meta.env.BASE_URL}${lang}/json/format-online` },
 ];
 
 const features = tc?.features ?? [];

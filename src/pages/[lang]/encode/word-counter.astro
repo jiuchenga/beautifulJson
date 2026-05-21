@@ -21,9 +21,9 @@ const catData = categories['encode'];
 const tc = getToolContent(langTyped, 'encode', 'word-counter');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'encode', url: `/${lang}/category/encode` },
-  { name: toolData?.name ?? 'word-counter', url: `/${lang}/encode/word-counter` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'encode', url: `${import.meta.env.BASE_URL}${lang}/category/encode` },
+  { name: toolData?.name ?? 'word-counter', url: `${import.meta.env.BASE_URL}${lang}/encode/word-counter` },
 ];
 
 const features = tc?.features ?? [];

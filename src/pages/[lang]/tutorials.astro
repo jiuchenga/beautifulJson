@@ -14,14 +14,14 @@ const langTyped = lang as Lang;
 const common = getCommon(langTyped);
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: common.tutorials, url: `/${lang}/tutorials` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: common.tutorials, url: `${import.meta.env.BASE_URL}${lang}/tutorials` },
 ];
 
 const tutorials = [
-  { title: 'JSON Formatter Guide', description: 'Learn how to format, validate, and minify JSON data.', href: `/${lang}/blog/json-formatter-guide`, icon: '{ }' },
-  { title: 'Encryption Algorithms Overview', description: 'Top 10 encryption algorithms every developer should know.', href: `/${lang}/blog/encryption-algorithms`, icon: '🔐' },
-  { title: 'Regex Cheat Sheet', description: 'Practical regex patterns for web development.', href: `/${lang}/blog/regex-cheat-sheet`, icon: '🔍' },
+  { title: 'JSON Formatter Guide', description: 'Learn how to format, validate, and minify JSON data.', href: `${import.meta.env.BASE_URL}${lang}/blog/json-formatter-guide`, icon: '{ }' },
+  { title: 'Encryption Algorithms Overview', description: 'Top 10 encryption algorithms every developer should know.', href: `${import.meta.env.BASE_URL}${lang}/blog/encryption-algorithms`, icon: '🔐' },
+  { title: 'Regex Cheat Sheet', description: 'Practical regex patterns for web development.', href: `${import.meta.env.BASE_URL}${lang}/blog/regex-cheat-sheet`, icon: '🔍' },
 ];
 ---
 

@@ -17,26 +17,26 @@ const footerLinks = [
   {
     title: common.popularTools ?? 'Popular Tools',
     links: [
-      { label: tools['json/formatter']?.name ?? 'JSON Formatter', href: `/${lang}/json/formatter` },
-      { label: tools['encrypt/aes']?.name ?? 'AES Encrypt', href: `/${lang}/encrypt/aes` },
-      { label: tools['qr/generate']?.name ?? 'QR Code Generator', href: `/${lang}/qr/generate` },
-      { label: tools['encrypt/base64']?.name ?? 'Base64', href: `/${lang}/encrypt/base64` },
+      { label: tools['json/formatter']?.name ?? 'JSON Formatter', href: `${import.meta.env.BASE_URL}${lang}/json/formatter` },
+      { label: tools['encrypt/aes']?.name ?? 'AES Encrypt', href: `${import.meta.env.BASE_URL}${lang}/encrypt/aes` },
+      { label: tools['qr/generate']?.name ?? 'QR Code Generator', href: `${import.meta.env.BASE_URL}${lang}/qr/generate` },
+      { label: tools['encrypt/base64']?.name ?? 'Base64', href: `${import.meta.env.BASE_URL}${lang}/encrypt/base64` },
     ],
   },
   {
     title: common.categories ?? 'Categories',
     links: [
-      { label: categories.json?.name ?? 'JSON Tools', href: `/${lang}/category/json` },
-      { label: categories.encrypt?.name ?? 'Encryption', href: `/${lang}/category/encrypt` },
-      { label: categories.webmaster?.name ?? 'Webmaster', href: `/${lang}/category/webmaster` },
-      { label: categories.qr?.name ?? 'QR Code', href: `/${lang}/category/qr` },
+      { label: categories.json?.name ?? 'JSON Tools', href: `${import.meta.env.BASE_URL}${lang}/category/json` },
+      { label: categories.encrypt?.name ?? 'Encryption', href: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
+      { label: categories.webmaster?.name ?? 'Webmaster', href: `${import.meta.env.BASE_URL}${lang}/category/webmaster` },
+      { label: categories.qr?.name ?? 'QR Code', href: `${import.meta.env.BASE_URL}${lang}/category/qr` },
     ],
   },
   {
     title: common.resources ?? 'Resources',
     links: [
-      { label: common.blog ?? 'Blog', href: `/${lang}/blog` },
-      { label: common.tutorials ?? 'Tutorials', href: `/${lang}/tutorials` },
+      { label: common.blog ?? 'Blog', href: `${import.meta.env.BASE_URL}${lang}/blog` },
+      { label: common.tutorials ?? 'Tutorials', href: `${import.meta.env.BASE_URL}${lang}/tutorials` },
     ],
   },
 ];
@@ -47,7 +47,7 @@ const footerLinks = [
     <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
       <!-- Brand -->
       <div>
-        <a href={`/${lang}/`} class="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)] hover:no-underline">
+        <a href={`${import.meta.env.BASE_URL}${lang}/`} class="flex items-center gap-2 text-lg font-bold text-[var(--text-primary)] hover:no-underline">
           <span>beautiful<span class="text-[var(--accent-blue)]">{'{json}'}</span></span>
         </a>
         <p class="mt-3 text-sm text-[var(--text-secondary)]">

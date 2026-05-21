@@ -21,9 +21,9 @@ const catData = categories['encode'];
 const tc = getToolContent(langTyped, 'encode', 'timestamp');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'encode', url: `/${lang}/category/encode` },
-  { name: toolData?.name ?? 'timestamp', url: `/${lang}/encode/timestamp` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'encode', url: `${import.meta.env.BASE_URL}${lang}/category/encode` },
+  { name: toolData?.name ?? 'timestamp', url: `${import.meta.env.BASE_URL}${lang}/encode/timestamp` },
 ];
 
 const features = tc?.features ?? [];

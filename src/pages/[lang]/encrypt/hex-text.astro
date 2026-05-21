@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'hex-text');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `/${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'hex-text', url: `/${lang}/encrypt/hex-text` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'hex-text', url: `${import.meta.env.BASE_URL}${lang}/encrypt/hex-text` },
 ];
 
 const features = tc?.features ?? [];

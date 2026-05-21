@@ -21,9 +21,9 @@ const catData = categories['webmaster'];
 const tc = getToolContent(langTyped, 'webmaster', 'http-status');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
-  { name: toolData?.name ?? 'http-status', url: `/${lang}/webmaster/http-status` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `${import.meta.env.BASE_URL}${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'http-status', url: `${import.meta.env.BASE_URL}${lang}/webmaster/http-status` },
 ];
 
 const features = tc?.features ?? [];

@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'js-html-convert');
 
 const breadcrumbs = [
-  { name: common.home, url: `/${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `/${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'js-html-convert', url: `/${lang}/encrypt/js-html-convert` },
+  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'js-html-convert', url: `${import.meta.env.BASE_URL}${lang}/encrypt/js-html-convert` },
 ];
 
 const features = tc?.features ?? [];

@@ -35,7 +35,7 @@ const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'fro
   <!-- Row 1: Logo | Ad | Language/Theme -->
   <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
     <!-- Logo -->
-    <a href={`/${lang}/`} class="flex items-center hover:no-underline shrink-0">
+    <a href={`${import.meta.env.BASE_URL}${lang}/`} class="flex items-center hover:no-underline shrink-0">
       <span class="text-lg font-bold text-[var(--text-primary)]">beautiful<span class="text-[var(--accent-blue)]">{'{json}'}</span></span>
     </a>
 
@@ -56,7 +56,7 @@ const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'fro
         </button>
         <div class="invisible absolute right-0 top-full mt-1 w-48 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] py-1 opacity-0 shadow-xl group-hover:visible group-hover:opacity-100 transition-all z-[60]">
           {langEntries.map(([code, name]) => (
-            <a href={`/${code}${currentPath}`} class:list={[
+            <a href={`${import.meta.env.BASE_URL}${code}${currentPath}`} class:list={[
               'block px-4 py-2 text-sm transition-colors',
               code === lang ? 'bg-[var(--bg-tertiary)] text-accent-blue' : 'text-[var(--text-secondary)] hover:bg-[var(--bg-tertiary)] hover:text-[var(--text-primary)]',
             ]}>{name}</a>
@@ -83,7 +83,7 @@ const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'fro
         const catData = categories[slug];
         const catTools = cat.slugs.map(s => {
           const t = tools[s];
-          return { name: t?.name ?? s, href: `/${lang}/${s}` };
+          return { name: t?.name ?? s, href: `${import.meta.env.BASE_URL}${lang}/${s}` };
         });
         const alignRight = idx >= 4;
         return (
@@ -114,7 +114,7 @@ const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'fro
         const catData = categories[slug];
         const catTools = cat.slugs.map(s => {
           const t = tools[s];
-          return { name: t?.name ?? s, href: `/${lang}/${s}` };
+          return { name: t?.name ?? s, href: `${import.meta.env.BASE_URL}${lang}/${s}` };
         });
         return (
           <details class="group">
@@ -134,7 +134,7 @@ const catOrder = ['json', 'encrypt', 'format', 'encode', 'qr', 'webmaster', 'fro
         <div class="relative">
           <select onchange="window.location.href=this.value" class="w-full appearance-none rounded-md border border-[var(--border-primary)] bg-[var(--bg-secondary)] px-3 py-2 pr-9 text-sm text-[var(--text-primary)] outline-none transition-all duration-200 focus:border-[var(--accent-blue)] focus:ring-2 focus:ring-[var(--accent-blue-rgb)]/25 hover:border-[var(--accent-blue)] cursor-pointer" style="color-scheme: dark;">
             {langEntries.map(([code, name]) => (
-              <option value={`/${code}${currentPath}`} selected={code === lang}>{name}</option>
+              <option value={`${import.meta.env.BASE_URL}${code}${currentPath}`} selected={code === lang}>{name}</option>
             ))}
           </select>
           <svg class="pointer-events-none absolute right-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--text-tertiary)]" viewBox="0 0 16 16" fill="currentColor">
