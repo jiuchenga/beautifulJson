@@ -1,20 +1,4 @@
 ---
 // src/pages/index.astro
-// Redirect to /en homepage
+return Astro.redirect('/en/');
 ---
-<html>
-  <head>
-    <meta name="robots" content="noindex" />
-    <title>Redirecting...</title>
-  </head>
-  <body>
-    <script is:inline>
-      var base = '/beautifulJson/';
-      window.location.replace(base + 'en/');
-    </script>
-    <noscript>
-      <meta http-equiv="refresh" content="0;url=/beautifulJson/en/" />
-      <p>Redirecting to <a href="/beautifulJson/en/">homepage</a>...</p>
-    </noscript>
-  </body>
-</html>
