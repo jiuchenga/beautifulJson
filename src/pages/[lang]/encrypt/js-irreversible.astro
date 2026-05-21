@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'js-irreversible');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'js-irreversible', url: `${import.meta.env.BASE_URL}${lang}/encrypt/js-irreversible` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/beautifulJson/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'js-irreversible', url: `/beautifulJson/${lang}/encrypt/js-irreversible` },
 ];
 
 const features = tc?.features ?? [];

@@ -21,9 +21,9 @@ const catData = categories['qr'];
 const tc = getToolContent(langTyped, 'qr', 'knowledge');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'qr', url: `${import.meta.env.BASE_URL}${lang}/category/qr` },
-  { name: toolData?.name ?? 'knowledge', url: `${import.meta.env.BASE_URL}${lang}/qr/knowledge` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'qr', url: `/beautifulJson/${lang}/category/qr` },
+  { name: toolData?.name ?? 'knowledge', url: `/beautifulJson/${lang}/qr/knowledge` },
 ];
 
 const features = tc?.features ?? [];

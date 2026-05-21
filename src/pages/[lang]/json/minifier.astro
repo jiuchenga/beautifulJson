@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'minifier');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
-  { name: toolData?.name ?? 'minifier', url: `${import.meta.env.BASE_URL}${lang}/json/minifier` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
+  { name: toolData?.name ?? 'minifier', url: `/beautifulJson/${lang}/json/minifier` },
 ];
 
 const features = tc?.features ?? [];

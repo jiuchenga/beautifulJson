@@ -21,9 +21,9 @@ const catData = categories['encode'];
 const tc = getToolContent(langTyped, 'encode', 'subnet-calculator');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'encode', url: `${import.meta.env.BASE_URL}${lang}/category/encode` },
-  { name: toolData?.name ?? 'subnet-calculator', url: `${import.meta.env.BASE_URL}${lang}/encode/subnet-calculator` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'encode', url: `/beautifulJson/${lang}/category/encode` },
+  { name: toolData?.name ?? 'subnet-calculator', url: `/beautifulJson/${lang}/encode/subnet-calculator` },
 ];
 
 const features = tc?.features ?? [];

@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'colorizer');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
-  { name: toolData?.name ?? 'colorizer', url: `${import.meta.env.BASE_URL}${lang}/json/colorizer` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
+  { name: toolData?.name ?? 'colorizer', url: `/beautifulJson/${lang}/json/colorizer` },
 ];
 
 const features = tc?.features ?? [];

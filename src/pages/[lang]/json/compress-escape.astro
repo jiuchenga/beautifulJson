@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'compress-escape');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
-  { name: toolData?.name ?? 'compress-escape', url: `${import.meta.env.BASE_URL}${lang}/json/compress-escape` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
+  { name: toolData?.name ?? 'compress-escape', url: `/beautifulJson/${lang}/json/compress-escape` },
 ];
 
 const features = tc?.features ?? [];

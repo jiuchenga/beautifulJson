@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'image-base64');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'image-base64', url: `${import.meta.env.BASE_URL}${lang}/encrypt/image-base64` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/beautifulJson/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'image-base64', url: `/beautifulJson/${lang}/encrypt/image-base64` },
 ];
 
 const features = tc?.features ?? [];

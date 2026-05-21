@@ -21,9 +21,9 @@ const catData = categories['life'];
 const tc = getToolContent(langTyped, 'life', 'morse-code');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'life', url: `${import.meta.env.BASE_URL}${lang}/category/life` },
-  { name: toolData?.name ?? 'morse-code', url: `${import.meta.env.BASE_URL}${lang}/life/morse-code` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'life', url: `/beautifulJson/${lang}/category/life` },
+  { name: toolData?.name ?? 'morse-code', url: `/beautifulJson/${lang}/life/morse-code` },
 ];
 
 const features = tc?.features ?? [];

@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'md5');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'md5', url: `${import.meta.env.BASE_URL}${lang}/encrypt/md5` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/beautifulJson/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'md5', url: `/beautifulJson/${lang}/encrypt/md5` },
 ];
 
 const features = tc?.features ?? [];

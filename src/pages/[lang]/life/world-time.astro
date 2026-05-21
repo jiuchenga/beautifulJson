@@ -21,9 +21,9 @@ const catData = categories['life'];
 const tc = getToolContent(langTyped, 'life', 'world-time');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'life', url: `${import.meta.env.BASE_URL}${lang}/category/life` },
-  { name: toolData?.name ?? 'world-time', url: `${import.meta.env.BASE_URL}${lang}/life/world-time` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'life', url: `/beautifulJson/${lang}/category/life` },
+  { name: toolData?.name ?? 'world-time', url: `/beautifulJson/${lang}/life/world-time` },
 ];
 
 const features = tc?.features ?? [];

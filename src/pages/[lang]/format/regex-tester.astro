@@ -21,9 +21,9 @@ const catData = categories['format'];
 const tc = getToolContent(langTyped, 'format', 'regex-tester');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'format', url: `${import.meta.env.BASE_URL}${lang}/category/format` },
-  { name: toolData?.name ?? 'regex-tester', url: `${import.meta.env.BASE_URL}${lang}/format/regex-tester` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'format', url: `/beautifulJson/${lang}/category/format` },
+  { name: toolData?.name ?? 'regex-tester', url: `/beautifulJson/${lang}/format/regex-tester` },
 ];
 
 const features = tc?.features ?? [];

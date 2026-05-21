@@ -21,9 +21,9 @@ const catData = categories['life'];
 const tc = getToolContent(langTyped, 'life', 'date-calculator');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'life', url: `${import.meta.env.BASE_URL}${lang}/category/life` },
-  { name: toolData?.name ?? 'date-calculator', url: `${import.meta.env.BASE_URL}${lang}/life/date-calculator` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'life', url: `/beautifulJson/${lang}/category/life` },
+  { name: toolData?.name ?? 'date-calculator', url: `/beautifulJson/${lang}/life/date-calculator` },
 ];
 
 const features = tc?.features ?? [];

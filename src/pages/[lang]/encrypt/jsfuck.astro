@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'jsfuck');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `${import.meta.env.BASE_URL}${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'jsfuck', url: `${import.meta.env.BASE_URL}${lang}/encrypt/jsfuck` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/beautifulJson/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'jsfuck', url: `/beautifulJson/${lang}/encrypt/jsfuck` },
 ];
 
 const features = tc?.features ?? [];

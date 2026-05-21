@@ -21,9 +21,9 @@ const catData = categories['frontend'];
 const tc = getToolContent(langTyped, 'frontend', 'color-picker');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'frontend', url: `${import.meta.env.BASE_URL}${lang}/category/frontend` },
-  { name: toolData?.name ?? 'color-picker', url: `${import.meta.env.BASE_URL}${lang}/frontend/color-picker` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'frontend', url: `/beautifulJson/${lang}/category/frontend` },
+  { name: toolData?.name ?? 'color-picker', url: `/beautifulJson/${lang}/frontend/color-picker` },
 ];
 
 const features = tc?.features ?? [];

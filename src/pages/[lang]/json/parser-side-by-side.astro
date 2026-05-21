@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'parser-side-by-side');
 
 const breadcrumbs = [
-  { name: common.home, url: `${import.meta.env.BASE_URL}${lang}` },
-  { name: catData?.name ?? 'json', url: `${import.meta.env.BASE_URL}${lang}/category/json` },
-  { name: toolData?.name ?? 'parser-side-by-side', url: `${import.meta.env.BASE_URL}${lang}/json/parser-side-by-side` },
+  { name: common.home, url: `/beautifulJson/${lang}` },
+  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
+  { name: toolData?.name ?? 'parser-side-by-side', url: `/beautifulJson/${lang}/json/parser-side-by-side` },
 ];
 
 const features = tc?.features ?? [];
