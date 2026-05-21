@@ -1,4 +1,21 @@
 ---
 // src/pages/index.astro
-return Astro.redirect('/en/');
+// Astro.redirect strips double slashes, so /beautifulJson/ + en/ becomes /beautifulJsonen/
+// Use JS redirect to avoid this bug
 ---
+<html>
+  <head>
+    <meta name="robots" content="noindex" />
+    <title>Redirecting...</title>
+  </head>
+  <body>
+    <script is:inline>
+      var base = '/beautifulJson/';
+      window.location.replace(base + 'en/');
+    </script>
+    <noscript>
+      <meta http-equiv="refresh" content="0;url=/beautifulJson/en/" />
+      <p>Redirecting to <a href="/beautifulJson/en/">homepage</a>...</p>
+    </noscript>
+  </body>
+</html>
