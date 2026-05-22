@@ -26,7 +26,7 @@ const posts = (await getCollection('blog')).sort(
 
 <BaseLayout
   title={`${common.blog} - BeautifulJSON`}
-  description={common.blog}
+  description={common.blogDesc ?? common.blog}
   path="/blog"
   siteUrl="https://jiuchenga.github.io/beautifulJson"
   lang={langTyped}

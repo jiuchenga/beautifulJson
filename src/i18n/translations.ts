@@ -47,6 +47,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'Resources',
       copyright: 'All tools are free and open source.',
       adSpaceContact: 'Ad Space \u2014 Contact: jiuchenga@163.com',
+      blogDesc: 'Developer tips, tutorials, and best practices for JSON, encryption, and web tools.',
+      tutDesc: 'Step-by-step guides for developer tools and utilities.',
     },
     categories: {
       json: { name: 'JSON Tools', description: 'Format, validate, minify, convert JSON data' },
@@ -226,6 +228,8 @@ export const translations: Record<Lang, Translations> = {
       resources: '资源',
       copyright: '所有工具免费且开源。',
       adSpaceContact: '广告位联系邮箱：jiuchenga@163.com',
+      blogDesc: '开发者技巧、教程和 JSON、加密、Web 工具的最佳实践。',
+      tutDesc: '开发者工具和实用程序的详细指南。',
     },
     categories: {
       json: { name: 'JSON 工具', description: '格式化、验证、压缩、转换 JSON 数据' },
@@ -405,6 +409,8 @@ export const translations: Record<Lang, Translations> = {
       resources: '资源',
       copyright: '所有工具免费且开源。',
       adSpaceContact: '廣告位聯繫郵箱：jiuchenga@163.com',
+      blogDesc: '開發者技巧、教學和 JSON、加密、Web 工具的最佳實踐。',
+      tutDesc: '開發者工具和實用程式的詳細指南。',
     },
     categories: {
       json: { name: 'JSON 工具', description: '格式化、驗證、壓縮、轉換 JSON 資料' },
@@ -508,6 +514,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'リソース',
       copyright: 'すべてのツールは無料でオープンソースです。',
       adSpaceContact: '広告枠 お問い合わせ：jiuchenga@163.com',
+      blogDesc: 'JSON、暗号化、Webツールに関する開発者のヒント、チュートリアル、ベストプラクティス。',
+      tutDesc: '開発者ツールとユーティリティのステップバイステップガイド。',
     },
     categories: {
       json: { name: 'JSONツール', description: 'JSONのフォーマット、検証、圧縮、変換' },
@@ -611,6 +619,8 @@ export const translations: Record<Lang, Translations> = {
       resources: '리소스',
       copyright: '모든 도구는 무료이며 오픈 소스입니다.',
       adSpaceContact: '광고 문의 이메일: jiuchenga@163.com',
+      blogDesc: 'JSON, 암호화, 웹 도구에 대한 개발자 팁, 튜토리얼 및 모범 사례.',
+      tutDesc: '개발자 도구 및 유틸리티에 대한 단계별 가이드.',
     },
     categories: {
       json: { name: 'JSON 도구', description: 'JSON 포맷, 검증, 압축, 변환' },
@@ -714,6 +724,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'Ressources',
       copyright: 'Tous les outils sont gratuits et open source.',
       adSpaceContact: 'Espace publicitaire \u2014 Contact : jiuchenga@163.com',
+      blogDesc: 'Conseils, tutoriels et meilleures pratiques pour JSON, le chiffrement et les outils web.',
+      tutDesc: 'Guides étape par étape pour les outils de développement.',
     },
     categories: {
       json: { name: 'Outils JSON', description: 'Formater, valider, minifier, convertir JSON' },
@@ -920,6 +932,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'Recursos',
       copyright: 'Todas las herramientas son gratuitas y de código abierto.',
       adSpaceContact: 'Espacio publicitario \u2014 Contacto: jiuchenga@163.com',
+      blogDesc: 'Consejos, tutoriales y mejores prácticas para JSON, cifrado y herramientas web.',
+      tutDesc: 'Guías paso a paso para herramientas de desarrollo.',
     },
     categories: {
       json: { name: 'Herramientas JSON', description: 'Formatear, validar, minificar, convertir JSON' },
@@ -1023,6 +1037,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'Recursos',
       copyright: 'Todas as ferramentas são gratuitas e de código aberto.',
       adSpaceContact: 'Espaço publicitário \u2014 Contato: jiuchenga@163.com',
+      blogDesc: 'Dicas, tutoriais e melhores práticas para JSON, criptografia e ferramentas web.',
+      tutDesc: 'Guias passo a passo para ferramentas de desenvolvimento.',
     },
     categories: {
       json: { name: 'Ferramentas JSON', description: 'Formatar, validar, minificar, converter JSON' },
@@ -1126,6 +1142,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'Ресурсы',
       copyright: 'Все инструменты бесплатные и с открытым исходным кодом.',
       adSpaceContact: 'Рекламное место \u2014 Контакт: jiuchenga@163.com',
+      blogDesc: 'Советы, руководства и лучшие практики по JSON, шифрованию и веб-инструментам.',
+      tutDesc: 'Пошаговые руководства по инструментам разработчика.',
     },
     categories: {
       json: { name: 'JSON инструменты', description: 'Форматирование, валидация, минификация, конвертация JSON' },
@@ -1229,6 +1247,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'الموارد',
       copyright: 'جميع الأدوات مجانية ومفتوحة المصدر.',
       adSpaceContact: 'مساحة إعلانية \u2014 التواصل: jiuchenga@163.com',
+      blogDesc: 'نصائح ودروس وأفضل الممارسات لأدوات JSON والتشفير والويب.',
+      tutDesc: 'أدلة خطوة بخطوة لأدوات المطورين.',
     },
     categories: {
       json: { name: 'أدوات JSON', description: 'تنسيق والتحقق وضغط وتحويل JSON' },
@@ -1332,6 +1352,8 @@ export const translations: Record<Lang, Translations> = {
       resources: 'संसाधन',
       copyright: 'सभी उपकरण मुफ़्त और ओपन सोर्स हैं।',
       adSpaceContact: 'विज्ञापन स्थान \u2014 संपर्क: jiuchenga@163.com',
+      blogDesc: 'JSON, एन्क्रिप्शन और वेब टूल के लिए डेवलपर टिप्स, ट्यूटोरियल और सर्वोत्तम अभ्यास।',
+      tutDesc: 'डेवलपर टूल के लिए चरण-दर-चरण मार्गदर्शिका।',
     },
     categories: {
       json: { name: 'JSON उपकरण', description: 'JSON फ़ॉर्मेट, सत्यापन, मिनीफ़ाई, कन्वर्ट' },

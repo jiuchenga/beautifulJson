@@ -95,9 +95,9 @@ export function buildMetaTags(props: SEOProps): {
   og: { title: string; description: string; url: string; type: string; siteName: string };
   twitter: { card: string; title: string; description: string };
 } {
-  const fullTitle = props.toolName
-    ? `${props.toolName} - BeautifulJSON`
-    : `${props.title} - BeautifulJSON`;
+  const baseName = 'BeautifulJSON';
+  const rawTitle = props.toolName || props.title;
+  const fullTitle = rawTitle.includes(baseName) ? rawTitle : `${rawTitle} - ${baseName}`;
   return {
     title: fullTitle,
     description: props.description,
