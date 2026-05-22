@@ -1,4 +1,12 @@
 ---
-// src/pages/index.astro
-return Astro.redirect('/en/');
+// src/pages/index.astro - instant redirect, no visible intermediate page
 ---
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0;url=/en/" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <script is:inline>window.location.replace('/en/');</script>
+  </body>
+</html>
