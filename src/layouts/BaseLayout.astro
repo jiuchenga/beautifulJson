@@ -24,6 +24,7 @@ const lang = props.lang as Lang;
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <SEOHead {...props} />
+    <slot name="head" />
     <script is:inline>
       (function(){try{var t=localStorage.getItem('theme');if(t==='light'||(t===null&&matchMedia('(prefers-color-scheme:light)').matches)){document.documentElement.classList.add('light')}}catch(e){}})();
     </script>

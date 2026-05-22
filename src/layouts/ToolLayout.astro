@@ -14,6 +14,9 @@ const lang = seoProps.lang as Lang;
 ---
 
 <BaseLayout {...seoProps}>
+  <Fragment slot="head">
+    <slot name="head" />
+  </Fragment>
   <Breadcrumb items={breadcrumbs} siteUrl={seoProps.siteUrl} />
 
   <div>
