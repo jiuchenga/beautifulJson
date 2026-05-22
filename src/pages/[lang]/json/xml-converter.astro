@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'xml-converter');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
-  { name: toolData?.name ?? 'xml-converter', url: `/beautifulJson/${lang}/json/xml-converter` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
+  { name: toolData?.name ?? 'xml-converter', url: `/${lang}/json/xml-converter` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'xml-converter'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/json/xml-converter"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'xml-converter'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

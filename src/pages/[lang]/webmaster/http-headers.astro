@@ -21,9 +21,9 @@ const catData = categories['webmaster'];
 const tc = getToolContent(langTyped, 'webmaster', 'http-headers');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'webmaster', url: `/beautifulJson/${lang}/category/webmaster` },
-  { name: toolData?.name ?? 'http-headers', url: `/beautifulJson/${lang}/webmaster/http-headers` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'http-headers', url: `/${lang}/webmaster/http-headers` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'http-headers'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/webmaster/http-headers"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'http-headers'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

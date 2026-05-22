@@ -15,8 +15,8 @@ const langTyped = lang as Lang;
 const common = getCommon(langTyped);
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: common.blog, url: `/beautifulJson/${lang}/blog` },
+  { name: common.home, url: `/${lang}` },
+  { name: common.blog, url: `/${lang}/blog` },
 ];
 
 const posts = (await getCollection('blog')).sort(
@@ -28,10 +28,10 @@ const posts = (await getCollection('blog')).sort(
   title={`${common.blog} - BeautifulJSON`}
   description={common.blogDesc ?? common.blog}
   path="/blog"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
 >
-  <Breadcrumb items={breadcrumbs} siteUrl="https://jiuchenga.github.io/beautifulJson" />
+  <Breadcrumb items={breadcrumbs} siteUrl="https://formatbeautifuljson.com" />
 
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-[var(--text-primary)]">{common.blog}</h1>
@@ -39,7 +39,7 @@ const posts = (await getCollection('blog')).sort(
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
     {posts.map((post) => (
-      <a href={`/beautifulJson/${lang}/blog/${post.id}`}
+      <a href={`/${lang}/blog/${post.id}`}
         class="group rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-5 transition-all hover:border-accent-blue/50">
         <div class="mb-2 flex items-center gap-2 text-xs text-[var(--text-tertiary)]">
           <time datetime={post.data.date.toISOString().split('T')[0]}>

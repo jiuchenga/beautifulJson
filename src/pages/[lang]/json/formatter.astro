@@ -21,9 +21,9 @@ const catData = categories['json'];
 const tc = getToolContent(langTyped, 'json', 'formatter');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'json', url: `/beautifulJson/${lang}/category/json` },
-  { name: toolData?.name ?? 'formatter', url: `/beautifulJson/${lang}/json/formatter` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'json', url: `/${lang}/category/json` },
+  { name: toolData?.name ?? 'formatter', url: `/${lang}/json/formatter` },
 ];
 
 const features = tc?.features ?? [];
@@ -34,14 +34,14 @@ const faq = tc?.faq ?? [];
 
 const relatedSlugs = ['json/viewer', 'json/minifier', 'json/compare', 'json/colorizer', 'json/format-online'];
 const relatedTools: { title: string; href: string }[] = relatedSlugs
-  .map(slug => ({ title: tools[slug]?.name ?? slug.split('/')[1], href: `/beautifulJson/${lang}/${slug}` }));
+  .map(slug => ({ title: tools[slug]?.name ?? slug.split('/')[1], href: `/${lang}/${slug}` }));
 ---
 
 <ToolLayout
   title={`${toolData?.name ?? 'formatter'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/json/formatter"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'formatter'}
   toolDescription={toolData?.description ?? ''}
@@ -54,7 +54,7 @@ const relatedTools: { title: string; href: string }[] = relatedSlugs
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

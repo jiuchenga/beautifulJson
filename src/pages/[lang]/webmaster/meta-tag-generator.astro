@@ -21,9 +21,9 @@ const catData = categories['webmaster'];
 const tc = getToolContent(langTyped, 'webmaster', 'meta-tag-generator');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'webmaster', url: `/beautifulJson/${lang}/category/webmaster` },
-  { name: toolData?.name ?? 'meta-tag-generator', url: `/beautifulJson/${lang}/webmaster/meta-tag-generator` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'meta-tag-generator', url: `/${lang}/webmaster/meta-tag-generator` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'meta-tag-generator'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/webmaster/meta-tag-generator"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'meta-tag-generator'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

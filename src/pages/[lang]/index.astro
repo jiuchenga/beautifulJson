@@ -34,7 +34,7 @@ const hotTools = hotToolSlugs.map(slug => {
   return {
     title: tool?.name ?? slug,
     description: tool?.description ?? '',
-    href: `/beautifulJson/${lang}/${slug}`,
+    href: `/${lang}/${slug}`,
     icon: slug.startsWith('json') ? '{ }' : '🔐',
   };
 });
@@ -44,7 +44,7 @@ const hotTools = hotToolSlugs.map(slug => {
   title={`${common.onlineTools} - BeautifulJSON`}
   description={indexPage.heroSubtitle + ' ' + indexPage.heroDescription}
   path="/"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
 >
   <!-- JSON-LD Structured Data -->
@@ -52,7 +52,7 @@ const hotTools = hotToolSlugs.map(slug => {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "BeautifulJSON",
-    "url": `https://jiuchenga.github.io/beautifulJson/${lang}`,
+    "url": `https://jiuchenga.github.io/${lang}`,
     "description": indexPage.heroSubtitle,
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "All",
@@ -84,7 +84,7 @@ const hotTools = hotToolSlugs.map(slug => {
         const catData = categories[cat.slug];
         return (
           <a
-            href={`/beautifulJson/${lang}/category/${cat.slug}`}
+            href={`/${lang}/category/${cat.slug}`}
             class="group flex items-center gap-4 rounded-lg border border-[var(--border-primary)] bg-[var(--bg-secondary)] p-4 transition-all hover:border-accent-blue/50"
           >
             <span class="text-2xl">{cat.icon}</span>

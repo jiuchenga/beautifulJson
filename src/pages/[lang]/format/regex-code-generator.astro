@@ -21,9 +21,9 @@ const catData = categories['format'];
 const tc = getToolContent(langTyped, 'format', 'regex-code-generator');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'format', url: `/beautifulJson/${lang}/category/format` },
-  { name: toolData?.name ?? 'regex-code-generator', url: `/beautifulJson/${lang}/format/regex-code-generator` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'format', url: `/${lang}/category/format` },
+  { name: toolData?.name ?? 'regex-code-generator', url: `/${lang}/format/regex-code-generator` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'regex-code-generator'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/format/regex-code-generator"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'regex-code-generator'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

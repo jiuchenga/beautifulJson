@@ -21,9 +21,9 @@ const catData = categories['other'];
 const tc = getToolContent(langTyped, 'other', 'cron-generator');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'other', url: `/beautifulJson/${lang}/category/other` },
-  { name: toolData?.name ?? 'cron-generator', url: `/beautifulJson/${lang}/other/cron-generator` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'other', url: `/${lang}/category/other` },
+  { name: toolData?.name ?? 'cron-generator', url: `/${lang}/other/cron-generator` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'cron-generator'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/other/cron-generator"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'cron-generator'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

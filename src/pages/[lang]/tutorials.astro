@@ -14,14 +14,14 @@ const langTyped = lang as Lang;
 const common = getCommon(langTyped);
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: common.tutorials, url: `/beautifulJson/${lang}/tutorials` },
+  { name: common.home, url: `/${lang}` },
+  { name: common.tutorials, url: `/${lang}/tutorials` },
 ];
 
 const tutorials = [
-  { title: 'JSON Formatter Guide', description: 'Learn how to format, validate, and minify JSON data.', href: `/beautifulJson/${lang}/blog/json-formatter-guide`, icon: '{ }' },
-  { title: 'Encryption Algorithms Overview', description: 'Top 10 encryption algorithms every developer should know.', href: `/beautifulJson/${lang}/blog/encryption-algorithms`, icon: '🔐' },
-  { title: 'Regex Cheat Sheet', description: 'Practical regex patterns for web development.', href: `/beautifulJson/${lang}/blog/regex-cheat-sheet`, icon: '🔍' },
+  { title: 'JSON Formatter Guide', description: 'Learn how to format, validate, and minify JSON data.', href: `/${lang}/blog/json-formatter-guide`, icon: '{ }' },
+  { title: 'Encryption Algorithms Overview', description: 'Top 10 encryption algorithms every developer should know.', href: `/${lang}/blog/encryption-algorithms`, icon: '🔐' },
+  { title: 'Regex Cheat Sheet', description: 'Practical regex patterns for web development.', href: `/${lang}/blog/regex-cheat-sheet`, icon: '🔍' },
 ];
 ---
 
@@ -29,10 +29,10 @@ const tutorials = [
   title={`${common.tutorials} - BeautifulJSON`}
   description={common.tutDesc ?? common.tutorials}
   path="/tutorials"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
 >
-  <Breadcrumb items={breadcrumbs} siteUrl="https://jiuchenga.github.io/beautifulJson" />
+  <Breadcrumb items={breadcrumbs} siteUrl="https://formatbeautifuljson.com" />
 
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-[var(--text-primary)]">{common.tutorials}</h1>

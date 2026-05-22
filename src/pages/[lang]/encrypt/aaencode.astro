@@ -21,9 +21,9 @@ const catData = categories['encrypt'];
 const tc = getToolContent(langTyped, 'encrypt', 'aaencode');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'encrypt', url: `/beautifulJson/${lang}/category/encrypt` },
-  { name: toolData?.name ?? 'aaencode', url: `/beautifulJson/${lang}/encrypt/aaencode` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'encrypt', url: `/${lang}/category/encrypt` },
+  { name: toolData?.name ?? 'aaencode', url: `/${lang}/encrypt/aaencode` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'aaencode'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/encrypt/aaencode"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'aaencode'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

@@ -21,9 +21,9 @@ const catData = categories['format'];
 const tc = getToolContent(langTyped, 'format', 'regex-tester');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'format', url: `/beautifulJson/${lang}/category/format` },
-  { name: toolData?.name ?? 'regex-tester', url: `/beautifulJson/${lang}/format/regex-tester` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'format', url: `/${lang}/category/format` },
+  { name: toolData?.name ?? 'regex-tester', url: `/${lang}/format/regex-tester` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'regex-tester'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/format/regex-tester"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'regex-tester'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

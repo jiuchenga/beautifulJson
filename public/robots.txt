@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jiuchenga.github.io/beautifulJson/sitemap-index.xml
+Sitemap: https://formatbeautifuljson.com/sitemap-index.xml

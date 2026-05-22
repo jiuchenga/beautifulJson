@@ -21,9 +21,9 @@ const catData = categories['encode'];
 const tc = getToolContent(langTyped, 'encode', 'word-counter');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'encode', url: `/beautifulJson/${lang}/category/encode` },
-  { name: toolData?.name ?? 'word-counter', url: `/beautifulJson/${lang}/encode/word-counter` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'encode', url: `/${lang}/category/encode` },
+  { name: toolData?.name ?? 'word-counter', url: `/${lang}/encode/word-counter` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'word-counter'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/encode/word-counter"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'word-counter'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

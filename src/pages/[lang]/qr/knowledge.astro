@@ -21,9 +21,9 @@ const catData = categories['qr'];
 const tc = getToolContent(langTyped, 'qr', 'knowledge');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'qr', url: `/beautifulJson/${lang}/category/qr` },
-  { name: toolData?.name ?? 'knowledge', url: `/beautifulJson/${lang}/qr/knowledge` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'qr', url: `/${lang}/category/qr` },
+  { name: toolData?.name ?? 'knowledge', url: `/${lang}/qr/knowledge` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'knowledge'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/qr/knowledge"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'knowledge'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

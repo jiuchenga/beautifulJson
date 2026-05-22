@@ -21,9 +21,9 @@ const catData = categories['webmaster'];
 const tc = getToolContent(langTyped, 'webmaster', 'user-agent-parser');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'webmaster', url: `/beautifulJson/${lang}/category/webmaster` },
-  { name: toolData?.name ?? 'user-agent-parser', url: `/beautifulJson/${lang}/webmaster/user-agent-parser` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'webmaster', url: `/${lang}/category/webmaster` },
+  { name: toolData?.name ?? 'user-agent-parser', url: `/${lang}/webmaster/user-agent-parser` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'user-agent-parser'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/webmaster/user-agent-parser"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'user-agent-parser'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>

@@ -45,7 +45,7 @@ const catTools = (toolSlugMap[slug!] || []).map(ts => {
   return {
     title: tool?.name ?? ts,
     description: tool?.description ?? '',
-    href: `/beautifulJson/${lang}/${ts}`,
+    href: `/${lang}/${ts}`,
     icon: iconMap[catKey] ?? '',
   };
 });
@@ -56,8 +56,8 @@ const catIcons: Record<string, string> = {
 };
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? slug!, url: `/beautifulJson/${lang}/category/${slug}` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? slug!, url: `/${lang}/category/${slug}` },
 ];
 ---
 
@@ -65,10 +65,10 @@ const breadcrumbs = [
   title={`${catData?.name ?? slug!} - BeautifulJSON`}
   description={catData?.description ?? ''}
   path={`/category/${slug}`}
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
 >
-  <Breadcrumb items={breadcrumbs} siteUrl="https://jiuchenga.github.io/beautifulJson" />
+  <Breadcrumb items={breadcrumbs} siteUrl="https://formatbeautifuljson.com" />
 
   <div class="mb-8">
     <h1 class="text-3xl font-bold text-[var(--text-primary)]">

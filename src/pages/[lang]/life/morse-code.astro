@@ -21,9 +21,9 @@ const catData = categories['life'];
 const tc = getToolContent(langTyped, 'life', 'morse-code');
 
 const breadcrumbs = [
-  { name: common.home, url: `/beautifulJson/${lang}` },
-  { name: catData?.name ?? 'life', url: `/beautifulJson/${lang}/category/life` },
-  { name: toolData?.name ?? 'morse-code', url: `/beautifulJson/${lang}/life/morse-code` },
+  { name: common.home, url: `/${lang}` },
+  { name: catData?.name ?? 'life', url: `/${lang}/category/life` },
+  { name: toolData?.name ?? 'morse-code', url: `/${lang}/life/morse-code` },
 ];
 
 const features = tc?.features ?? [];
@@ -41,7 +41,7 @@ const relatedTools: { title: string; href: string }[] = [
   title={`${toolData?.name ?? 'morse-code'} - Free Online Tool | BeautifulJSON`}
   description={toolData?.description ?? ''}
   path="/life/morse-code"
-  siteUrl="https://jiuchenga.github.io/beautifulJson"
+  siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
   toolName={toolData?.name ?? 'morse-code'}
   toolDescription={toolData?.description ?? ''}
@@ -55,7 +55,7 @@ const relatedTools: { title: string; href: string }[] = [
     steps={steps}
     faq={faq}
     relatedTools={relatedTools}
-    siteUrl="https://jiuchenga.github.io/beautifulJson"
+    siteUrl="https://formatbeautifuljson.com"
     lang={langTyped}
   />
 </ToolLayout>
