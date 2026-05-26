@@ -47,6 +47,10 @@ const hotTools = hotToolSlugs.map(slug => {
   siteUrl="https://formatbeautifuljson.com"
   lang={langTyped}
 >
+  <Fragment slot="head">
+    <meta name="baidu-site-verification" content="codeva-tfLCY1MZm8" />
+  </Fragment>
+
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
