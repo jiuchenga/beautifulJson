@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# baidu push (contains token)
+scripts/baidu-push-progress.json
+scripts/baidu-urls.txt
